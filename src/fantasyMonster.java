@@ -114,25 +114,52 @@ public class fantasyMonster {
 //*****************************************************************************
 
     public static String trashMonster() {
-        return "Worm";
+        // Worm
+        return "Wolf";
     }
 
 //*****************************************************************************
 
     public static String smallMonster() {
-        return "Goblin";
+        String[] smallMonsters = {
+                "Cockatrice", "Enchanted Clothing", "Faery", "Goblin", "Hobbit",
+                "Imp", "Jackelope", "Kodama", "Leprechaun", "Pirhana",
+                "Pixie", "Rat", "Goblin", "Red Slime", "Slime",
+                "Sprite", "Wisp"};
+        String[] slimeColors = {
+                "Blue", "Green", "Orange", "Pink", "Purple", "Red", "Yellow"};
+        String small_monster =
+                smallMonsters[random.nextInt(smallMonsters.length)];
+        if (small_monster.equals("Slime")) {
+            small_monster =
+                    slimeColors[random.nextInt(slimeColors.length)] +
+                    " " + "Slime";
+        }
+        return small_monster;
     }
 
 //*****************************************************************************
 
     public static String normalMonster() {
-        return "Zombie";
+        String[] normalMonsters = {
+                "Bandit", "Basilisk", "Centaur", "Demon", "Djinn", "Dryad",
+                "Elemental", "Enchanted Furniture", "Faun", "Ghoul",
+                "Giant Rat", "Green Man", "Harpy", "Lamia", "Large Slime",
+                "Mermaid", "Naga", "Orc", "Satyr", "Shapeshifter", "Siren",
+                "Tengu", "Vampire", "Wendigo", "Werewolf", "Wolf", "Yokai",
+                "Zombie",};
+        return normalMonsters[random.nextInt(normalMonsters.length)];
     }
 
 //*****************************************************************************
 
     public static String largeMonster() {
-        return "Behemoth";
+        String[] largeMonsters = {
+                "Alpha Wolf", "Behemoth", "Demon King", "Dire Wolf",
+                "Giantic Rat", "Goblin King", "Golem",
+                "Griffin", "Hydra", "Land Shark", "Manticore", "Minotaur",
+                "Ogre", "Orc Captain", "Scorpion Man", "Were-bear"};
+        return largeMonsters[random.nextInt(largeMonsters.length)];
     }
 
 //*****************************************************************************
@@ -144,7 +171,10 @@ public class fantasyMonster {
 //*****************************************************************************
 
     public static String rareMonster() {
-        return "Leprechaun";
+        String[] rareMonsters = {
+                "Doppelganger", "Leprechaun", "Master Tonberry", "Moon Rabbit",
+                "Old Hero", "Pink Souffle"};
+        return rareMonsters[random.nextInt(rareMonsters.length)];
     }
 
 //*****************************************************************************

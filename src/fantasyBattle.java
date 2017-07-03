@@ -9,6 +9,7 @@ public class fantasyBattle {
     static String loner_name;
     static Random random = new Random();
     static ArrayList<fantasyMonster> monsters;
+    static String[] loners = {"lone", "wandering", "solitary", "single", "lonely"};
 
     //    static boolean mix_types;
 //    static int[] monsterNumber;
@@ -35,12 +36,46 @@ public class fantasyBattle {
 
         // Announce single attacker
         if (monsters.size() == 1) {
-            System.out.println("A " + monsters.get(monsters.size() - 1).name + " attacks! ");
+            if (((monsters.get(monsters.size() - 1).name.substring(0, 1).toLowerCase()).equals("a"))||
+                    ((monsters.get(monsters.size() - 1).name.substring(0, 1).toLowerCase()).equals("e"))||
+                    ((monsters.get(monsters.size() - 1).name.substring(0, 1).toLowerCase()).equals("i"))||
+                    ((monsters.get(monsters.size() - 1).name.substring(0, 1).toLowerCase()).equals("o"))||
+                    ((monsters.get(monsters.size() - 1).name.substring(0, 1).toLowerCase()).equals("u"))) {
+                System.out.print("An ");
+            }
+            else {
+                System.out.print("A ");
+            }
+            if (random.nextInt(10) > 7) {
+                System.out.println(loners[random.nextInt(loners.length)] + " " +
+                        monsters.get(monsters.size() - 1).name + " attacks! ");
+            }
+            else {
+                System.out.println(monsters.get(monsters.size() - 1).name + " attacks! ");
+            }
         }
         // Announce multiple attackers
         if (monsters.size() > 1) {
-            System.out.println("A group of " + monsters.size() + " " +
-                    monsters.get(monsters.size() - 1).name + "s attacks! ");
+            System.out.print("A group of " + monsters.size() + " ");
+            // Check if alternate plural suffix needed
+            if (((monsters.get(monsters.size() - 1).name.substring(monsters.
+                    get(monsters.size() - 1).name.length() - 1, monsters.get(
+                    monsters.size() - 1).name.length())).equals("f"))) {
+                System.out.println(monsters.get(monsters.size() - 1).name.
+                    substring(0, monsters.get(monsters.size() - 1).name.
+                    length() - 1) + "ves attacks! ");
+            }
+            else if (((monsters.get(monsters.size() - 1).name.substring(
+                    monsters.get(
+                    monsters.size() - 1).name.length() - 1, monsters.get(
+                    monsters.size() - 1).name.length())).equals("y"))) {
+                System.out.println(monsters.get(monsters.size() - 1).name.
+                    substring(0, monsters.get(monsters.size() - 1).name.
+                    length() - 1) + "ies attacks! ");
+            }
+            else {
+                System.out.println(monsters.get(monsters.size() - 1).name + "s attacks! ");
+            }
         }
 
         // Somewhat rarely add next level monster
@@ -56,7 +91,7 @@ public class fantasyBattle {
             monster_type = "";
         }
 
-        // Print loaded monster
+        // Print loaded monsters
         for (int i = 0; i < monsters.size(); i++) {
             System.out.println("Monster #" + (i + 1) + " = " +
                     monsters.get(i).name);
@@ -67,18 +102,24 @@ public class fantasyBattle {
 //*****************************************************************************
 
     public static void battle() {
-        System.out.println("What will you do?");
+//        System.out.println("What will you do?");
         // Battle start
         // Choose starting turn; player or enemy
-        // first_strike = random.nextInt(2);
-        // if (first_strike == 1) {
-        //     attacker = "player";
-        // }
-        // else {
-        //     attacker = "enemy";
-        // }
+        boolean first_strike = random.nextBoolean();
+        fantasyCommand command = new fantasyCommand();
+        String attacker = "";
+        if (first_strike) {
+            attacker = "player";
+            System.out.println("You strike first!");
+        }
+        else {
+            attacker = "enemy";
+            System.out.println("Enemy strikes first!");
+        }
         // End battle start
 
+        command.get();
+        command.act();
         // Battle loop
         // while (player_turn = true) {
         //     player_turn = false;
