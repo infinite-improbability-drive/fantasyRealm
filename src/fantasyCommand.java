@@ -65,6 +65,11 @@ public class fantasyCommand {
                 (command.equals("R"))||(command.equals("r")))) {
             command = "Run";
         }
+        else {
+            System.out.println("You try to " + command + ", but it doesn't " +
+                "work. Try something else. ");
+            get();
+        }
         return command;
     }
 

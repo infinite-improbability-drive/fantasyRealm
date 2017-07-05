@@ -3,6 +3,8 @@ import java.util.Random;
 public class fantasyMonster {
     public static String type;
     public String name;
+    static int HP;
+    static int MP;
     public static String monster;
     public static String[] monsterTypes = {
             "Trash", "Small", "Normal", "Large", "Very Large", "Rare",
@@ -15,6 +17,8 @@ public class fantasyMonster {
     public fantasyMonster() {
         name = fantasyBattle.group_name;
         type = fantasyBattle.monster_type;
+        HP = 100;
+        MP = 10;
     }
 
 //*****************************************************************************
@@ -114,8 +118,9 @@ public class fantasyMonster {
 //*****************************************************************************
 
     public static String trashMonster() {
-        // Worm
-        return "Wolf";
+        String[] trashMonsters = {
+                "Crow", "Rat", "Worm"};
+        return trashMonsters[random.nextInt(trashMonsters.length)];
     }
 
 //*****************************************************************************
@@ -186,17 +191,3 @@ public class fantasyMonster {
 //*****************************************************************************
 
 }   // End fantasyMonster
-
-//        type = fantasyBattleGroup.group_type;
-//        name = fantasyBattleGroup.group_name;
-//        System.out.println("Name = " + fantasyBattleGroup.group_name);
-//        monster = "";
-//        name = fantasyBattle.group_name;
-//        type = fantasyBattle.monster_type;
-//        type = fantasyBattleGroup.group_type;
-//        name = fantasyBattleGroup.group_name;
-//        System.out.println("Name = " + fantasyBattleGroup.group_name);
-//        monster = "";
-//        else {
-//            monster = veryRareMonster();
-//        }
