@@ -3,8 +3,10 @@ import java.util.Random;
 public class fantasyMonster {
     public static String type;
     public String name;
-    static int HP;
-    static int MP;
+    public int HP;
+    public int MP;
+    static int maxHP;
+    static int maxMP;
     public static String monster;
     public static String[] monsterTypes = {
             "Trash", "Small", "Normal", "Large", "Very Large", "Rare",
@@ -17,6 +19,8 @@ public class fantasyMonster {
     public fantasyMonster() {
         name = fantasyBattle.group_name;
         type = fantasyBattle.monster_type;
+        maxHP = 100;
+        maxMP = 10;
         HP = 100;
         MP = 10;
     }
@@ -27,6 +31,10 @@ public class fantasyMonster {
     public fantasyMonster(String set_type) {
         type = set_type;
         name = monster();
+        maxHP = 100;
+        maxMP = 10;
+        HP = 100;
+        MP = 10;
     }
 
 //*****************************************************************************

@@ -1,19 +1,19 @@
 import java.awt.*;
+import java.util.Random;
 
 public class fantasyMap {
-
+    static fantasyLocation[] locations;
+    static Random random = new Random();
 
 //*****************************************************************************
 
-   public fantasyMap() {}
+    public fantasyMap() {
+        locations = new fantasyLocation[random.nextInt(50) + 1];
+    }
 
 //*****************************************************************************
    
    public static void print() {
-   
-      // map1.printMap(location1, location2, location3, location4, location5, 
-      // location6, location7, location8, location9, location10, location11, 
-      // location12, location13, Point fantasyPlayer.point, Point[] fantasyLocation.points, String fantasyPlayer.name, String[] fantasyLocation.locations);
       int i          = 0;
       int j          = 0; 
       int k          = 1;
@@ -47,34 +47,52 @@ public class fantasyMap {
                         (mapPointer.y <= fantasyLocation.points[i].y)&&
                         (mapPointer.x == fantasyLocation.points[i].x)) {
                      mapData = "^ ";
-                     if (((mapPointer.y == fantasyPlayer.point.y + mapSize + 1) && 
-                          (mapPointer.x == fantasyPlayer.point.x - mapSize - 1))||
-                         ((mapPointer.y == fantasyPlayer.point.y + mapSize + 1) && 
-                          (mapPointer.x == fantasyPlayer.point.x + mapSize + 1))) {
+                     if (((mapPointer.y == fantasyPlayer.point.y
+                             + mapSize + 1) &&
+                          (mapPointer.x == fantasyPlayer.point.x
+                             - mapSize - 1))||
+                         ((mapPointer.y == fantasyPlayer.point.y
+                             + mapSize + 1) &&
+                          (mapPointer.x == fantasyPlayer.point.x
+                             + mapSize + 1))) {
                      mapData = "  ";
                      }
                      break;
                   }  // End if for Top map border
                   
                   // else if for Right map border
-                  else if ((mapPointer.x == fantasyPlayer.point.x + mapSize + 1)&&
+                  else if ((mapPointer.x == fantasyPlayer.point.x
+                                + mapSize + 1)&&
                            (mapPointer.x <= fantasyLocation.points[i].x)&&
                            (mapPointer.y == fantasyLocation.points[i].y)) {
                      mapData = "> ";
-                     if (((mapPointer.y == fantasyPlayer.point.y + mapSize + 1) && (mapPointer.x == fantasyPlayer.point.x + mapSize + 1))||
-                         ((mapPointer.y == fantasyPlayer.point.y - mapSize - 1) && (mapPointer.x == fantasyPlayer.point.x + mapSize + 1))) {
+                     if (((mapPointer.y == fantasyPlayer.point.y
+                            + mapSize + 1) &&
+                        (mapPointer.x == fantasyPlayer.point.x
+                            + mapSize + 1))||
+                        ((mapPointer.y == fantasyPlayer.point.y
+                            - mapSize - 1) &&
+                        (mapPointer.x == fantasyPlayer.point.x
+                            + mapSize + 1))) {
                      mapData = "  ";
                      }
                      break;
                   }  // End else if for Right map border
                   
                   // else if for Bottom map border
-                  else if ((mapPointer.y == fantasyPlayer.point.y - mapSize - 1)&&
+                  else if ((mapPointer.y == fantasyPlayer.point.y
+                                - mapSize - 1)&&
                            (mapPointer.y >= fantasyLocation.points[i].y)&&
                            (mapPointer.x == fantasyLocation.points[i].x)) {
                      mapData = "v ";
-                     if (((mapPointer.y == fantasyPlayer.point.y - mapSize - 1) && (mapPointer.x == fantasyPlayer.point.x + mapSize + 1))||
-                         ((mapPointer.y == fantasyPlayer.point.y - mapSize - 1) && (mapPointer.x == fantasyPlayer.point.x - mapSize - 1))) {
+                     if (((mapPointer.y == fantasyPlayer.point.y
+                            - mapSize - 1) &&
+                         (mapPointer.x == fantasyPlayer.point.x
+                            + mapSize + 1))||
+                         ((mapPointer.y == fantasyPlayer.point.y
+                            - mapSize - 1) &&
+                         (mapPointer.x == fantasyPlayer.point.x
+                            - mapSize - 1))) {
                      mapData = "  ";
                      }
                      break;

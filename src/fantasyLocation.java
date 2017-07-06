@@ -3,30 +3,37 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class fantasyLocation {
-   public static Point[] points;
-   public static String[] locations;
-   static Random random;
-   static Scanner scan;
+    static int total_locations;
+    public static Point[] points;
+    public static String[] locations;
+    static Random random;
+    static Scanner scan;
 
-   static String[] caves = new String[] {
+    static String[] caves = new String[] {
       "Deepest", "Dark", "Deep", "Deeper", "Darker", "Darkest", "Mysterious", 
       "Luminous", "Skull", "Faerie", "Troll", "Goblin", "Bandit", "Mercenary", 
       "Demon's", "Dwarven", "Beast's"};
-   static String[] cave = new String[] {
+    static String[] cave = new String[] {
       "Underground Waterway", "Antlion's Den", "Manscorpion's Den", 
       "Master's Ichor Chamber", "Underworld"};
-   static String[] elements = new String[] {
+    static String[] elements = new String[] {
       "Air","Earth", "Fire", "Water"
       };
-   static String[] farms = new String[] {
+    static String[] farms = new String[] {
       "Blueberry", "Raspberry", "Beetroot", "Wheat", "Carrot", "Potato", 
       "Cranberry"};
-   static String[] myLocations = new String[] {
-      "Arcadia", "Crystal Caves", "Decrepid Crypt", "Fishing Village", 
-      "Nightmare Cathedral", "Northern Camp", "Orc Encampment", 
-      "Peasant Hamlet", "Royal Gardens", "Windswept Valley"};
+    static String[] myLocations = new String[] {
+        "Arcadia", "Crystal Caves", "Decrepid Crypt", "Fishing Village",
+        "Nightmare Cathedral", "Northern Camp", "Orc Encampment",
+        "Peasant Hamlet", "Royal Gardens", "Windswept Valley"};
 
-   static String[] namedTowns = new String[] {
+    static String[] namedTowns = new String[] {
+
+      // Dragon Quest
+      "Tantagel Castle", "The Town of Brecconary", "Erdrick's Cave",
+      "The Town of Garinham", "The Village of Kol", "Rock Mountain Cave",
+      "Swamp Cave", "The Town of Rimuldar", "The Town of Cantlin",
+      "Charlock Castle",
 
       // Final Fantasy
       "Cornelia", "Pravoka", "Elfheim", "Mount Duergar", 
@@ -65,6 +72,7 @@ public class fantasyLocation {
 
    public fantasyLocation() {
       random = new Random();
+      total_locations = random(50);
       points = new Point[random(25) + 10];
       locations = new String[points.length];
       scan = new Scanner(System.in);
@@ -109,7 +117,7 @@ public class fantasyLocation {
                break;
             }
          }  // End inner loop
-      }  // End outer loop     
+      }  // End outer loop
    }  // End check()
 
 //*****************************************************************************

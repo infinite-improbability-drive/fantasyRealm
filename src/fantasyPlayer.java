@@ -47,6 +47,10 @@ public class fantasyPlayer {
       System.out.println("Welcome, [" + name + "] the [" + role + "]. ");
       System.out.println("The [" + role + "] class uses the [" + weapon + 
          "] and has the class ability [" + ability + "]. ");
+      System.out.println("You begin your adventure at " +
+              location + ". ");
+      System.out.println("Player = " + point.x + ", " +
+              point.y);
    } // End start
 
 //*****************************************************************************
@@ -116,10 +120,6 @@ public class fantasyPlayer {
                location = fantasyLocation.locations[i];
             }
          }
-      System.out.println("You begin your adventure at " + 
-         location + ". ");
-      System.out.println("Player = " + point.x + ", " + 
-         point.y);
    }  // End set player location
 
 //*****************************************************************************
@@ -163,6 +163,9 @@ public class fantasyPlayer {
                     fantasyLocation.locations[i] + ". ");
             location = fantasyLocation.locations[i];
          }
+      }
+      if (random.nextInt(10) > 9) {
+
       }
    }
 

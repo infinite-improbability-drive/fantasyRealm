@@ -69,9 +69,10 @@ public class fantasyBattle {
         if (monsters.size() > 1) {
             System.out.print("A group of " + monsters.size() + " ");
             // Check if alternate plural suffix needed
-            if (((monsters.get(monsters.size() - 1).name.substring(monsters.
-                    get(monsters.size() - 1).name.length() - 1, monsters.get(
-                    monsters.size() - 1).name.length())).equals("f"))) {
+            if (((monsters.get(monsters.size() - 1).name.substring(
+                    monsters.get(monsters.size() - 1).name.length() - 1,
+                    monsters.get(monsters.size() - 1).name.length()))
+                    .equals("f"))) {
                 System.out.println(monsters.get(monsters.size() - 1).name.
                     substring(0, monsters.get(monsters.size() - 1).name.
                     length() - 1) + "ves attacks! ");
@@ -86,8 +87,8 @@ public class fantasyBattle {
             }
             else if (((monsters.get(monsters.size() - 1).name.substring(
                     monsters.get(monsters.size() - 1).name.length() - 3,
-                    monsters.get(monsters.size() - 1).name.length())
-            ).equals("Man"))) {
+                    monsters.get(monsters.size() - 1).name.length()))
+                    .equals("Man"))) {
                 System.out.println(monsters.get(monsters.size() - 1).name.
                         substring(0, monsters.get(monsters.size() - 3).name.
                                 length() - 3) + "Men attacks! ");
@@ -135,7 +136,6 @@ public class fantasyBattle {
         // Battle start
         // Choose starting turn; player or enemy
         boolean first_strike = random.nextBoolean();
-        fantasyCommand command = new fantasyCommand();
         String attacker = "";
         if (first_strike) {
             attacker = "player";
@@ -147,15 +147,12 @@ public class fantasyBattle {
         }
         // End battle start
 
-        command.get();
-        command.act();
-        if (command.command.equals("Fight")) {
-            target();
+        while (!monsters.isEmpty()) {
+            playerTurn();
+//            monsters.remove(0);
         }
 
-        while (!monsters.isEmpty()) {
-            monsters.remove(0);
-        }
+        System.out.println("You have defeated the monsters. ");
         // Battle loop
         // while (player_turn = true) {
         //     player_turn = false;
@@ -182,9 +179,34 @@ public class fantasyBattle {
 
 //*****************************************************************************
 
-    public static fantasyMonster target() {
+    public static void playerTurn() {
+        fantasyCommand command = new fantasyCommand();
+        int target_monster = 0;
+        statusCheck();
+        command.get();
+        command.act();
+        if (command.command.equals("Fight")) {
+            target_monster = target();
+            attack(target_monster);
+        }
+        if (command.command.equals("Run")) {
+            fantasyPlayer.depart();
+        }
+    }
+
+//*****************************************************************************
+
+    public static void enemyTurn() {}
+
+//*****************************************************************************
+
+    public static void statusCheck() {}
+
+//*****************************************************************************
+
+    public static int target() {
         System.out.println("Which monster will you attack? ");
-        fantasyMonster target;
+//        fantasyMonster target;
         int input;
         for (int i = 0; i < monsters.size(); i++) {
             System.out.println("Monster #" + (i + 1) + " = " +
@@ -198,223 +220,29 @@ public class fantasyBattle {
             System.out.print((i + 1) + "] ");
         }
         input = scan.nextInt();
-        target = monsters.get(input - 1);
+//        target = monsters.get(input - 1);
         System.out.println("You have chosen Monster #" + (input) + " = " +
             monsters.get(input - 1).name);
-        return target;
+        return input - 1;
+    }
+
+//*****************************************************************************
+
+    public static ArrayList<fantasyMonster> attack(int target_monster) {
+        monsters.get(target_monster).HP -= 10;
+        if (monsters.get(target_monster).HP <= 0) {
+            System.out.println("You have defeated Monster #" +
+                    (target_monster + 1) + " = " +
+                    monsters.get(target_monster).name);
+            monsters.remove(target_monster);
+        }
+        else {
+            System.out.println(monsters.get(target_monster).name + " HP: " +
+                    monsters.get(target_monster).HP);
+        }
+        return monsters;
     }
 
 //*****************************************************************************
 
 }   // End fantasyBattle
-
-//*****************************************************************************
-//
-// JUNK CODE
-//
-//            System.out.println("Monster #" + (i + 1) + " = " + monsters.get(i).name);
-//        System.out.println("Type = " + monster_type + ", Amount = " + monster_amount);
-//                    System.out.println("Type = " + monster_type);
-//                    System.out.println("Type = " + monster_type);
-//        fantasyMonster[] monsters = new fantasyMonster[monster_amount];
-//                    loner_name = fantasyMonster.monster();
-//                    fantasyMonster tmp = new fantasyMonster();
-//            monsters[i] = new fantasyMonster();
-//        // Set number of types
-//        number_of_types = random.nextInt(100) + 1;
-//        if (number_of_types > 96) {
-//            number_of_types = 3;
-//        }
-//        else if ((number_of_types <= 96)&&(number_of_types > 81)) {
-//            number_of_types = 2;
-//        }
-//        else {
-//            number_of_types = 1;
-//        }
-//        System.out.println("Number of types = " + number_of_types);
-//        // End set number of types
-//
-//        // Set outer array
-//        fantasyBattleGroup[] groups = new fantasyBattleGroup[number_of_types];
-//
-//        // Set inner arrays
-//        for (int i = 0, total_monsters = 1; i < groups.length; i++) {
-////            System.out.println("Creating Group #" + (i + 1));
-//            groups[i] = new fantasyBattleGroup();
-////            System.out.println("Populating Group #" + (i + 1));
-//            for (int j = 0; j < groups[i].monsters.length; j++, total_monsters++) {
-//                groups[i].monsters[j] = new fantasyMonster();
-////                System.out.println("Monster #" + (j + 1) + " = " + groups[i].monsters[j].name);
-//                System.out.println("Monster #" + (total_monsters) + " = " + groups[i].monsters[j].name);
-////                System.out.println("Total = " + total_monsters);
-//            }
-//        }
-//        fantasyMonster[] battle_monsters = new fantasyMonster[total_monsters];
-//
-//        for (int i = 0, k = 0; i < groups.length; i++) {
-//            for (int j = 0; j < groups[i].monsters.length; j++, k++) {
-////                battle_monsters[k] = new fantasyMonster();
-//                battle_monsters[k] = groups[i].monsters[j];
-//            }
-//        }
-//        System.out.println("A wild groupPP of " + groups[0].number_of_monsters + " " +
-//                groups[0].group_name + "s appeared!");
-//        if (groups[1] != null) {
-//            System.out.println("A wild groupPP of " + groups[1].number_of_monsters + " " +
-//                    groups[1].group_name + "s appeared!");
-//        }
-//        if (groups[2] != null) {
-//            System.out.println("A wild groupPP of " + groups[2].number_of_monsters + " " +
-//                    groups[2].group_name + "s appeared!");
-//        }
-//        System.out.println("A wild groupPP of " + groups[2].number_of_monsters + " " +
-//                groups[2].group_name + "s appeared!");
-//        int k = 0;
-//        fantasyMonster[] battle_monsters = new fantasyMonster[total_monsters];
-// Print groups with names and numbers
-//            System.out.println("A wild groupPP of " + groups[i].number_of_monsters + " " +
-//                    groups[i].group_name + "s appeared!");
-////            System.out.println("Creating Group #" + (i + 1));
-//            groups[i] = new fantasyBattleGroup();
-////            System.out.println("Populating Group #" + (i + 1));
-//                battle_monsters[k] = new fantasyMonster();
-//                battle_monsters[k] = groups[i].monsters[j];
-////                System.out.println("Monster #" + (j + 1) + " = " + groups[i].monsters[j].name);
-//                System.out.println("Monster #" + (total_monsters) + " = " + groups[i].monsters[j].name);
-////                System.out.println("Total = " + total_monsters);
-// Merge arrays
-//        int k = 0;
-//        fantasyMonster[] new_group = new fantasyMonster[total_monsters];
-//        for (int i = 0; i < groups.length; i++) {
-////            System.out.println("Creating Group #" + (i + 1));
-////            groups[i] = new fantasyBattleGroup();
-////            System.out.println("Populating Group #" + (i + 1));
-//            for (int j = 0; j < groups[i].monsters.length; j++, k++) {
-////                new_group[k] = new fantasyMonster();
-//                new_group[k] = groups[i].monsters[j]; // = new fantasyMonster();
-//                System.out.println("Monster #" + (k + 1) + " = " + new_group[k].name);
-////                System.out.println("Total = " + total_monsters);
-//            }
-//        }
-
-//        for (int i = 0; i < number_of_types; i++) {
-//            System.out.println("Creating Group #" + (i + 1));
-//            groups[i] = new fantasyBattleGroup();
-//        }
-//        for each in groups
-//
-//                fantasyBattleGroup new_group = new fantasyBattleGroup();
-//            groups[i].monsters[i] = new fantasyMonster();
-//            System.out.println(groups[i].group_type);
-//            groups[i] = new fantasyMonster[new_group.number_of_monsters];
-//            System.out.println("Group # " + (i + 1) + ": " + groups[i].group_type);
-//            System.out.println("Group # " + (i + 1) + " contains: " + groups[i].number_of_monsters);
-//            System.out.println("Number of types = " + number_of_types);
-//
-//        // Set outer array of groups
-//        for (int i = 0; i < number_of_types; i++) {
-//            fantasyBattleGroup[] groups = new fantasyBattleGroup[number_of_types];
-//        }
-//
-//        // Set inner array of monsters within each group
-//        for (int i = 0; i < number_of_types; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                fantasyMonster[] monsters = new fantasyMonster[3];
-//            }
-//        }
-//
-//        int l = 0;
-//        // Set inner array of monsters within each group
-//        for (int i = 0; i < number_of_types; i++) {
-//            for (int j = 0; j < groups.length; j++) {
-//                for (int k = 0; k < monsters.length; k++) {
-//                    monsters[j][k]  = new fantasyMonster();
-//                    l++;
-//                }
-//            }
-//        }
-//
-//            groups[i] = monsters[i];
-//
-//        monsterTypes = new String[number_of_types];
-//        monsterNumber = new int[number_of_types];
-//        int l = 0;
-//
-//        for (int i = 0; i < number_of_types; i++) {
-//            System.out.println("Creating group #" + (i + 1));
-//            fantasyBattleGroup[] groups = new fantasyBattleGroup[number_of_types];
-//            System.out.println("Creating monsters in group #" + (i + 1));
-//            groups[i] = new fantasyBattleGroup();
-//        }
-//        for (int i = 0; i < number_of_types; i++) {
-//            for (int j = 0; j < groups.length; i++) {
-//                System.out.println("Creating monsters in group #" + (i + 1));
-//                groups[j] = new fantasyBattleGroup();
-//            }
-//        }
-//        for (int i = 0; i < number_of_types; i++) {
-//            for (int j = 0; j < groups.length; i++) {
-//                for (int k = 0; j < groups.length; i++) {
-//                System.out.println("Creating monsters in group #" + (i + 1));
-//                groups[i] = new fantasyBattleGroup();
-//                }
-//            }
-//        }
-//
-//        for (int i = 0; i < number_of_types; i++) {
-//            System.out.println("Monster #" + (i + 1) + ": " + group[i]);
-//        }
-//            monsterTypes[i] = fantasyMonster.type();
-//            for (int j = 0; j < monsterTypes.length; j++) {
-//                monsterNumber[i] = fantasyMonster.number();
-//                for (int k = 0; k < monsterNumber.length; k++) {
-//                    group[l] = new fantasyMonster();
-//                    total_monsters++;
-//                }
-//            }
-//        }
-//            group = new fantasyMonster[monsterNumber];
-//
-//        if (number_of_types == 1) {
-//            monsterType = fantasyMonster.type();
-//            System.out.println("Monster type = " + monsterType);
-//            monsterNumber = fantasyMonster.number();
-//            System.out.println("Monster number = " + monsterNumber);
-//            monsterName = fantasyMonster.name;
-//            System.out.println("Monster  = " + monsterName);
-//            group = new fantasyMonster[monsterNumber];
-//            for (int i = 0; i < group.length; i++) {
-//                group[i] = new fantasyMonster();
-//            }
-//        }
-//        else if (number_of_types == 2) {
-//            monsterType = fantasyMonster.type();
-//            System.out.println("Monster type = " + monsterType);
-//            monsterNumber = fantasyMonster.number();
-//            System.out.println("Monster number = " + monsterNumber);
-//            monsterName = fantasyMonster.name;
-//            System.out.println("Monster  = " + monsterName);
-//            group = new fantasyMonster[monsterNumber];
-//            for (int i = 0; i < group.length; i++) {
-//                group[i] = new fantasyMonster();
-//            }
-//            for (int i = 0; i < group.length; i++) {
-//                group[i] = new fantasyMonster();
-//            }
-//        }
-//        else if (number_of_types == 3) {
-//        }
-//
-//
-//        // Print
-//        if (total_monsters == 1) {
-//            System.out.println("A wild " + group[0].name + " appeared!");
-//        }
-//        else if (total_monsters > 1) {
-//            System.out.println("A wild group of " + total_monsters + " " +
-//                    group[0].name + "s appeared!");
-//        }
-//        for (int i = 0; i < group.length; i++) {
-//            System.out.println("Monster #" + (i + 1) + " = " +
-//                    group[i].name);
-//        }
