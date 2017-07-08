@@ -1,20 +1,23 @@
 import java.util.ArrayList;
 
 public class fantasyParty {
-   public static ArrayList<fantasyNPC> party;
+   public static ArrayList<fantasyPlayer> party;
 //   public static String partyMember;
 
 //*****************************************************************************
 
     public fantasyParty() {
-        party = new ArrayList<>(10);
-        party.add(new fantasyNPC());
+        party = new ArrayList<>(0);
+        party.add(new fantasyPlayer());
+        party.get(0).start();
     }
    
 //*****************************************************************************
 
-    public static ArrayList<fantasyNPC> add() {
-       party.add(new fantasyNPC());
+    public static ArrayList<fantasyPlayer> add() {
+        party.add(new fantasyPlayer());
+        System.out.println(party.get(party.size() - 1).name + " the " +
+            party.get(party.size() - 1).role + " has joined the party!");
         return party;
     }
 

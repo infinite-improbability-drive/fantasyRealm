@@ -12,7 +12,7 @@ public class fantasyCommand {
     public fantasyCommand() {
         commands = new ArrayList<String>();
         commands.add("Fight");
-        commands.add(fantasyPlayer.ability);
+        commands.add(fantasyParty.party.get(0).ability);
         commands.add("Items");
         commands.add("Run");
         command = "";
@@ -26,7 +26,7 @@ public class fantasyCommand {
             System.out.println("You have chosen to [" + command + "].");
 //            fantasyBattle.target();
         }
-        else if (command.equals(fantasyPlayer.ability)) {
+        else if (command.equals(fantasyParty.party.get(0).ability)) {
             System.out.println(
                     "You have chosen to check your [" + command + "].");
         }
@@ -55,12 +55,12 @@ public class fantasyCommand {
             (command.equals("F"))||(command.equals("f")))) {
             command = "Fight";
         }
-        else if (((command.equals(fantasyPlayer.ability))||
-            (command.equals(fantasyPlayer.ability.substring(0, 1)))||
-            (command.equals(fantasyPlayer.ability.substring(0, 1)
+        else if (((command.equals(fantasyParty.party.get(0).ability))||
+            (command.equals(fantasyParty.party.get(0).ability.substring(0, 1)))||
+            (command.equals(fantasyParty.party.get(0).ability.substring(0, 1)
                 .toLowerCase()))||
-            (command.equals(fantasyPlayer.ability.toUpperCase())))) {
-            command = fantasyPlayer.ability;
+            (command.equals(fantasyParty.party.get(0).ability.toUpperCase())))) {
+            command = fantasyParty.party.get(0).ability;
         }
         else if (((command.equals("Items"))||(command.equals("items"))||
             (command.equals("I"))||(command.equals("i")))) {

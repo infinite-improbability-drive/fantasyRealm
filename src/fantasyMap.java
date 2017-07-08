@@ -127,9 +127,9 @@ public class fantasyMap {
 
                     // Player point
                     else if (mapPointer.equals(fantasyPlayer.point)) {
-                        mapData = (fantasyPlayer.name.substring(0, 1) + " ");
-                        mapKeys[0] = ("[" + fantasyPlayer.name.substring(0, 1) + "] " +
-                            fantasyPlayer.name + " the " + fantasyPlayer.role);
+                        mapData = (fantasyParty.party.get(0).name.substring(0, 1) + " ");
+                        mapKeys[0] = ("[" + fantasyParty.party.get(0).name.substring(0, 1) + "] " +
+                            fantasyParty.party.get(0).name + " the " + fantasyParty.party.get(0).role);
                         if (y < mapKeys[0].length()) {y = mapKeys[0].length();}
                         if  (mapPointer.equals(fantasyLocation.points[i])) {
                             mapKeys[k] = ("[" + fantasyLocation.locations[i].substring(0, 1) + "] " +
@@ -148,9 +148,9 @@ public class fantasyMap {
                         if (y < mapKeys[k].length()) {y = mapKeys[k].length();}
                      k++;
                      if (mapPointer.equals(fantasyPlayer.point)) {
-                        mapData = (fantasyPlayer.name.substring(0, 1) + " ");
-                        mapKeys[0] = ("[" + fantasyPlayer.name.substring(0, 1) + "] " +
-                                fantasyPlayer.name + " the " + fantasyPlayer.role);
+                        mapData = (fantasyParty.party.get(0).name.substring(0, 1) + " ");
+                        mapKeys[0] = ("[" + fantasyParty.party.get(0).name.substring(0, 1) + "] " +
+                                fantasyParty.party.get(0).name + " the " + fantasyParty.party.get(0).role);
                          if (y < mapKeys[0].length()) {y = mapKeys[0].length();}
                      }
                      break;

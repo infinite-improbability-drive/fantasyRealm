@@ -1,6 +1,10 @@
 import java.util.Random;
 import java.util.Scanner;
 
+// To do:
+// Unify player + party_member as single arrayList<fantasyPlayer>
+
+
 public class fantasyRealm {
    static boolean acting = false;
    static boolean moving = false;
@@ -10,8 +14,8 @@ public class fantasyRealm {
    static fantasyAction action     = new fantasyAction();
    static fantasyJournal journal   = new fantasyJournal();
    static fantasyLocation location = new fantasyLocation();
-   static fantasyPlayer player     = new fantasyPlayer();
     static fantasyParty party       = new fantasyParty();
+    static fantasyPlayer player     = new fantasyPlayer();
    //    static fantasySave save         = new fantasySave();
    
    public static void main (String[] args) {

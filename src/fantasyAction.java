@@ -35,7 +35,7 @@ public class fantasyAction {
          fantasyParty.print();
       }
       else if (action.equals("Status")) {
-         fantasyPlayer.stats();
+//         fantasyPlayer.stats();
       }
       else if (action.equals("Exit")) {
          System.out.println("You have decide to " + action + ". ");

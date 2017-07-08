@@ -80,14 +80,16 @@ public class fantasySave {
 
    public static void system() {
       systemFile.println(line);
-      systemFile.print("Name: " + fantasyPlayer.name); 
+//      systemFile.print("Name: " + fantasyPlayer.name);
       systemFile.close();
    }
    
 //*****************************************************************************
 
    public static void save() {
-      outputFile.print("Name: " + fantasyPlayer.name); 
+      outputFile.print("Name: "
+//              fantasyPlayer.name
+      );
    }
    
 //*****************************************************************************
