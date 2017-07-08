@@ -136,38 +136,24 @@ public class fantasyBattle {
         // Battle start
         // Choose starting turn; player or enemy
         boolean first_strike = random.nextBoolean();
-        String attacker = "";
+//        String attacker = "";
         if (first_strike) {
-            attacker = "player";
+//            attacker = "player";
             System.out.println("You strike first!");
+            while (!monsters.isEmpty()) {
+               playerTurn();
+            }
         }
         else {
-            attacker = "enemy";
+//            attacker = "enemy";
             System.out.println("Enemy strikes first!");
+            while (!monsters.isEmpty()) {
+                enemyTurn();
+            }
         }
         // End battle start
 
-        while (!monsters.isEmpty()) {
-            playerTurn();
-//            monsters.remove(0);
-        }
 
-        // Battle loop
-        // while (player_turn = true) {
-        //     player_turn = false;
-        //     enemy_turn = true;
-        // }
-        // while (enemy_turn = true) {
-        //     enemy_turn = false;
-        //     player_turn = true;
-        // }
-        // Choose starting attacker
-        // if (attacker.equals("player")) {
-        //
-        // }
-
-        // else {
-        // }
 
         // Choose starting defender
         // End Battle loop

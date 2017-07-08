@@ -15,10 +15,6 @@ public class fantasyPlayer {
     };
 
     // Instance variables
-//    public static String player_ability;
-//    public static String player_name;
-//    public static String player_role;
-//    public static String player_weapon;
     private int number;
     public String ability;
     public String name;
