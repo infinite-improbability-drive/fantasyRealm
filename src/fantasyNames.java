@@ -3,7 +3,7 @@ public class fantasyNames {
 
    // First names
    static String[] first_names = new String[] {
-   "", ""
+   "Elsie", "Olga", "Harold", "Charlotte"
    };
 
    // Last names
@@ -188,5 +188,58 @@ public class fantasyNames {
       "Tupac Amaru", 
    }; 
    // End full names
+
+// "Barbarian", "Bard", "Cleric", "Demon Hunter", "Druid", "Knight", "Paladin", "Pugilist",
+// "Pyromancer", "Samurai", "Sniper", "Sorcerer", "Thief", "Princess", "Fool"};
+
+
+   // Class names
+   public static String[][] role_names = new String[][] {
+        // Barbarian names
+        {"Conan", "Erlich", "Krudr", "Gimleim", "Kull", "Sonya"},
+        // Bard names
+        {"Florian", "Wolfgang", "Carl", "Elton", "Gerald", "Lenny"},
+        // Cleric names
+        {"Joan", "Nelly", "Maria", "Pious", "Simon"},
+        // Demon Hunter names
+        {"Blair", "Bloodling", "Damien", "Jason", "Michael"},
+        // Druid names
+        {"Crow Bear", "Crazy Horse", "Flying Snake", "Wolf Spider"},
+        // Knight names
+        {"Alexander", "Alfred", "Arthur", "Charles", "Cid", "Edward", "Henry",
+         "Heinrich", "Richard", "Seigfried", "William"},
+        // Paladin names
+        {"Alfonse", "Marcus", "Sanford"},
+        // Pugilist names
+        {"Bonesaw", "Hunter", "Nikita"},
+        // Pyromancer names
+        {"Rose", "Lorelei", "Veronica", "Nadia", "Jack"},
+        // Samurai
+        {"Mushashi", "Miyamoto", "Jubei", "Saotome"},
+        // Sniper
+        {"Apollo", "Artemis"},
+        // Sorcerer
+        {"Elektra", "Esther", "Helena", "Nightshade"},
+        // Thief
+        {"Martin", "Jimmy", "Katsumi", "Hayato", "Beau", "Justin"},
+        // Princess
+        {"Ariel", "Augusta", "Aurora", "Euna", "Eilonwy", "Harmony", "Irene",
+         "Maya", "Melody", "Priscilla", "Rhythm", "Sonya"},
+        // Fool
+        {"Charlie", "Zippo", "Lemmy"},
+
+   };
+   // End Class names
+
+   // Bard names
+   public static String[] bard_names = new String[] {
+
+   };
+   // End Bard names
+
+   // Barbarian names
+   public static String[] druid_names = new String[] {
+   };
+   // End Barbarian names
 
 }  // End fantasyNames

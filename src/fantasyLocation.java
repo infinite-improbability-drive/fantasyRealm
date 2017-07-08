@@ -6,8 +6,8 @@ public class fantasyLocation {
     static int total_locations;
     public static Point[] points;
     public static String[] locations;
-    static Random random;
-    static Scanner scan;
+    static Random random = new Random();
+    static Scanner scan = new Scanner(System.in);
 
     static String[] caves = new String[] {
       "Deepest", "Dark", "Deep", "Deeper", "Darker", "Darkest", "Mysterious", 
@@ -17,11 +17,10 @@ public class fantasyLocation {
       "Underground Waterway", "Antlion's Den", "Manscorpion's Den", 
       "Master's Ichor Chamber", "Underworld"};
     static String[] elements = new String[] {
-      "Air","Earth", "Fire", "Water"
-      };
+        "Air","Earth", "Fire", "Water"};
     static String[] farms = new String[] {
-      "Blueberry", "Raspberry", "Beetroot", "Wheat", "Carrot", "Potato", 
-      "Cranberry"};
+        "Blueberry", "Raspberry", "Beetroot", "Wheat", "Carrot", "Potato",
+        "Cranberry"};
     static String[] myLocations = new String[] {
         "Arcadia", "Crystal Caves", "Decrepid Crypt", "Fishing Village",
         "Nightmare Cathedral", "Northern Camp", "Orc Encampment",
@@ -29,39 +28,48 @@ public class fantasyLocation {
 
     static String[] namedTowns = new String[] {
 
-      // Dragon Quest
-      "Tantagel Castle", "The Town of Brecconary", "Erdrick's Cave",
-      "The Town of Garinham", "The Village of Kol", "Rock Mountain Cave",
-      "Swamp Cave", "The Town of Rimuldar", "The Town of Cantlin",
-      "Charlock Castle",
+        // Dragon Quest
+        "Tantagel Castle", "The Town of Brecconary", "Erdrick's Cave",
+        "The Town of Garinham", "The Village of Kol", "Rock Mountain Cave",
+        "Swamp Cave", "The Town of Rimuldar", "The Town of Cantlin",
+        "Charlock Castle",
 
-      // Final Fantasy
-      "Cornelia", "Pravoka", "Elfheim", "Mount Duergar", 
-      "Melmond", "Crescent Lake", "Onrac", "Lufenia", "Gaia",
+        // Final Fantasy
+        "Cornelia", "Pravoka", "Elfheim", "Mount Duergar",
+        "Melmond", "Crescent Lake", "Onrac", "Lufenia", "Gaia",
 
-      // Final Fantasy II
-      "Altair", "Gatrea", "Paloom", "Poft", "Salamand", "Bafsk",
-      "Fynn", "Mysidia", "Tropical Island", "Machanon",
-      
-      // Final Fantasy VII
-      "Sector 7 Slums", "Wall Market", "Kalm Town", "Fort Condor", "Junon",
-      "Costa del Sol", "North Corel", "Gold Saucer", "Gongaga Village", 
-      "Nibelheim", "Rocket Town", "Wutai", "Bone Village", "Icicle Inn", 
-      "Mideel",
-      
-      // Final Fantasy VIII
-      "Balamb Town", "Timber", "Dollet", "Deling City", "Fisherman's Horizeon",
-      "Winhill", "Shumi Village", "Esthar City",
+        // Final Fantasy II
+        "Altair", "Gatrea", "Paloom", "Poft", "Salamand", "Bafsk",
+        "Fynn", "Mysidia", "Tropical Island", "Machanon",
 
-      // Final Fantasy IX
-      "Alexandria", "Dali", "Lindblum", "Summit Station", "Cleyra", "Treno",
-      "Conde Petie", "Black Mage Village", "Madain Sari", "Esto Gaza", 
-      "Daguerreo", "Bran Bal", "Burmecia",
+        // Final Fantasy VII
+        "Sector 7 Slums", "Wall Market", "Kalm Town", "Fort Condor", "Junon",
+        "Costa del Sol", "North Corel", "Gold Saucer", "Gongaga Village",
+        "Nibelheim", "Rocket Town", "Wutai", "Bone Village", "Icicle Inn",
+        "Mideel",
+
+        // Final Fantasy VIII
+        "Balamb Town", "Timber", "Dollet", "Deling City", "Fisherman's Horizeon",
+        "Winhill", "Shumi Village", "Esthar City",
+
+        // Final Fantasy IX
+        "Alexandria", "Dali", "Lindblum", "Summit Station", "Cleyra", "Treno",
+        "Conde Petie", "Black Mage Village", "Madain Sari", "Esto Gaza",
+        "Daguerreo", "Bran Bal", "Burmecia",
       
-      // Final Fantasy X
-      "Besaid Village", "Kilika", "Luca", "Mi'ihen Highroad", "Guadosalam",
-      "Thunder Plains", "Macalania", "Bevelle", "Calm Lands"
-      };
+        // Final Fantasy X
+        "Besaid Village", "Kilika", "Luca", "Mi'ihen Highroad", "Guadosalam",
+        "Thunder Plains", "Macalania", "Bevelle", "Calm Lands",
+
+        // Final Fantasy XI
+        "Republic of Bastok", "The Kingdom of San d'Oria",
+        "The Federation of Windurst", "The Grand Duchy of Jeuno", "Aragoneu",
+        "Derfland", "Fauregandi", "Gustaberg", "Kolshushu", "Norvallen",
+        "Qufim", "Ronfaure", "Sarutabaruta", "Valdeaunia", "Zulkheim",
+        "Arrapago Islands", "Halvung Territory", "Mamool Ja Savagelands",
+        "Ruins of Alzadaal", "West Aht Urhgan", "Dynamis"
+        };
+
 
    static String[] ores = new String[] {
       "Adamantyte", "Copper", "Gold", "Iron", "Mithril",
@@ -71,12 +79,17 @@ public class fantasyLocation {
 //*****************************************************************************
 
    public fantasyLocation() {
-      random = new Random();
+       // point = randomPoint(10);
+       // name = randomLocation();
+       // npc = false;
+       // shop = false;
+       // smith = false;
+       // inn = false;
+
       total_locations = random(50);
       points = new Point[random(25) + 10];
       locations = new String[points.length];
-      scan = new Scanner(System.in);
-      start();      
+      start();
       // Set random locations
       for (int i = 0; i < points.length; i++) {
          points[i] = randomPoint(10);

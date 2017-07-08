@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="fantasyRealm:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/fantasyRealm_jar</output-path>
+    <root id="archive" name="fantasyRealm.jar">
+      <element id="module-output" name="fantasyRealm" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+    </root>
+  </artifact>
+</component>

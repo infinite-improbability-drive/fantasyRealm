@@ -152,7 +152,6 @@ public class fantasyBattle {
 //            monsters.remove(0);
         }
 
-        System.out.println("You have defeated the monsters. ");
         // Battle loop
         // while (player_turn = true) {
         //     player_turn = false;
@@ -186,11 +185,16 @@ public class fantasyBattle {
         command.get();
         command.act();
         if (command.command.equals("Fight")) {
-            target_monster = target();
+            if (monsters.size() == 1) {
+                target_monster = 0;
+            }
+            else {
+                target_monster = target();
+            }
             attack(target_monster);
         }
         if (command.command.equals("Run")) {
-            fantasyPlayer.depart();
+            monsters = new ArrayList<fantasyMonster>();
         }
     }
 
@@ -235,6 +239,9 @@ public class fantasyBattle {
                     (target_monster + 1) + " = " +
                     monsters.get(target_monster).name);
             monsters.remove(target_monster);
+            if (monsters.isEmpty()) {
+                System.out.println("You have defeated the monsters. ");
+            }
         }
         else {
             System.out.println(monsters.get(target_monster).name + " HP: " +

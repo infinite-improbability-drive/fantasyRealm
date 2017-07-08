@@ -1,9 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
 
-// Hello GitHub
-
-// Hi how are you
 public class fantasyRealm {
    static boolean acting = false;
    static boolean moving = false;
@@ -14,7 +11,8 @@ public class fantasyRealm {
    static fantasyJournal journal   = new fantasyJournal();
    static fantasyLocation location = new fantasyLocation();
    static fantasyPlayer player     = new fantasyPlayer();
-//    static fantasySave save         = new fantasySave();
+    static fantasyParty party       = new fantasyParty();
+   //    static fantasySave save         = new fantasySave();
    
    public static void main (String[] args) {
                   

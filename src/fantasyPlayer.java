@@ -3,37 +3,36 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class fantasyPlayer {
-   public static Point point;
-   public static Random random;
-   static Scanner scan;
+    public static Point point;
+    static Random random = new Random();
+    static Scanner scan = new Scanner(System.in);
 
-   public static String ability;
-   public static String name;
-   public static String role;
-   public static String weapon;
-   public static String direction;
-   public static String location;
+    public static String ability;
+    public static String name;
+    public static String role;
+    public static String weapon;
+    public static String direction;
+    public static String location;
 
-   public final static String[] stats = new String[] {
-      "HP", "MP", "Strength", "Dexterity", "Stamina", "Intelligence", "Wisdom", "Spirit", 
-      };
+    public final static String[] stats = new String[] {
+        "HP", "MP", "Strength", "Dexterity", "Stamina", "Intelligence",
+        "Wisdom", "Spirit",
+        };
 
-   public static int[] levels;
+    public static int[] levels;
    
 //*****************************************************************************
 
-   public fantasyPlayer() {
-      ability   = "";
-      direction = "";
-      location  = "";
-      name      = "";
-      point = new Point();
-      random = new Random();
-      role = "";
-      scan = new Scanner(System.in);
-      start();
-      levels = new int[8];
-      for (int i = 0; i < stats.length; i++) {
+    public fantasyPlayer() {
+       ability   = "";
+       direction = "";
+       location  = "";
+       name      = "";
+       point = new Point();
+       role = "";
+       start();
+       levels = new int[8];
+       for (int i = 0; i < stats.length; i++) {
          levels[i] = 10;
       }
 
@@ -153,6 +152,7 @@ public class fantasyPlayer {
       System.out.println("You have decided to go [" + direction + "]. ");
       System.out.println("Player = " + point.x + ", " + point.y);   
    }  // End move()
+
 //*****************************************************************************
 
    public static void arrive() {
