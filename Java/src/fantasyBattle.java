@@ -142,6 +142,7 @@ public class fantasyBattle {
             System.out.println("You strike first!");
             while (!monsters.isEmpty()) {
                playerTurn();
+               enemyTurn();
             }
         }
         else {
@@ -149,6 +150,7 @@ public class fantasyBattle {
             System.out.println("Enemy strikes first!");
             while (!monsters.isEmpty()) {
                 enemyTurn();
+                playerTurn();
             }
         }
         // End battle start

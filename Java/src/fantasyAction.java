@@ -24,7 +24,7 @@ public class fantasyAction {
          fantasyJournal.print();
       }
       else if (action.equals("Look")) {
-         System.out.println("You have decide to [" + action + 
+         System.out.println("You decide to [" + action +
             "] around the [" + fantasyPlayer.location + "]. ");
          fantasyLocation.look();
       }
@@ -38,7 +38,7 @@ public class fantasyAction {
 //         fantasyPlayer.stats();
       }
       else if (action.equals("Exit")) {
-         System.out.println("You have decide to " + action + ". ");
+         System.out.println("You have decided to " + action + ". ");
          fantasyRealm.move();
       }
       else if (action.equals("Quit")) {

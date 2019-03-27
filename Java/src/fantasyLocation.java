@@ -25,7 +25,6 @@ public class fantasyLocation {
             "Arcadia", "Crystal Caves", "Decrepid Crypt", "Fishing Village",
             "Nightmare Cathedral", "Northern Camp", "Orc Encampment",
             "Peasant Hamlet", "Royal Gardens", "Windswept Valley"};
-
     static String[] namedTowns = new String[] {
 
         // Dragon Quest
@@ -67,12 +66,30 @@ public class fantasyLocation {
         "Derfland", "Fauregandi", "Gustaberg", "Kolshushu", "Norvallen",
         "Qufim", "Ronfaure", "Sarutabaruta", "Valdeaunia", "Zulkheim",
         "Arrapago Islands", "Halvung Territory", "Mamool Ja Savagelands",
-        "Ruins of Alzadaal", "West Aht Urhgan", "Dynamis"
+        "Ruins of Alzadaal", "West Aht Urhgan", "Dynamis",
+
+        // Shin Megami Tensei: Nocturne
+        "Shinjuku", "Shibuya", "Amala Network", "Labyrinth of Amala",
+        "Ginza", "Great Underpass of Ginza", "Ikebukuro",
+        "Mantra Headquarters", "Assembly of Nihilo", "Kabukicho",
+        "Asakusa", "The Obelisk", "Amala Temple", "Mifunashiro",
+        "Diet Building", "Tower of Kagutsuchi",
+
+        // Shin Megami Tensei: Digital Devil Saga
+        "Ground Zero", "Muladhara", "Svadhisthana", "Manipura", "Anahata",
+        "Coordinate 136", "Deserted Ship", "Embryon Base 2", "Vishuddha",
+        "Ajna", "Karma Temple", "Samsara Tunnels",
+
+        // Shin Megami Tensei: Digital Devil Saga 2
+        "Underground City", "Internment Facility", "Karma Society Tower",
+        "EGG Installation", "Power Plant", "Airport", "HAARP Facility", "Sun"
     };
 
 
     static String[] ores = new String[] {
-            "Adamantyte", "Copper", "Gold", "Iron", "Mithril",
+            "Adamantyte", "Bauxite", "Chromium", "Copper", "Diamond", "Gold",
+            "Iron", "Lead", "Manganese", "Mithril", "Nickel", "Platinum",
+            "Silver", "Tin", "Titanium"
     };
 
 
@@ -324,3 +341,5 @@ public class fantasyLocation {
 //*****************************************************************************
 
 }  // End fantasyLocation
+
+class location {}
