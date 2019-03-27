@@ -2,34 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="941953e1-d85d-4594-9f0f-a0a326116311" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/slnx.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/fantasyRealm_jar/fantasyRealm.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/fantasyRealm_jar/fantasyRealm.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyAbility.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyAbility.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyBattle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyBattle.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyLocation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyLocation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyBattle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyBattle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyRealm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fantasyRealm/fantasyRealm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/fantasyRealm/location.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fantasyRealm/location.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyAbility.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyJournal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyLocation.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fantasyLocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyLocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyMonster.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fantasyMonster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyMonster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/.vs/fantasyRealm/v15/.suo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/SDL2.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/arial10x10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/fantasyRealm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/fantasyRealm.pyproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/fantasyRealm.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/firstrl.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/libtcod.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/libtcodgui.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/libtcodpy/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Python/fantasyRealm/libtcodpy/cprotos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyMap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyNPC.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyNames.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyParty.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyPlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyRealm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyRealm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fantasyRealm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyRoles.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasySave.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fantasyWeapons.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -77,23 +69,23 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="423" />
+          <entry key="java" value="572" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="423" />
+          <entry key="JAVA" value="572" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="12" />
+          <entry key="java" value="15" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="12" />
+          <entry key="JAVA" value="15" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -110,11 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/fantasyPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="61" column="23" lean-forward="true" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
+            <state relative-caret-position="509">
+              <caret line="57" column="60" lean-forward="true" selection-start-line="57" selection-start-column="60" selection-end-line="57" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -122,17 +114,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fantasyMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2720">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="170">
+              <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/fantasyRealm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="19" column="54" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fantasyLocation.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="176" column="25" selection-start-line="176" selection-start-column="19" selection-end-line="176" selection-end-column="25" />
+              <caret line="18" column="45" lean-forward="true" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/fantasyAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="93" column="4" lean-forward="true" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -161,7 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/fantasyPlayer.java" />
         <option value="$PROJECT_DIR$/src/fantasyBattle.java" />
         <option value="$PROJECT_DIR$/src/Battle/fantasyBattle.java" />
         <option value="$PROJECT_DIR$/src/World/fantasyLocation.java" />
@@ -170,9 +179,10 @@
         <option value="$PROJECT_DIR$/src/fantasyAbility.java" />
         <option value="$PROJECT_DIR$/src/fantasyAction.java" />
         <option value="$PROJECT_DIR$/src/fantasySave.java" />
-        <option value="$PROJECT_DIR$/src/fantasyRealm.java" />
         <option value="$PROJECT_DIR$/src/fantasyStory.java" />
         <option value="$PROJECT_DIR$/src/fantasyLocation.java" />
+        <option value="$PROJECT_DIR$/src/fantasyRealm.java" />
+        <option value="$PROJECT_DIR$/src/fantasyPlayer.java" />
       </list>
     </option>
   </component>
@@ -209,7 +219,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553727161172" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553727849173" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -270,11 +280,11 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32939914" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39914164" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32939914" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32939914" />
@@ -290,6 +300,18 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/fantasyRealm.java</url>
+          <line>27</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/fantasySave_File_01.txt">
@@ -340,20 +362,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fantasyAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="93" column="4" lean-forward="true" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fantasyRealm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fantasyNames.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="481">
@@ -368,6 +376,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/fantasyLocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="18" column="45" lean-forward="true" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/fantasyStory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -375,26 +390,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fantasyPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="61" column="23" lean-forward="true" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fantasyMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2720">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        <state relative-caret-position="170">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fantasyLocation.java">
+    <entry file="file://$PROJECT_DIR$/src/fantasyAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="176" column="25" selection-start-line="176" selection-start-column="19" selection-end-line="176" selection-end-column="25" />
+        <state relative-caret-position="323">
+          <caret line="93" column="4" lean-forward="true" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/fantasyRealm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="54" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fantasyPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="57" column="60" lean-forward="true" selection-start-line="57" selection-start-column="60" selection-end-line="57" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>fantasyRealm:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>fantasyRealm</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

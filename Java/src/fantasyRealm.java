@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ public class fantasyRealm {
    static fantasyAction action     = new fantasyAction();
    static fantasyJournal journal   = new fantasyJournal();
    static fantasyLocation location = new fantasyLocation();
+   // static ArrayList<fantasyLocation> locations = new ArrayList<fantasyLocation>();
    static fantasyParty party       = new fantasyParty();
    static fantasyPlayer player     = new fantasyPlayer();
    //    static fantasySave save         = new fantasySave();

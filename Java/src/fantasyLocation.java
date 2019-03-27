@@ -10,21 +10,21 @@ public class fantasyLocation {
     static Scanner scan = new Scanner(System.in);
 
     static String[] caves = new String[] {
-            "Deepest", "Dark", "Deep", "Deeper", "Darker", "Darkest", "Mysterious",
-            "Luminous", "Skull", "Faerie", "Troll", "Goblin", "Bandit", "Mercenary",
-            "Demon's", "Dwarven", "Beast's"};
+        "Deepest", "Dark", "Deep", "Deeper", "Darker", "Darkest", "Mysterious",
+        "Luminous", "Skull", "Faerie", "Troll", "Goblin", "Bandit", "Mercenary",
+        "Demon's", "Dwarven", "Beast's"};
     static String[] cave = new String[] {
-            "Underground Waterway", "Antlion's Den", "Manscorpion's Den",
-            "Master's Ichor Chamber", "Underworld"};
+        "Underground Waterway", "Antlion's Den", "Manscorpion's Den",
+        "Master's Ichor Chamber", "Underworld"};
     static String[] elements = new String[] {
-            "Air","Earth", "Fire", "Water"};
+        "Air","Earth", "Fire", "Water"};
     static String[] farms = new String[] {
-            "Blueberry", "Raspberry", "Beetroot", "Wheat", "Carrot", "Potato",
-            "Cranberry"};
+        "Blueberry", "Raspberry", "Beetroot", "Wheat", "Carrot", "Potato",
+        "Cranberry"};
     static String[] myLocations = new String[] {
-            "Arcadia", "Crystal Caves", "Decrepid Crypt", "Fishing Village",
-            "Nightmare Cathedral", "Northern Camp", "Orc Encampment",
-            "Peasant Hamlet", "Royal Gardens", "Windswept Valley"};
+        "Arcadia", "Crystal Caves", "Decrepid Crypt", "Fishing Village",
+        "Nightmare Cathedral", "Northern Camp", "Orc Encampment",
+        "Peasant Hamlet", "Royal Gardens", "Windswept Valley"};
     static String[] namedTowns = new String[] {
 
         // Dragon Quest
