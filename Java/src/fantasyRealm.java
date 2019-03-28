@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,11 +16,27 @@ public class fantasyRealm {
    static fantasyAction action     = new fantasyAction();
    static fantasyJournal journal   = new fantasyJournal();
    static fantasyLocation location = new fantasyLocation();
-   // static ArrayList<fantasyLocation> locations = new ArrayList<fantasyLocation>();
-   static fantasyParty party       = new fantasyParty();
    static fantasyPlayer player     = new fantasyPlayer();
-   //    static fantasySave save         = new fantasySave();
-   
+   // static ArrayList<fantasyLocation> locations = new ArrayList<fantasyLocation>();
+
+   static fantasyParty party;
+   static {
+      try {
+         party = new fantasyParty();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
+   static fantasySave save;
+   static {
+      try {
+         save = new fantasySave();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
    public static void main (String[] args) {
                   
 //*****************************************************************************
@@ -58,7 +75,7 @@ public class fantasyRealm {
    
    public static void save(fantasySave save) {
 //       fantasySave save         = new fantasySave();
-      save.system();
+      save.save();
    }
 
 //*****************************************************************************

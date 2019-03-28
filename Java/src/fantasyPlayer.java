@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ public class fantasyPlayer {
     public String name;
     public String role;
     public String weapon;
+    public int level;
     // Add helm, legs, gloves, chestpiece, 3 ring slots, other jewelery
 
 //    public static int[] stat_levels;
@@ -50,7 +52,7 @@ public class fantasyPlayer {
 
 //*****************************************************************************
 
-   public void start() {
+   public void start() throws IOException {
       System.out.println("Welcome to the fantasy realm. ");
       set();
       System.out.println("Welcome, [" + name + "] the [" + role + "]. ");
@@ -64,11 +66,14 @@ public class fantasyPlayer {
 
 //*****************************************************************************
    
-   private void set() {
+   private void set() throws IOException {
       name      = setName();
       role      = setRole();
       weapon    = setWeapon();
       ability   = setAbility();
+      level = 1;
+      fantasyRealm.save.saveSystemFile(level, name, role);
+      fantasyRealm.save.readSystemFile();
       setLocation();
 //       System.out.print("Please enter a number: ");
    }   // End set

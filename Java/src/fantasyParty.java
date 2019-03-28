@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class fantasyParty {
@@ -6,7 +7,7 @@ public class fantasyParty {
 
 //*****************************************************************************
 
-    public fantasyParty() {
+    public fantasyParty() throws IOException {
         party = new ArrayList<>(0);
         party.add(new fantasyPlayer());
         party.get(0).start();
