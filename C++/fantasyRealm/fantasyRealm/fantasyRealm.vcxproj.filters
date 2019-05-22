@@ -29,5 +29,11 @@
     <ClCompile Include="fantasy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="realm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="place.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

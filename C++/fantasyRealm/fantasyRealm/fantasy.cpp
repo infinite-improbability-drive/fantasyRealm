@@ -50,7 +50,7 @@ Last Updated: 24/06/2017
 using namespace std;
 
 #include "olcConsoleGameEngine.h"
-// #include "realm.cpp"
+#include "realm.cpp"
 #include <Windows.h>
 
 wstring userrole;
@@ -71,7 +71,7 @@ private:
 		int y;
 		wstring name = start();
 		wstring role = userrole;
-		// realm here = realm();
+		realm here = realm();
 	};
 	player player;
 
@@ -87,25 +87,30 @@ protected:
 		// clear screen
 		Fill(0, 0, ScreenWidth(), ScreenHeight(), L' ');
 
-		if (m_keys[VK_LEFT].bPressed)
+		if (m_keys[0x25].bPressed)
 			player.x -= 1;
-		if (m_keys[VK_RIGHT].bPressed)
-			player.x += 1;
-		if (m_keys[VK_DOWN].bPressed)
-			player.y += 1;
-		if (m_keys[VK_UP].bPressed)
+		if (m_keys[0x26].bPressed)
 			player.y -= 1;
+		if (m_keys[0x27].bPressed)
+			player.x += 1;
+		if (m_keys[0x28].bPressed)
+			player.y += 1;
 
 		// draw header
 		DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
-		// DrawStringAlpha(2, 1, player.here.name, 0x000F);
+		DrawStringAlpha(2, 1, player.here.name, 0x000F);
 		wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 		DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
-		DrawLine(0, 2, ScreenWidth(), 2, 0x003D, FG_WHITE);
+
+		if (player.x == player.here.here.x && player.y == player.here.here.y) {
+			DrawStringAlpha(2, 2, L"You have arrived at " + player.here.here.name, 0x000F);
+		}
+
+		DrawLine(0, 3, ScreenWidth(), 3, 0x003D, FG_WHITE);
 
 		// draw realm
-		// for (place place : player.here.places) {
-		// 	Draw(place.x, place.y, place.name[0], FG_WHITE);
+		// for (place place : player.here.here) {
+			Draw(player.here.here.x, player.here.here.y, player.here.here.name[0], FG_WHITE);
 		// }
 
 		// draw string
@@ -122,7 +127,7 @@ protected:
 int main() {
 
 	// set character set to Unicode-16
-	_setmode(_fileno(stdout), _O_U16TEXT);
+	// _setmode(_fileno(stdout), _O_U16TEXT);
 
 	// username = start();
 
