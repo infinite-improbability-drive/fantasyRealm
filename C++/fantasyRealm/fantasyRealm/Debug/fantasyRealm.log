@@ -1,3 +1,2 @@
-﻿  fantasyRealm.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasyrealm.cpp(186): warning C4244: '=': conversion from 'wchar_t' to 'char', possible loss of data
+﻿  realm.cpp
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe
