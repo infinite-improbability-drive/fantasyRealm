@@ -55,9 +55,8 @@ using namespace std;
 
 wstring userrole;
 
-wstring start();
+
 wstring input();
-std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 
 class fantasy : public olcConsoleGameEngine {
 public:
@@ -89,6 +88,9 @@ protected:
 		// clear screen
 		Fill(0, 0, ScreenWidth(), ScreenHeight(), L' ');
 
+// -------- LOGIC --------
+
+		// move player
 		if (m_keys[0x25].bPressed)
 			player.x -= 1;
 		if (m_keys[0x26].bPressed)
@@ -98,20 +100,28 @@ protected:
 		if (m_keys[0x28].bPressed)
 			player.y += 1;
 
-		// draw header
+// -------- HEADER --------
+
 		// top border
 		DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
+
 		// realm name
 		DrawStringAlpha(2, 1, here.name, 0x000F);
+
 		// player title
 		wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 		DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
+		// player position
 
+		// collision detection
 		if (player.x == here.there.x && player.y == here.there.y) {
 			DrawStringAlpha(2, 2, L"You have arrived at " + here.there.name, 0x000F);
 		}
 
+		// bottom border
 		DrawLine(0, 3, ScreenWidth(), 3, 0x003D, FG_WHITE);
+
+// -------- GAME WORLD --------
 
 		// draw realm
 		// for (place place : player.here.here) {
@@ -181,8 +191,8 @@ void fantasy::start() {
 
 wstring input() {
 	string out;
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 	getline(cin, out);
-	// wstring wname = converter.from_bytes(out);
-	// std::string narrow = converter.to_bytes(wide_utf16_source_string);
 	return converter.from_bytes(out);
+	// std::string narrow = converter.to_bytes(wide_utf16_source_string);
 }
