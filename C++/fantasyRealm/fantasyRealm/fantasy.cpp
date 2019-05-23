@@ -79,7 +79,6 @@ protected:
 	virtual bool OnUserCreate() {
 		// seed random number generator
 		srand(clock());
-
 		return true;
 	}
 
@@ -112,10 +111,16 @@ protected:
 		wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 		DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
 		// player position
+		DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(player.y), 0x000F);
+		DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
 
 		// collision detection
-		if (player.x == here.there.x && player.y == here.there.y) {
-			DrawStringAlpha(2, 2, L"You have arrived at " + here.there.name, 0x000F);
+		int i = 0;
+		for (place place : here.places) {
+			if (player.x == here.places[i].x && player.y == here.places[i].y) {
+				DrawStringAlpha(2, 2, L"You have arrived at " + here.places[i].name, 0x000F);
+			}
+			i = i + 1;
 		}
 
 		// bottom border
@@ -125,11 +130,17 @@ protected:
 
 		// draw realm
 		// for (place place : player.here.here) {
-		Draw((ScreenWidth() / 2) + here.there.x - player.x, (ScreenHeight() / 2) + here.there.y - player.y, here.there.name[0], FG_WHITE);
+		i = 0;
+		for (place place : here.places) {
+			if (player.x == here.places[i].x && player.y == here.places[i].y) {
+				Draw((int)(ScreenWidth() / 2) + here.places[i].x - player.x, (int)(ScreenHeight() / 2) + here.places[i].y - player.y, here.places[i].name[0], FG_WHITE);
+			}
+			i = i + 1;
+		}
 		// }
 
 		// draw string
-		DrawStringAlpha((ScreenWidth() / 2) + 15 - player.x, (ScreenHeight() / 2) + 22 - player.y, L"Hi how are you", 0x000F);
+		// DrawStringAlpha((int) (ScreenWidth() / 2) + 15 - player.x, (int) (ScreenHeight() / 2) + 22 - player.y, L"Hi how are you", 0x000F);
 
 		// draw player
 		Draw(ScreenWidth() / 2, ScreenHeight() / 2, player.name[0], FG_WHITE);

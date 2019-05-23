@@ -6,7 +6,7 @@ using namespace std;
 class place {
 public: 
 	wstring name = L"Taos";
-	int x = 12;
-	int y = 12;
+	int x = rand() % 200 - 100;
+	int y = rand() % 200 - 100;
 };
 
