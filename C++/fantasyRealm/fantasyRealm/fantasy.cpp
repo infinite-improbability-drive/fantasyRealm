@@ -132,9 +132,9 @@ protected:
 		// for (place place : player.here.here) {
 		i = 0;
 		for (place place : here.places) {
-			if (player.x == here.places[i].x && player.y == here.places[i].y) {
+			// if (player.x == here.places[i].x && player.y == here.places[i].y) {
 				Draw((int)(ScreenWidth() / 2) + here.places[i].x - player.x, (int)(ScreenHeight() / 2) + here.places[i].y - player.y, here.places[i].name[0], FG_WHITE);
-			}
+			// }
 			i = i + 1;
 		}
 		// }
