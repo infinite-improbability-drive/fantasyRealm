@@ -70,10 +70,10 @@ private:
 		int x;
 		int y;
 		wstring name = start();
-		wstring role = userrole;
-		realm here = realm();
+		wstring role;
 	};
 	player player;
+	realm here = realm();
 
 protected:
 	virtual bool OnUserCreate() {
@@ -98,26 +98,26 @@ protected:
 
 		// draw header
 		DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
-		DrawStringAlpha(2, 1, player.here.name, 0x000F);
+		DrawStringAlpha(2, 1, here.name, 0x000F);
 		wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 		DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
 
-		if (player.x == player.here.here.x && player.y == player.here.here.y) {
-			DrawStringAlpha(2, 2, L"You have arrived at " + player.here.here.name, 0x000F);
+		if (player.x == here.there.x && player.y == here.there.y) {
+			DrawStringAlpha(2, 2, L"You have arrived at " + here.there.name, 0x000F);
 		}
 
 		DrawLine(0, 3, ScreenWidth(), 3, 0x003D, FG_WHITE);
 
 		// draw realm
 		// for (place place : player.here.here) {
-			Draw(player.here.here.x, player.here.here.y, player.here.here.name[0], FG_WHITE);
+		Draw((ScreenWidth() / 2) + here.there.x - player.x, (ScreenHeight() / 2) + here.there.y - player.y, here.there.name[0], FG_WHITE);
 		// }
 
 		// draw string
-		DrawStringAlpha(30, 30, L"Hi how are you", 0x000F);
+		DrawStringAlpha((ScreenWidth() / 2) + 15 - player.x, (ScreenHeight() / 2) + 22 - player.y, L"Hi how are you", 0x000F);
 
 		// draw player
-		Draw(player.x, player.y, player.name[0], FG_WHITE);
+		Draw(ScreenWidth() / 2, ScreenHeight() / 2, player.name[0], FG_WHITE);
 
 		return true;
 	}
