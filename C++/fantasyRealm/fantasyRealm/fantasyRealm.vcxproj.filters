@@ -35,5 +35,8 @@
     <ClCompile Include="place.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="name.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
