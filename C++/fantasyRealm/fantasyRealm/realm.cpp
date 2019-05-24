@@ -11,4 +11,4 @@ public:
 	place places[80];
 };
 
-// wstring getName() { return L"Piss Palace"; }
+// wstring getName() { return L"Sanctuary Circle"; }

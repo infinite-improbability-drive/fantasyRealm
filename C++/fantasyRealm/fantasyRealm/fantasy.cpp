@@ -109,7 +109,14 @@ protected:
 
 		if (m_keys[69].bPressed) {
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
-				// Element in vector.
+				int j = 0;
+				for (place place : here.places) {
+					if (player.x == here.places[j].x && player.y == here.places[j].y) {
+						realm location = realm();
+						here = location;
+					}
+					j = j + 1;
+				}
 			}
 			else {
 				player.actions.push_back(L"Enter");
@@ -143,14 +150,11 @@ protected:
 
 		// commands
 		i = 0;
-		for (place place : here.places) {
-			if (player.x == here.places[i].x && player.y == here.places[i].y) {
-				for (wstring action : player.actions) {
-					DrawStringAlpha(2, 4, action, 0x000F);
-				}
-			}
-			i = i + 1;
+		for (wstring action : player.actions) {
+			DrawStringAlpha(2, 4, action, 0x000F);
 		}
+		i = i + 1;
+
 
 
 		// bottom border
