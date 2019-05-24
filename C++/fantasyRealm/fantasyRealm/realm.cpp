@@ -8,7 +8,7 @@ using namespace std;
 class realm {
 public:
 	wstring name = L"Midgard";
-	place places[20];
+	place places[80];
 };
 
 // wstring getName() { return L"Piss Palace"; }
