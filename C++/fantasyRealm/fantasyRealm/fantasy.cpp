@@ -46,6 +46,7 @@ Last Updated: 24/06/2017
 #include <locale>
 #include <codecvt>
 #include <wchar.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -71,6 +72,7 @@ private:
 		int y;
 		wstring name;
 		wstring role;
+		vector<wstring> actions;
 	};
 	player player;
 	realm here = realm();
@@ -99,6 +101,22 @@ protected:
 		if (m_keys[0x28].bPressed)
 			player.y += 1;
 
+		for (int i = 0; i < 256; i++) {
+			if (m_keys[i].bHeld) {
+				DrawStringAlpha(2, 3, L"You are pressing " + to_wstring(i), 0x000F);
+			}
+		}
+
+		if (m_keys[69].bPressed) {
+			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
+				// Element in vector.
+			}
+			else {
+				player.actions.push_back(L"Enter");
+			}
+		}
+
+
 // -------- HEADER --------
 
 		// top border
@@ -111,7 +129,7 @@ protected:
 		wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 		DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
 		// player position
-		DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(player.y), 0x000F);
+		DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(-player.y), 0x000F);
 		DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
 
 		// collision detection
@@ -123,8 +141,20 @@ protected:
 			i = i + 1;
 		}
 
+		// commands
+		i = 0;
+		for (place place : here.places) {
+			if (player.x == here.places[i].x && player.y == here.places[i].y) {
+				for (wstring action : player.actions) {
+					DrawStringAlpha(2, 4, action, 0x000F);
+				}
+			}
+			i = i + 1;
+		}
+
+
 		// bottom border
-		DrawLine(0, 3, ScreenWidth(), 3, 0x003D, FG_WHITE);
+		DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
 
 // -------- GAME WORLD --------
 

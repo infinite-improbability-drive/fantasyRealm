@@ -156,6 +156,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="fantasy.cpp" />
     <ClCompile Include="name.cpp" />
     <ClCompile Include="pch.cpp">
