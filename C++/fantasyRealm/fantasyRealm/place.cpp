@@ -9,6 +9,7 @@ static wstring getName();
 class place {
 public: 
 	wstring name = getName();
+	wstring type = L"place";
 	int x = rand() % 200 - 100;
 	int y = rand() % 200 - 100;
 };

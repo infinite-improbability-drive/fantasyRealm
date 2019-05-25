@@ -140,22 +140,16 @@ protected:
 		DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
 
 		// collision detection
-		int i = 0;
 		for (place place : here.places) {
-			if (player.x == here.places[i].x && player.y == here.places[i].y) {
-				DrawStringAlpha(2, 2, L"You have arrived at " + here.places[i].name, 0x000F);
+			if (player.x == place.x && player.y == place.y) {
+				DrawStringAlpha(2, 2, L"You have arrived at " + place.name + L" type = " + place.type, 0x000F);
 			}
-			i = i + 1;
 		}
 
 		// commands
-		i = 0;
 		for (wstring action : player.actions) {
 			DrawStringAlpha(2, 4, action, 0x000F);
 		}
-		i = i + 1;
-
-
 
 		// bottom border
 		DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
@@ -164,12 +158,10 @@ protected:
 
 		// draw realm
 		// for (place place : player.here.here) {
-		i = 0;
 		for (place place : here.places) {
-			// if (player.x == here.places[i].x && player.y == here.places[i].y) {
-				Draw((int)(ScreenWidth() / 2) + here.places[i].x - player.x, (int)(ScreenHeight() / 2) + here.places[i].y - player.y, here.places[i].name[0], FG_WHITE);
-			// }
-			i = i + 1;
+			if (((int)(ScreenHeight() / 2) + place.y - player.y) > 5) {
+				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + place.y - player.y, place.name[0], FG_WHITE);
+			}
 		}
 		// }
 
