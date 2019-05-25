@@ -109,13 +109,12 @@ protected:
 
 		if (m_keys[69].bPressed) {
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
-				int j = 0;
 				for (place place : here.places) {
-					if (player.x == here.places[j].x && player.y == here.places[j].y) {
+					if (player.x == place.x && player.y == place.y) {
 						realm location = realm();
+						location.name = place.name;
 						here = location;
 					}
-					j = j + 1;
 				}
 			}
 			else {
