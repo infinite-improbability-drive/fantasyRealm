@@ -61,12 +61,16 @@ wstring userrole;
 
 wstring input();
 
+
 class fantasy : public olcConsoleGameEngine {
 public:
 	fantasy() {
 		m_sAppName = L"fantasy realm";
 	}
 	void start();
+	void drawHeader();
+	void drawMenu();
+	void drawQuit();
 
 private:
 	struct player {
@@ -184,88 +188,29 @@ protected:
 
 // -------- HEADER --------
 
-		// top border
-		DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
-
-		// realm name
-		DrawStringAlpha(2, 1, here.name, 0x000F);
-
-		// player title
-		wstring title = L"" + player.name + L" the Lv 1 " + player.role;
-		DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
-		// player position
-		DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(-player.y), 0x000F);
-		DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
-
-		// collision detection
-		for (place place : here.places) {
-			if (player.x == place.x && player.y == place.y) {
-				DrawStringAlpha(2, 2, L"You have arrived at " + place.name + L" type = " + place.type, 0x000F);
-			}
-		}
-
-		// commands
-		int i = 2;
-		for (wstring action : player.actions) {
-			DrawStringAlpha(i, 4, action, 0x000F);
-			i = i + action.length() + 2;
-		}
-
-		// bottom border
-		DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
+		drawHeader();
 
 // -------- GAME WORLD --------
 
 		// draw realm
-		// for (place place : player.here.here) {
 		for (place place : here.places) {
 			if (((int)(ScreenHeight() / 2) + place.y - player.y) > 5) {
 				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + place.y - player.y, place.name[0], FG_WHITE);
 			}
 		}
-		// }
 
-		// draw string
-		// DrawStringAlpha((int) (ScreenWidth() / 2) + 15 - player.x, (int) (ScreenHeight() / 2) + 22 - player.y, L"Hi how are you", 0x000F);
 
 		// draw player
 		Draw(ScreenWidth() / 2, ScreenHeight() / 2, player.name[0], FG_WHITE);
 
 		// draw menu
 		if (current == menu) {
-			int margin = 10;
-
-			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left		'|'
-			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top		'-'
-			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right	'|'
-			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom	'-'
-
-			// title
-			DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
-
-			// menu commands
-			i = player.menu_actions[0].length();
-			for (wstring action : player.menu_actions) {
-				DrawStringAlpha(margin + 3 + i, margin + 3, action, 0x000F);
-				i = i + action.length() + 2;
-			}
+			drawMenu();
 		}
 
 		// draw quit
 		if (current == quit) {
-			int margin = 25;
-
-			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
-			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
-			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
-			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
-
-			// title
-			DrawStringAlpha(margin + 3, margin + 1 - 10, L"Quit?", 0x000F);
-
-			// message
-			DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
-			DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
+			drawQuit();
 		}
 
 		return true;
@@ -329,4 +274,71 @@ wstring input() {
 	getline(cin, out);
 	return converter.from_bytes(out);
 	// std::string narrow = converter.to_bytes(wide_utf16_source_string);
+}
+
+void fantasy::drawHeader() {
+	// top border
+	DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
+
+	// realm name
+	DrawStringAlpha(2, 1, here.name, 0x000F);
+
+	// player title
+	wstring title = L"" + player.name + L" the Lv 1 " + player.role;
+	DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
+	// player position
+	DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(-player.y), 0x000F);
+	DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
+
+	// collision detection
+	for (place place : here.places) {
+		if (player.x == place.x && player.y == place.y) {
+			DrawStringAlpha(2, 2, L"You have arrived at " + place.name + L" type = " + place.type, 0x000F);
+		}
+	}
+
+	// commands
+	int i = 2;
+	for (wstring action : player.actions) {
+		DrawStringAlpha(i, 4, action, 0x000F);
+		i = i + action.length() + 2;
+	}
+
+	// bottom border
+	DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
+}
+
+void fantasy::drawMenu() {
+	int margin = 10;
+
+	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left		'|'
+	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top		'-'
+	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right	'|'
+	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom	'-'
+
+	// title
+	DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
+
+	// menu commands
+	int i = player.menu_actions[0].length();
+	for (wstring action : player.menu_actions) {
+		DrawStringAlpha(margin + 3 + i, margin + 3, action, 0x000F);
+		i = i + action.length() + 2;
+	}
+}
+
+void fantasy::drawQuit() {
+	int margin = 25;
+
+	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
+	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
+	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
+	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
+
+	// title
+	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Quit?", 0x000F);
+
+	// message
+	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
+	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
 }
