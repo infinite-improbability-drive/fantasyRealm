@@ -39,6 +39,7 @@ Last Updated: 24/06/2017
 #include "pch.h"
 #include <algorithm>
 #include <codecvt>
+#include <cstdlib>
 #include <iostream>
 #include <list>
 #include <locale>
@@ -77,12 +78,15 @@ private:
 	};
 	player player;
 	realm here;
+	enum mode {play, pause, menu, quit};
+	mode current;
 
 protected:
 	virtual bool OnUserCreate() {
 		// seed random number generator
 		// int r = rand() % 1000;
-		// srand(clock());
+		mode current = play;
+		srand(clock() + time(nullptr));
 		realm here = realm();
 		return true;
 	}
@@ -94,15 +98,17 @@ protected:
 
 // -------- LOGIC --------
 
-		// move player
-		if (m_keys[0x25].bPressed)
-			player.x -= 1;
-		if (m_keys[0x26].bPressed)
-			player.y -= 1;
-		if (m_keys[0x27].bPressed)
-			player.x += 1;
-		if (m_keys[0x28].bPressed)
-			player.y += 1;
+		if (current == play) {
+			// move player
+			if (m_keys[0x25].bPressed)
+				player.x -= 1;
+			if (m_keys[0x26].bPressed)
+				player.y -= 1;
+			if (m_keys[0x27].bPressed)
+				player.x += 1;
+			if (m_keys[0x28].bPressed)
+				player.y += 1;
+		}
 
 		for (int i = 0; i < 256; i++) {
 			if (m_keys[i].bHeld) {
@@ -110,7 +116,7 @@ protected:
 			}
 		}
 
-		if (m_keys[69].bPressed) {
+		if (m_keys[13].bPressed) {
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
 				for (place place : here.places) {
 					if (player.x == place.x && player.y == place.y) {
@@ -123,6 +129,28 @@ protected:
 			else {
 				player.actions.push_back(L"Enter");
 			}
+		}		
+		
+		if (m_keys[77].bPressed) {
+			if (std::find(player.actions.begin(), player.actions.end(), L"Menu") != player.actions.end()) {
+				current = menu;
+			}
+			else {
+				player.actions.push_back(L"Menu");
+			}
+		}
+
+		if (m_keys[81].bPressed) {
+			if (std::find(player.actions.begin(), player.actions.end(), L"Quit") != player.actions.end()) {
+				current = quit;
+			}
+			else {
+				player.actions.push_back(L"Quit");
+			}
+		}
+
+		if (m_keys[89].bPressed && current == quit) {
+			exit(0);
 		}
 
 
@@ -149,8 +177,10 @@ protected:
 		}
 
 		// commands
+		int i = 2;
 		for (wstring action : player.actions) {
-			DrawStringAlpha(2, 4, action, 0x000F);
+			DrawStringAlpha(i, 4, action, 0x000F);
+			i = i + 6;
 		}
 
 		// bottom border
@@ -172,6 +202,49 @@ protected:
 
 		// draw player
 		Draw(ScreenWidth() / 2, ScreenHeight() / 2, player.name[0], FG_WHITE);
+
+		// draw menu
+		if (current == menu) {
+			int margin = 10;
+
+			// left border
+			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);
+
+			// top border
+			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);
+
+			// right border
+			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);
+
+			// bottom border
+			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);
+
+			// title
+			DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
+		}
+
+		// draw menu
+		if (current == quit) {
+			int margin = 25;
+
+			// left border
+			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);
+
+			// top border
+			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);
+
+			// right border
+			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);
+
+			// bottom border
+			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);
+
+			// title
+			DrawStringAlpha(margin + 3, margin + 1 - 10, L"Quit?", 0x000F);
+
+			// title
+			DrawStringAlpha(margin + 3, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
+		}
 
 		return true;
 	}
