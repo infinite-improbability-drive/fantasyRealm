@@ -93,7 +93,7 @@ protected:
 		// int r = rand() % 1000;
 		mode current = play;
 		srand(clock() + time(nullptr));
-		realm here = realm();
+		realm here = realm(L"", L"realm");
 		return true;
 	}
 
@@ -128,8 +128,8 @@ protected:
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
 				for (place place : here.places) {
 					if (player.x == place.x && player.y == place.y) {
-						realm location = realm();
-						location.name = place.name;
+						realm location = realm(place.name, place.type);
+						// location.name = place.name;
 						here = location;
 					}
 				}
@@ -281,7 +281,7 @@ void fantasy::drawHeader() {
 	DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
 
 	// realm name
-	DrawStringAlpha(2, 1, here.name, 0x000F);
+	DrawStringAlpha(2, 1, here.name + L" type = " + here.type, 0x000F);
 
 	// player title
 	wstring title = L"" + player.name + L" the Lv 1 " + player.role;
