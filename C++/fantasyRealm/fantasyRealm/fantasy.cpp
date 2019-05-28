@@ -75,10 +75,12 @@ private:
 		wstring name;
 		wstring role;
 		vector<wstring> actions;
+		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
 	};
 	player player;
 	realm here;
 	enum mode {play, pause, menu, quit};
+	enum menu {status, items, equipment};
 	mode current;
 
 protected:
@@ -110,12 +112,14 @@ protected:
 				player.y += 1;
 		}
 
+		// print current key
 		for (int i = 0; i < 256; i++) {
 			if (m_keys[i].bHeld) {
 				DrawStringAlpha(2, 3, L"You are pressing " + to_wstring(i), 0x000F);
 			}
 		}
 
+		// [ENTER] enter location
 		if (m_keys[13].bPressed) {
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
 				for (place place : here.places) {
@@ -131,6 +135,7 @@ protected:
 			}
 		}		
 		
+		// [M] menu
 		if (m_keys[77].bPressed) {
 			if (std::find(player.actions.begin(), player.actions.end(), L"Menu") != player.actions.end()) {
 				current = menu;
@@ -139,7 +144,25 @@ protected:
 				player.actions.push_back(L"Menu");
 			}
 		}
+			// [S] status
+			if (m_keys[83].bPressed && current == menu) {
+				current = play;
+			}
+			// [I] items
+			if (m_keys[73].bPressed && current == menu) {
+				current = play;
+			}
+			// [Q] equipment
+			if (m_keys[81].bPressed && current == menu) {
+				current = play;
+			}
+			// [E] return to game
+			if (m_keys[69].bPressed && current == menu) {
+				current = play;
+			}
 
+
+		// [Q] quit
 		if (m_keys[81].bPressed) {
 			if (std::find(player.actions.begin(), player.actions.end(), L"Quit") != player.actions.end()) {
 				current = quit;
@@ -149,10 +172,15 @@ protected:
 			}
 		}
 
-		if (m_keys[89].bPressed && current == quit) {
-			exit(0);
-		}
+			// [Y] quit game
+			if (m_keys[89].bPressed && current == quit) {
+				exit(0);
+			}
 
+			// [N] return to game
+			if (m_keys[78].bPressed && current == quit) {
+				current = play;
+			}
 
 // -------- HEADER --------
 
@@ -180,7 +208,7 @@ protected:
 		int i = 2;
 		for (wstring action : player.actions) {
 			DrawStringAlpha(i, 4, action, 0x000F);
-			i = i + 6;
+			i = i + action.length() + 2;
 		}
 
 		// bottom border
@@ -207,43 +235,37 @@ protected:
 		if (current == menu) {
 			int margin = 10;
 
-			// left border
-			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);
-
-			// top border
-			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);
-
-			// right border
-			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);
-
-			// bottom border
-			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);
+			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left		'|'
+			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top		'-'
+			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right	'|'
+			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom	'-'
 
 			// title
 			DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
+
+			// menu commands
+			i = player.menu_actions[0].length();
+			for (wstring action : player.menu_actions) {
+				DrawStringAlpha(margin + 3 + i, margin + 3, action, 0x000F);
+				i = i + action.length() + 2;
+			}
 		}
 
-		// draw menu
+		// draw quit
 		if (current == quit) {
 			int margin = 25;
 
-			// left border
-			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);
-
-			// top border
-			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);
-
-			// right border
-			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);
-
-			// bottom border
-			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);
+			DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
+			DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
+			DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
+			DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
 
 			// title
 			DrawStringAlpha(margin + 3, margin + 1 - 10, L"Quit?", 0x000F);
 
-			// title
-			DrawStringAlpha(margin + 3, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
+			// message
+			DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
+			DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
 		}
 
 		return true;
