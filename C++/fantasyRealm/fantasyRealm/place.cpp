@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "name.cpp"
+#include "time.h"
 #include <string>
 
 using namespace std;
@@ -18,8 +19,8 @@ static wstring getName() {
 	name names = name();
 	wstring here;
 
+	srand(clock());
 	int i = rand() % 1000;
-
 
 	if (i == 1000) {}
 
@@ -97,10 +98,6 @@ static wstring getName() {
 		else if ((i < 50) && (i >= 25)) {}
 		else {}
 	}
-
-
-
-
 
 	else { here = L"Unknown location"; }
 

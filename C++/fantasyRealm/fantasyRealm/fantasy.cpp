@@ -37,16 +37,17 @@ Last Updated: 24/06/2017
 */
 
 #include "pch.h"
+#include <algorithm>
+#include <codecvt>
 #include <iostream>
 #include <list>
+#include <locale>
 #include <string>
 #include <thread>
 #include <fcntl.h>
 #include <io.h>
-#include <locale>
-#include <codecvt>
+#include <time.h>
 #include <wchar.h>
-#include <algorithm>
 
 using namespace std;
 
@@ -75,12 +76,14 @@ private:
 		vector<wstring> actions;
 	};
 	player player;
-	realm here = realm();
+	realm here;
 
 protected:
 	virtual bool OnUserCreate() {
 		// seed random number generator
-		srand(clock());
+		// int r = rand() % 1000;
+		// srand(clock());
+		realm here = realm();
 		return true;
 	}
 
