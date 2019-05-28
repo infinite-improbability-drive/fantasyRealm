@@ -7,8 +7,11 @@ using namespace std;
 
 class realm {
 public:
-	wstring name = L"Midgard";
+	wstring name;
 	place places[80];
+	realm() {
+		this->name = L"Midgard";
+	}
 };
 
 // wstring getName() { return L"Sanctuary Circle"; }
