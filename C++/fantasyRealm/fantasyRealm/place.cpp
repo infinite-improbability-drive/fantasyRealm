@@ -13,6 +13,7 @@ class place {
 public: 
 	wstring name;
 	wstring type;
+	bool solid;
 	int x;
 	int y;
 	place() {
@@ -20,6 +21,7 @@ public:
 		int i = rand() % 1000;
 		this->name = getName(i);
 		this->type = getType(i);
+		this->solid = false;
 		this->x = rand() % 200 - 100;
 		this->y = rand() % 200 - 100;
 	}
@@ -28,8 +30,16 @@ public:
 		int i = rand() % 1000;
 		this->name = L"Exit";
 		this->type = type;
+		this->solid = false;
 		this->x = rand() % 20 - 10;
 		this->y = rand() % 20 - 10;
+	}
+	place(wstring name, wstring type, int x, int y, bool solid) {
+		this->name = name;
+		this->type = type;
+		this->solid = solid;
+		this->x = x;
+		this->y = y;
 	}
 };
 

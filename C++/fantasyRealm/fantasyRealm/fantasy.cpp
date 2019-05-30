@@ -89,12 +89,14 @@ private:
 	enum mode {play, pause, menu, quit};
 	enum menu {status, items, equipment};
 	mode current;
+	bool move;
 
 protected:
 	virtual bool OnUserCreate() {
 		// seed random number generator
 		// int r = rand() % 1000;
 		mode current = play;
+		move = true;
 		srand(clock() + time(nullptr));
 		const realm here = realm(player.wits);
 		return true;
@@ -109,14 +111,51 @@ protected:
 
 		if (current == play) {
 			// move player
-			if (m_keys[0x25].bPressed)
-				player.x -= 1;
-			if (m_keys[0x26].bPressed)
-				player.y -= 1;
-			if (m_keys[0x27].bPressed)
-				player.x += 1;
-			if (m_keys[0x28].bPressed)
-				player.y += 1;
+			if (m_keys[0x25].bPressed) {	// left
+				for (place place : here.places) {
+					if ((place.y == player.y) && (place.x + 1 == player.x)) {
+						if (place.solid) {
+							move = false;
+							break;
+						}
+					}
+				}
+				if (move) { player.x -= 1; }
+			}
+			if (m_keys[0x26].bPressed) {	// up
+				for (place place : here.places) {
+					if ((place.x == player.x) && (place.y + 1 == player.y)) {
+						if (place.solid) {
+							move = false;
+							break;
+						}
+					}
+				}
+				if (move) { player.y -= 1; }
+			}
+			if (m_keys[0x27].bPressed) {	// right
+				for (place place : here.places) {
+					if ((place.y == player.y) && (place.x - 1 == player.x)) {
+						if (place.solid) {
+							move = false;
+							break;
+						}
+					}
+				}
+				if (move) { player.x += 1; }
+			}
+			if (m_keys[0x28].bPressed) {	// down
+				for (place place : here.places) {
+					if ((place.x == player.x) && (place.y - 1 == player.y)) {
+						if (place.solid) {
+							move = false;
+							break;
+						}
+					}
+				}
+				if (move) { player.y += 1; }
+			}
+			move = true;
 		}
 
 		// print current key
@@ -318,7 +357,7 @@ void fantasy::drawHeader() {
 	wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 	DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
 	// player position
-	DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(-player.y), 0x000F);
+	DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(player.y), 0x000F);
 	DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
 
 	// collision detection

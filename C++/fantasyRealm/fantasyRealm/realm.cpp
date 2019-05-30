@@ -33,9 +33,16 @@ public:
 			this->name = name;
 			this->type = type;
 			this->parent = parent;
-			places.push_back(place(L"exit"));
 			this->x = x;
 			this->y = y;
+			places.push_back(place(L"exit"));
+			for (int i = 0; i < 60; i++) {
+				for (int j = 0; j < 30; j++) {
+					if (i == 0 || j == 0 || i == 59 || j == 29) {
+						places.push_back(place(L"X", L"X", i, j, true));
+					}
+				}
+			}
 		}
 	}
 };
