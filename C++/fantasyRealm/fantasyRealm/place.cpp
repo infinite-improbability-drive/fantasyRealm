@@ -16,8 +16,8 @@ public:
 	int x;
 	int y;
 	place() {
-		srand(clock());
-		int i = rand() % 1000;
+		srand(clock() + rand() % 10000);
+		int i = rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100;
 		this->name = getName(i);
 		this->type = getType(i);
 		this->x = rand() % 200 - 100;
@@ -77,10 +77,10 @@ static wstring getName(int i) {
 	else if ((i < 400) && (i >= 300)) {
 		if (i >= 383) { here = names.elements[rand() % (sizeof(names.elements) / sizeof(names.elements[0]))] + L" Temple"; }
 		else if ((i < 383) && (i >= 366)) { here = L"Temple of " + names.full[rand() % (sizeof(names.full) / sizeof(names.full[0]))]; }
-		else if ((i < 366) && (i >= 349)) { here = names.elements[rand() % (sizeof(names.elements) / sizeof(names.elements[0]))] + L"'s Sanctuary"; }
-		else if ((i < 349) && (i >= 332)) { here = names.elements[rand() % (sizeof(names.elements) / sizeof(names.elements[0]))] + L"'s Archives"; }
-		else if ((i < 332) && (i >= 315)) { here = names.elements[rand() % (sizeof(names.elements) / sizeof(names.elements[0]))] + L"'s Resting Place"; }
-		else { here = names.elements[rand() % (sizeof(names.elements) / sizeof(names.elements[0]))] + L"'s Tomb"; }
+		else if ((i < 366) && (i >= 349)) { here = names.full[rand() % (sizeof(names.full) / sizeof(names.full[0]))] + L"'s Sanctuary"; }
+		else if ((i < 349) && (i >= 332)) { here = names.full[rand() % (sizeof(names.full) / sizeof(names.full[0]))] + L"'s Archives"; }
+		else if ((i < 332) && (i >= 315)) { here = names.full[rand() % (sizeof(names.full) / sizeof(names.full[0]))] + L"'s Resting Place"; }
+		else { here = names.full[rand() % (sizeof(names.full) / sizeof(names.full[0]))] + L"'s Tomb"; }
 	}
 
 	// castles
