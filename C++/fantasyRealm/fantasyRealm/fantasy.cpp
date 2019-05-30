@@ -210,7 +210,7 @@ protected:
 
 		// draw realm
 		for (place place : here.places) {
-			if (((int)(ScreenHeight() / 2) + place.y - player.y) > 5) {
+			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > 5) {
 				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, place.name[0], FG_WHITE);
 			}
 		}
