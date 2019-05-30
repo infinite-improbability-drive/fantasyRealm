@@ -104,6 +104,49 @@ protected:
 		return true;
 	}
 
+	virtual bool OnUpdate() {
+		if (current == play) {
+			int i = 0;
+			// move monsters
+			for (monster monster : here.monsters) {
+				int randomize = rand() % 1024 + 1;
+				if (randomize == 1) {
+					monster.x += 1;
+				}
+				else if (randomize == 2) {
+					monster.y += 1;
+				}
+				else if (randomize == 3) {
+					monster.x -= 1;
+				}
+				else if (randomize == 4) {
+					monster.y -= 1;
+				}
+				else if (randomize == 5) {
+					monster.x += 1;
+					monster.y += 1;
+				}
+				else if (randomize == 6) {
+					monster.x += 1;
+					monster.y -= 1;
+				}
+				else if (randomize == 7) {
+					monster.y += 1;
+					monster.x -= 1;
+				}
+				else if (randomize == 8) {
+					monster.x -= 1;
+					monster.y -= 1;
+				}
+				else {
+				}
+				here.monsters[i] = monster;
+				i += 1;
+			}
+		}
+		return true;
+	}
+
 	virtual bool OnUserUpdate(float fElapsedTime) {
 
 		// clear screen
@@ -112,6 +155,7 @@ protected:
 // -------- LOGIC --------
 
 		if (current == play) {
+
 			// move player
 			if (m_keys[0x25].bPressed) {	// left
 				for (place place : here.places) {
@@ -122,7 +166,13 @@ protected:
 						}
 					}
 				}
-				if (move) { 
+				for (monster monster : here.monsters) {
+					if ((monster.y == player.y) && (monster.x + 1 == player.x)) {
+						current = battle;
+						break;
+					}
+				}
+				if (move) {
 					player.x -= 1; 
 				}
 			}
@@ -135,7 +185,13 @@ protected:
 						}
 					}
 				}
-				if (move) { 
+				for (monster monster : here.monsters) {
+					if ((monster.x == player.x) && (monster.y + 1 == player.y)) {
+						current = battle;
+						break;
+					}
+				}
+				if (move) {
 					player.y -= 1;
 				}
 			}
@@ -148,7 +204,13 @@ protected:
 						}
 					}
 				}
-				if (move) { 
+				for (monster monster : here.monsters) {
+					if ((monster.y == player.y) && (monster.x - 1 == player.x)) {
+						current = battle;
+						break;
+					}
+				}
+				if (move) {
 					player.x += 1; 
 				}
 			}
@@ -161,7 +223,13 @@ protected:
 						}
 					}
 				}
-				if (move) { 
+				for (monster monster : here.monsters) {
+					if ((monster.x == player.x) && (monster.y - 1 == player.y)) {
+						current = battle;
+						break;
+					}
+				}
+				if (move) {
 					player.y += 1; 
 				}
 			}
@@ -266,6 +334,13 @@ protected:
 		for (place place : here.places) {
 			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > 5) {
 				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, place.name[0], FG_WHITE);
+			}
+		}
+
+		// draw monsters
+		for (monster monster : here.monsters) {
+			if (((int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y) > 5) {
+				Draw((int)(ScreenWidth() / 2) + monster.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon[0], FG_GREEN);
 			}
 		}
 

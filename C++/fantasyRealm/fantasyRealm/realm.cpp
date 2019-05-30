@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "place.cpp"
+#include "monster.cpp"
 #include <string>
 #include <vector>
 
@@ -11,6 +12,7 @@ public:
 	wstring name;
 	wstring type;
 	vector<place> places;
+	vector<monster> monsters;
 	realm* parent;
 	int x;
 	int y;
@@ -20,12 +22,18 @@ public:
 		for (int i = 0; i < 80; i++) {
 			places.push_back(place());
 		}
+		for (int i = 0; i < 240; i++) {
+			monsters.push_back(monster());
+		}
 	}
 	realm(int wits, int brave) {
 		this->name = L"Midgard";
 		this->type = L"realm";
 		for (int i = 0; i < wits * 10 + brave; i++) {
 			places.push_back(place());
+		}
+		for (int i = 0; i < wits * 10 + brave * 30; i++) {
+			monsters.push_back(monster());
 		}
 	}
 	realm(wstring name, wstring type, realm *parent, int x, int y) {
@@ -43,6 +51,10 @@ public:
 					}
 				}
 			}
+			for (int i = 0; i < 240; i++) {
+				monsters.push_back(monster());
+			}
+
 		}
 	}
 };

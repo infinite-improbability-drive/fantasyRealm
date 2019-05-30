@@ -819,6 +819,7 @@ public:
 private:
 	void GameThread()
 	{
+
 		// Create user resources as part of this thread
 		if (!OnUserCreate()) 
 			m_bAtomActive = false;
@@ -841,6 +842,9 @@ private:
 			// Run as fast as possible
 			while (m_bAtomActive)
 			{
+				OnUpdate();
+
+
 				// Handle Timing
 				tp2 = std::chrono::system_clock::now();
 				std::chrono::duration<float> elapsedTime = tp2 - tp1;
@@ -981,6 +985,9 @@ public:
 	// User MUST OVERRIDE THESE!!
 	virtual bool OnUserCreate()							= 0;
 	virtual bool OnUserUpdate(float fElapsedTime)		= 0;	
+	
+	// new function
+	virtual bool OnUpdate() = 0;
 
 	// Optional for clean up 
 	virtual bool OnUserDestroy()						{ return true; }
