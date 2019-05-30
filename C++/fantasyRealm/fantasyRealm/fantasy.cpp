@@ -74,12 +74,14 @@ public:
 
 private:
 	struct player {
-		int x;
-		int y;
 		wstring name;
 		wstring role;
 		vector<wstring> actions;
 		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
+		int wits;
+		int brave;
+		int x;
+		int y;
 	};
 	player player;
 	realm here;
@@ -94,7 +96,7 @@ protected:
 		// int r = rand() % 1000;
 		mode current = play;
 		srand(clock() + time(nullptr));
-		const realm here = realm();
+		const realm here = realm(player.wits);
 		return true;
 	}
 
@@ -133,12 +135,15 @@ protected:
 							player.x = here.x;
 							player.y = here.y;
 							here = r;
+							break;
 						}
 						else {
 							realm location = realm(place.name, place.type, &here, place.x, place.y);
 							r = here;
 							here = location;
 							here.parent = &r;
+							player.x = rand() % 20 - 10;
+							player.y = rand() % 20 - 10;
 							// here = location;
 							break;
 						}
@@ -206,13 +211,15 @@ protected:
 		// draw realm
 		for (place place : here.places) {
 			if (((int)(ScreenHeight() / 2) + place.y - player.y) > 5) {
-				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + place.y - player.y, place.name[0], FG_WHITE);
+				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, place.name[0], FG_WHITE);
 			}
 		}
 
+		// draw map hints
+
 
 		// draw player
-		Draw(ScreenWidth() / 2, ScreenHeight() / 2, player.name[0], FG_WHITE);
+		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player.name[0], FG_WHITE);
 
 		// draw menu
 		if (current == menu) {
@@ -267,6 +274,14 @@ void fantasy::start() {
 	}
 	wprintf(L"\n");
 	player.role = input();
+
+	wprintf(L"You must think you're pretty clever.\n");
+	wprintf(L"Just how clever are you? (1-10):\n");
+	cin >> player.wits;
+
+	wprintf(L"You must be brave to traverse these realms.\n");
+	wprintf(L"How brave do you think you are? (1-10):\n");
+	cin >> player.brave;
 
 	player.x = 10;
 	player.y = 10;

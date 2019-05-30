@@ -1,7 +1,7 @@
 ﻿  pch.cpp
   action.cpp
   fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(96): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(98): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   name.cpp
   place.cpp
   realm.cpp

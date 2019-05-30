@@ -21,6 +21,13 @@ public:
 			places.push_back(place());
 		}
 	}
+	realm(int wits) {
+		this->name = L"Midgard";
+		this->type = L"realm";
+		for (int i = 0; i < wits * 10; i++) {
+			places.push_back(place());
+		}
+	}
 	realm(wstring name, wstring type, realm *parent, int x, int y) {
 		if (type != L"realm") {
 			this->name = name;
