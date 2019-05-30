@@ -23,6 +23,14 @@ public:
 		this->x = rand() % 200 - 100;
 		this->y = rand() % 200 - 100;
 	}
+	place(wstring type) {
+		srand(clock() + rand() % 10000);
+		int i = rand() % 1000;
+		this->name = L"Exit";
+		this->type = type;
+		this->x = rand() % 20 - 10;
+		this->y = rand() % 20 - 10;
+	}
 };
 
 static wstring getName(int i) {

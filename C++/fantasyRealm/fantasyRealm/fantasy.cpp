@@ -129,12 +129,19 @@ protected:
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
 				for (place place : here.places) {
 					if (player.x == place.x && player.y == place.y) {
-						realm location = realm(place.name, place.type, &here);
-						r = here;
-						here = location;
-						here.parent = &r;
-						// here = location;
-						break;
+						if (place.type == L"exit") {
+							player.x = here.x;
+							player.y = here.y;
+							here = r;
+						}
+						else {
+							realm location = realm(place.name, place.type, &here, place.x, place.y);
+							r = here;
+							here = location;
+							here.parent = &r;
+							// here = location;
+							break;
+						}
 					}
 				}
 			}
