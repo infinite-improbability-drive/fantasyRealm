@@ -83,6 +83,7 @@ private:
 	};
 	player player;
 	realm here;
+	realm r;
 	enum mode {play, pause, menu, quit};
 	enum menu {status, items, equipment};
 	mode current;
@@ -93,7 +94,7 @@ protected:
 		// int r = rand() % 1000;
 		mode current = play;
 		srand(clock() + time(nullptr));
-		realm here = realm();
+		const realm here = realm();
 		return true;
 	}
 
@@ -129,8 +130,11 @@ protected:
 				for (place place : here.places) {
 					if (player.x == place.x && player.y == place.y) {
 						realm location = realm(place.name, place.type, &here);
-						// location.name = place.name;
+						r = here;
 						here = location;
+						here.parent = &r;
+						// here = location;
+						break;
 					}
 				}
 			}
@@ -281,7 +285,12 @@ void fantasy::drawHeader() {
 	DrawLine(0, 0, ScreenWidth(), 0, 0x003D, FG_WHITE);
 
 	// realm name
-	DrawStringAlpha(2, 1, here.name + L" type = " + here.type, 0x000F);
+	if (here.parent == nullptr) {
+		DrawStringAlpha(2, 1, here.name + L" type = " + here.type, 0x000F);
+	}
+	else {
+		DrawStringAlpha(2, 1, here.name + L" type = " + here.type + L" parent = " + here.parent->name, 0x000F);
+	}
 
 	// player title
 	wstring title = L"" + player.name + L" the Lv 1 " + player.role;

@@ -1,9 +1,3 @@
-﻿  pch.cpp
-  action.cpp
-  fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(95): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  name.cpp
-  place.cpp
-  realm.cpp
-  Generating Code...
+﻿  fantasy.cpp
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(96): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe

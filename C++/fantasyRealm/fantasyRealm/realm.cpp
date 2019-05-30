@@ -23,7 +23,7 @@ public:
 		if (type != L"realm") {
 			this->name = name;
 			this->type = type;
-			// this->parent = parent;
+			this->parent = parent;
 		}
 	}
 };
