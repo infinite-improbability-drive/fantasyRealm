@@ -11,6 +11,7 @@ public:
 	wstring name;
 	wstring type;
 	vector<place> places;
+	realm* parent;
 	realm() {
 		this->name = L"Midgard";
 		this->type = L"realm";
@@ -18,12 +19,12 @@ public:
 			places.push_back(place());
 		}
 	}
-	realm(wstring name, wstring type) {
+	realm(wstring name, wstring type, realm *parent) {
 		if (type != L"realm") {
 			this->name = name;
 			this->type = type;
+			// this->parent = parent;
 		}
-
 	}
 };
 

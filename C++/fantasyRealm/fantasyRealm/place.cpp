@@ -17,7 +17,7 @@ public:
 	int y;
 	place() {
 		srand(clock() + rand() % 10000);
-		int i = rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100;
+		int i = rand() % 1000;
 		this->name = getName(i);
 		this->type = getType(i);
 		this->x = rand() % 200 - 100;

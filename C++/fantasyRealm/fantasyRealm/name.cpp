@@ -79,17 +79,17 @@ public:
 		// Vietnam 95.54 million
 
 		// Germany - 82.9 million - 9.54% european population
-		L"M�ller", L"Schmidt", L"Schneider", L"Fischer", L"Meyer", L"Weber", L"Schulz",
-		L"Wagner", L"Becker", L"Hoffman", L"Sch�fer", L"Koch", L"Bauer", L"Richter",
-		L"Klein", L"Wolf", L"Schr�der", L"Neumann", L"Schwarz", L"Zimmerman", L"Braun",
-		L"Kr�ger", L"Hofmann", L"Hartmann", L"Lange", L"Schmitt", L"Werner", L"Schmitz",
+		L"M\u00fcller", L"Schmidt", L"Schneider", L"Fischer", L"Meyer", L"Weber", L"Schulz",
+		L"Wagner", L"Becker", L"Hoffman", L"Sch\u00e4fer", L"Koch", L"Bauer", L"Richter",
+		L"Klein", L"Wolf", L"Schr\u00f6der", L"Neumann", L"Schwarz", L"Zimmerman", L"Braun",
+		L"Kr\u00f6ger", L"Hofmann", L"Hartmann", L"Lange", L"Schmitt", L"Werner", L"Schmitz",
 		L"Werner", L"Shmitt", L"Krause", L"Meier", L"Lehmann", L"Schmid", L"Schulze",
-		L"Maier", L"K�hler", L"Hermann", L"K�nig", L"Walter", L"Mayer", L"Huber",
+		L"Maier", L"K\u00f6hler", L"Hermann", L"K\u00f6nig", L"Walter", L"Mayer", L"Huber",
 		L"Kaiser", L"Fuchs", L"Peters", L"Lang", L"Scholz", L"M�ller", L"Weiss", L"Jung",
 		L"Hahn", L"Schubert", L"Vogel", L"Friedrich", L"Keller", L"G�nther", L"Frank",
 		L"Berger", L"Winkler", L"Roth", L"Beck", L"Lorenz", L"Baumann", L"Franke",
-		L"Albrecht", L"Schuster", L"Simon", L"Ludwig", L"B�hm", L"Winter", L"Kraus",
-		L"Martin", L"Schumacher", L"Kr�mer", L"Vogt", L"Stein", L"J�ger", L"Otto",
+		L"Albrecht", L"Schuster", L"Simon", L"Ludwig", L"B\u00f6hm", L"Winter", L"Kraus",
+		L"Martin", L"Schumacher", L"Kr\u00e4mer", L"Vogt", L"Stein", L"J\u00e4ger", L"Otto",
 		L"Sommer", L"Gross", L"Seidel", L"Heinrich", L"Brandt", L"Schreiber", L"Graf",
 		L"Schulte", L"Deitrich", L"Ziegler", L"Kuhn", L"K�hn", L"Pohl", L"Horn",
 		L"Bergmann", L"Thomas", L"Voigt", L"Sauer", L"Arnold", L"Wolff", L"Pfeiffer",
@@ -156,7 +156,7 @@ public:
 	};
 
 	// full names
-	wstring full[216] = {
+	wstring full[346] = {
 
 		// Ancient Names
 		// Sumerian 4500 BC - 2004 BC
@@ -252,6 +252,89 @@ public:
 		L"Tupac Inca Yupanqui", L"Huayna Capac", L"Huascar", L"Atahualpa",
 		L"Topa Huallpa", L"Manco Capac II", L"Sayri Tupac", L"Titu Cusi Yupanqui",
 		L"Tupac Amaru",
+
+		// British Monarchs
+		L"Anne", L"George I", L"George II", L"George III", L"George IV", 
+		L"William IV", L"Victoria", L"Edward VII", L"George V", L"Edward VIII",
+		L"George V", L"Elizabeth II",
+
+		// French Monarchs
+		// https://en.wikipedia.org/wiki/List_of_French_monarchs
+		// Merovingians (486-751)
+		L"Clovis I", L"Childebert I", L"Chlothar I", L"Charibert I", 
+		L"Guntram", L"Chilperic I", L"Sigebert I", L"Childebert II", 
+		L"Chlothar II", L"Dagobert I", L"Sigebert II", L"Clovis II", 
+		L"Chlothar III", L"Childeric II", L"Theuderic III", L"Clovis IV", 
+		L"Childebert III", L"Dagobert III", L"Chilperic II", L"Chlothar IV", 
+		L"Theuderic IV", L"Childeric III",
+
+		// Carolingians, Robertians and Bosonids(751–987)
+		L"Pepin the Short", L"Carloman I", L"Charlemagne", L"Charles I", 
+		L"Louis I", L"Charles II", L"Louis II", L"Louis III", L"Carloman II", 
+		L"Charles the Fat", L"Odo", L"Charles III", L"Robert I", L"Rudolph", 
+		L"Louis IV", L"Lothair", L"Louis V",
+
+		// House of Capet (987–1328)
+		L"Hugh Capet", L"Robert II", L"Henry I", L"Philip I", L"Louis VI", 
+		L"Louis VII", L"Philip II", L"Louis VIII", L"Louis IX", L"Philip III", 
+		L"Philip IV", L"Louis X", L"John I", L"Philip V", L"Charles IV",
+
+		// House of Valois (1328–1589)
+		L"Philip VI", L"John II", L"Charles V", L"Charles VI", L"Charles VII", 
+		L"Louis XI", L"Charles VIII", L"Louis XII", L"Francis I", L"Henry II",
+		L"Francis II", L"Charles IX", L"Henry III",
+
+		// House of Lancaster (1422–1453)
+		L"Henry VI of England",
+
+		// House of Bourbon (1589–1792)
+		L"Henry IV", L"Louis XIII", L"Louis XIV", L"Louis XV", L"Louis XVI", 
+		L"Louis XVII",
+
+		// First Republic (1792–1804)
+
+		// First Empire (1804–1815)
+		L"Napoleon I", L"Napoleon II",
+
+		// Bourbon Restoration (1815–1830)
+		L"Louis XVIII", L"Charles X", L"Louis XIX", L"Henry V",
+
+		// July Monarchy (1830–1848)
+		L"Louis Philippe I",
+
+		// Second Republic (1848–1852)
+		L"Jacques-Charles Dupont de l'Eure", L"Louis-Eugène Cavaignac", 
+		L"Louis-Napoléon Bonaparte",
+
+		// Second Empire (1852–1870)
+		L"Napoleon III",
+
+		// Government of National Defense (1870–1871
+		L"Louis-Jules Trochu",
+
+		// Third Republic (1871–1940
+		L"Adolphe Thiers", L"Patrice de MacMahon", L"Jules Grévy", 
+		L"Sadi Carnot", L"Jean Casimir-Perier", L"Félix Faure",
+		L"Émile Loubet", L"Armand Fallières", L"Raymond Poincaré",
+		L"Paul Deschanel", L"Alexandre Millerand", L"Gaston Doumergue", 
+		L"Paul Doumer", L"Albert Lebrun",
+
+		// Vichy France (1940–1944)
+		L"Philippe Pétain",
+
+		// Provisional Government (1944–1947)
+		L"Charles de Gaulle", L"Félix Gouin", L"Georges Bidault",
+		L"Vincent Auriol", L"Léon Blum",
+
+		// Fourth Republic (1947–1958)
+		L"Vincent Auriol", L"René Coty",
+
+		// Fifth Republic (1958–present)
+		L"Charles de Gaulle", L"Alain Poher", L"Georges Pompidou",
+		L"Alain Poher", L"Valéry Giscard d'Estaing", L"François Mitterrand", 
+		L"Jacques Chirac", L"Nicolas Sarkozy", L"François Hollande", 
+		L"Emmanuel Macron",
+
 
 	};
 

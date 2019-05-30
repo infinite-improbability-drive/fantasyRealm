@@ -93,7 +93,7 @@ protected:
 		// int r = rand() % 1000;
 		mode current = play;
 		srand(clock() + time(nullptr));
-		realm here = realm(L"", L"realm");
+		realm here = realm();
 		return true;
 	}
 
@@ -128,7 +128,7 @@ protected:
 			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
 				for (place place : here.places) {
 					if (player.x == place.x && player.y == place.y) {
-						realm location = realm(place.name, place.type);
+						realm location = realm(place.name, place.type, &here);
 						// location.name = place.name;
 						here = location;
 					}
