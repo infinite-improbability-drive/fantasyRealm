@@ -78,8 +78,8 @@ private:
 		wstring role;
 		vector<wstring> actions;
 		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
-		int wits;
-		int brave;
+		int wits = 0;
+		int brave = 0;
 		int x;
 		int y;
 	};
@@ -90,6 +90,7 @@ private:
 	enum menu {status, items, equipment};
 	mode current;
 	bool move;
+
 
 protected:
 	virtual bool OnUserCreate() {
@@ -317,10 +318,19 @@ void fantasy::start() {
 	wprintf(L"You must think you're pretty clever.\n");
 	wprintf(L"Just how clever are you? (1-10):\n");
 	cin >> player.wits;
+	while (player.wits < 1 || player.wits > 11) {
+		wprintf(L"Try again. \n");
+		wprintf(L"Just how clever are you? (1-10):\n");
+		cin >> player.wits;
+	}
 
 	wprintf(L"You must be brave to traverse these realms.\n");
 	wprintf(L"How brave do you think you are? (1-10):\n");
 	cin >> player.brave;
+	while (player.brave < 1 || player.brave > 11) {
+		wprintf(L"Just how brave are you, really? (1-10):\n");
+		cin >> player.brave;
+	}
 
 	player.x = 10;
 	player.y = 10;
@@ -399,6 +409,8 @@ void fantasy::drawMenu() {
 
 void fantasy::drawQuit() {
 	int margin = 25;
+
+	Fill(margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, L' ');
 
 	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
 	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
