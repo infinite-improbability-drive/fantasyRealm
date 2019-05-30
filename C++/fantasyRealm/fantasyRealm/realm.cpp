@@ -21,10 +21,10 @@ public:
 			places.push_back(place());
 		}
 	}
-	realm(int wits) {
+	realm(int wits, int brave) {
 		this->name = L"Midgard";
 		this->type = L"realm";
-		for (int i = 0; i < wits * 10; i++) {
+		for (int i = 0; i < wits * 10 + brave; i++) {
 			places.push_back(place());
 		}
 	}

@@ -39,7 +39,7 @@ Last Updated: 24/06/2017
 #include "pch.h"
 #include <algorithm>
 #include <codecvt>
-#include <cstdlib>
+// #include <cstdlib>
 #include <iostream>
 #include <list>
 #include <locale>
@@ -70,6 +70,7 @@ public:
 	void start();
 	void drawHeader();
 	void drawMenu();
+	void drawBattle();
 	void drawQuit();
 
 private:
@@ -78,15 +79,15 @@ private:
 		wstring role;
 		vector<wstring> actions;
 		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
-		int wits = 0;
-		int brave = 0;
+		int wits;
+		int brave;
 		int x;
 		int y;
 	};
 	player player;
 	realm here;
 	realm r;
-	enum mode {play, pause, menu, quit};
+	enum mode {play, pause, menu, shop, battle, quit};
 	enum menu {status, items, equipment};
 	mode current;
 	bool move;
@@ -99,7 +100,7 @@ protected:
 		mode current = play;
 		move = true;
 		srand(clock() + time(nullptr));
-		const realm here = realm(player.wits);
+		const realm here = realm(player.wits, player.brave);
 		return true;
 	}
 
@@ -121,7 +122,9 @@ protected:
 						}
 					}
 				}
-				if (move) { player.x -= 1; }
+				if (move) { 
+					player.x -= 1; 
+				}
 			}
 			if (m_keys[0x26].bPressed) {	// up
 				for (place place : here.places) {
@@ -132,7 +135,9 @@ protected:
 						}
 					}
 				}
-				if (move) { player.y -= 1; }
+				if (move) { 
+					player.y -= 1;
+				}
 			}
 			if (m_keys[0x27].bPressed) {	// right
 				for (place place : here.places) {
@@ -143,7 +148,9 @@ protected:
 						}
 					}
 				}
-				if (move) { player.x += 1; }
+				if (move) { 
+					player.x += 1; 
+				}
 			}
 			if (m_keys[0x28].bPressed) {	// down
 				for (place place : here.places) {
@@ -154,46 +161,46 @@ protected:
 						}
 					}
 				}
-				if (move) { player.y += 1; }
+				if (move) { 
+					player.y += 1; 
+				}
+			}
+			if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
+				if (rand() % 100 > 85) {
+					current = battle;
+				}
 			}
 			move = true;
-		}
-
-		// print current key
-		for (int i = 0; i < 256; i++) {
-			if (m_keys[i].bHeld) {
-				DrawStringAlpha(2, 3, L"You are pressing " + to_wstring(i), 0x000F);
-			}
-		}
-
-		// [ENTER] enter location
-		if (m_keys[13].bPressed) {
-			if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
-				for (place place : here.places) {
-					if (player.x == place.x && player.y == place.y) {
-						if (place.type == L"exit") {
-							player.x = here.x;
-							player.y = here.y;
-							here = r;
-							break;
-						}
-						else {
-							realm location = realm(place.name, place.type, &here, place.x, place.y);
-							r = here;
-							here = location;
-							here.parent = &r;
-							player.x = rand() % 20 - 10;
-							player.y = rand() % 20 - 10;
-							// here = location;
-							break;
+			// [ENTER] enter location
+			if (m_keys[13].bPressed) {
+				if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
+					for (place place : here.places) {
+						if (player.x == place.x && player.y == place.y) {
+							if (place.type == L"exit") {
+								player.x = here.x;
+								player.y = here.y;
+								here = r;
+								break;
+							}
+							else {
+								realm location = realm(place.name, place.type, &here, place.x, place.y);
+								r = here;
+								here = location;
+								here.parent = &r;
+								player.x = rand() % 20 - 10;
+								player.y = rand() % 20 - 10;
+								// here = location;
+								break;
+							}
 						}
 					}
 				}
+				else {
+					player.actions.push_back(L"Enter");
+				}
 			}
-			else {
-				player.actions.push_back(L"Enter");
-			}
-		}		
+		}
+
 		
 		// [M] menu
 		if (m_keys[77].bPressed) {
@@ -220,6 +227,13 @@ protected:
 			if (m_keys[69].bPressed && current == menu) {
 				current = play;
 			}
+
+
+		// battle
+		// [Y] win battle
+		if (m_keys[89].bPressed && current == battle) {
+				current = play;
+		}
 
 
 		// [Q] quit
@@ -261,15 +275,10 @@ protected:
 		// draw player
 		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player.name[0], FG_WHITE);
 
-		// draw menu
-		if (current == menu) {
-			drawMenu();
-		}
+		if (current == menu) {	 drawMenu(); }		// draw menu
+		if (current == battle) { drawBattle(); }	// draw battle
+		if (current == quit) {	 drawQuit(); }		// draw quit
 
-		// draw quit
-		if (current == quit) {
-			drawQuit();
-		}
 
 		return true;
 	}
@@ -367,8 +376,8 @@ void fantasy::drawHeader() {
 	wstring title = L"" + player.name + L" the Lv 1 " + player.role;
 	DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
 	// player position
-	DrawStringAlpha(ScreenWidth() - title.length() - 9, 1, L"y = " + to_wstring(player.y), 0x000F);
-	DrawStringAlpha(ScreenWidth() - title.length() - 16, 1, L"x = " + to_wstring(player.x), 0x000F);
+	DrawStringAlpha(ScreenWidth() - (to_wstring(-player.y).length() + 6), 2, L"y = " + to_wstring(-player.y), 0x000F);
+	DrawStringAlpha(ScreenWidth() - (to_wstring(player.x).length() + 6), 3, L"x = " + to_wstring(player.x), 0x000F);
 
 	// collision detection
 	for (place place : here.places) {
@@ -376,7 +385,12 @@ void fantasy::drawHeader() {
 			DrawStringAlpha(2, 2, L"You have arrived at " + place.name + L" type = " + place.type, 0x000F);
 		}
 	}
-
+	// print current key
+	for (int i = 0; i < 256; i++) {
+		if (m_keys[i].bHeld) {
+			DrawStringAlpha(2, 3, L"You are pressing " + to_wstring(i), 0x000F);
+		}
+	}
 	// commands
 	int i = 2;
 	for (wstring action : player.actions) {
@@ -405,6 +419,24 @@ void fantasy::drawMenu() {
 		DrawStringAlpha(margin + 3 + i, margin + 3, action, 0x000F);
 		i = i + action.length() + 2;
 	}
+}
+
+void fantasy::drawBattle() {
+	int margin = 25;
+
+	Fill(margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, L' ');
+
+	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
+	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
+	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
+	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
+
+	// title
+	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Battle!", 0x000F);
+
+	// message
+	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to win?", 0x000F);
+	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
 }
 
 void fantasy::drawQuit() {
