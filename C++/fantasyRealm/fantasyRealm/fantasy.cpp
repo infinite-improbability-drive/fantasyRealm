@@ -89,7 +89,7 @@ private:
 	player player;
 	realm here;
 	realm r;
-	enum mode {play, pause, menu, shop, battle, quit};
+	enum mode {play, pause, menu, shop, battle, random_battle, quit};
 	enum menu {status, items, equipment};
 	mode current;
 	bool move;
@@ -111,7 +111,7 @@ protected:
 			int i = 0;
 			// move monsters
 			for (monster monster : here.monsters) {
-				int randomize = rand() % 8192 + 1;
+				int randomize = rand() % 4096 + 1;
 				if (randomize == 1) {
 					monster.x += 1;
 				}
@@ -235,7 +235,7 @@ protected:
 			// random battle
 			if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
 				if (rand() % 10000 < 2) {
-					current = battle;
+					current = random_battle;
 				}
 			}
 			move = true;
@@ -308,6 +308,10 @@ protected:
 			here.monsters.erase(here.monsters.begin() + enemy);
 			current = play;
 		}
+		// [Y] win battle
+		if (m_keys[89].bPressed && current == random_battle) {
+			current = play;
+		}
 
 
 		// [Q] quit
@@ -346,7 +350,7 @@ protected:
 		// draw monsters
 		for (monster monster : here.monsters) {
 			if (((int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y) > 5) {
-				Draw((int)(ScreenWidth() / 2) + monster.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon, FG_GREEN);
+				Draw((int)(ScreenWidth() / 2) + monster.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon, monster.color);
 			}
 		}
 
