@@ -1,0 +1,12 @@
+﻿  pch.cpp
+  action.cpp
+  fantasy.cpp
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(104): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  monster.cpp
+  name.cpp
+  place.cpp
+  realm.cpp
+  Generating code
+  All 1110 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Release\fantasyRealm.exe

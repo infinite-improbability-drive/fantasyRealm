@@ -111,7 +111,7 @@ protected:
 			int i = 0;
 			// move monsters
 			for (monster monster : here.monsters) {
-				int randomize = rand() % 4096 + 1;
+				int randomize = rand() % 8192 + 1;
 				if (randomize == 1) {
 					monster.x += 1;
 				}
