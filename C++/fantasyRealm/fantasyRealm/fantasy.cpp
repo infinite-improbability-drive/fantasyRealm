@@ -72,6 +72,8 @@ public:
 	void drawMenu();
 	void drawBattle();
 	void drawQuit();
+	void isSolid();
+	void isMonster();
 
 private:
 	struct player {
@@ -91,7 +93,6 @@ private:
 	enum menu {status, items, equipment};
 	mode current;
 	bool move;
-
 
 protected:
 	virtual bool OnUserCreate() {
@@ -157,7 +158,9 @@ protected:
 		if (current == play) {
 
 			// move player
-			if (m_keys[0x25].bPressed) {	// left
+			// left
+			if (m_keys[0x25].bPressed) {
+				// check if solid 
 				for (place place : here.places) {
 					if ((place.y == player.y) && (place.x + 1 == player.x)) {
 						if (place.solid) {
@@ -166,17 +169,17 @@ protected:
 						}
 					}
 				}
-				for (monster monster : here.monsters) {
-					if ((monster.y == player.y) && (monster.x + 1 == player.x)) {
-						current = battle;
-						break;
-					}
-				}
+				// check if monster
+				isMonster();
+
+				// move
 				if (move) {
 					player.x -= 1; 
 				}
 			}
-			if (m_keys[0x26].bPressed) {	// up
+			// up
+			if (m_keys[0x26].bPressed) {
+				// check if solid object
 				for (place place : here.places) {
 					if ((place.x == player.x) && (place.y + 1 == player.y)) {
 						if (place.solid) {
@@ -185,16 +188,15 @@ protected:
 						}
 					}
 				}
-				for (monster monster : here.monsters) {
-					if ((monster.x == player.x) && (monster.y + 1 == player.y)) {
-						current = battle;
-						break;
-					}
-				}
+				// check if monster
+				isMonster();
+
+				// move
 				if (move) {
 					player.y -= 1;
 				}
 			}
+			// right
 			if (m_keys[0x27].bPressed) {	// right
 				for (place place : here.places) {
 					if ((place.y == player.y) && (place.x - 1 == player.x)) {
@@ -204,16 +206,14 @@ protected:
 						}
 					}
 				}
-				for (monster monster : here.monsters) {
-					if ((monster.y == player.y) && (monster.x - 1 == player.x)) {
-						current = battle;
-						break;
-					}
-				}
+				// check if monster
+				isMonster();
+
 				if (move) {
 					player.x += 1; 
 				}
 			}
+			// down
 			if (m_keys[0x28].bPressed) {	// down
 				for (place place : here.places) {
 					if ((place.x == player.x) && (place.y - 1 == player.y)) {
@@ -223,12 +223,9 @@ protected:
 						}
 					}
 				}
-				for (monster monster : here.monsters) {
-					if ((monster.x == player.x) && (monster.y - 1 == player.y)) {
-						current = battle;
-						break;
-					}
-				}
+				// check if monster
+				isMonster();
+
 				if (move) {
 					player.y += 1; 
 				}
@@ -350,6 +347,7 @@ protected:
 		// draw player
 		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player.name[0], FG_WHITE);
 
+		// draw menus
 		if (current == menu) {	 drawMenu(); }		// draw menu
 		if (current == battle) { drawBattle(); }	// draw battle
 		if (current == quit) {	 drawQuit(); }		// draw quit
@@ -357,6 +355,7 @@ protected:
 
 		return true;
 	}
+
 };
 
 
@@ -531,3 +530,15 @@ void fantasy::drawQuit() {
 	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
 	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
 }
+
+void fantasy::isMonster() {
+	for (monster monster : here.monsters) {
+		if (((monster.y == player.y) && ((monster.x + 1 == player.x) || (monster.x - 1 == player.x))) || 
+			((monster.x == player.x) && ((monster.y + 1 == player.y) || (monster.y - 1 == player.y)))) {
+			current = battle;
+			break;
+		}
+	}
+}
+
+
