@@ -119,6 +119,7 @@ static wstring getMonsterName(wstring type) {
 }
 
 static wchar_t getMonsterIcon(wstring name) {
-	// if (name == L"Rat") { return 'u\00A5'; }
+	if (name == L"Crow") { return 0x04AB; }
+	else if (name == L"Rat") { return 0x0155; }
 	return tolower(name[0]);
 }
