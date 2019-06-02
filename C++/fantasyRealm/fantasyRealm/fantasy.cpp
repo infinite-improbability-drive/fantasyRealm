@@ -346,7 +346,7 @@ protected:
 		// draw monsters
 		for (monster monster : here.monsters) {
 			if (((int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y) > 5) {
-				Draw((int)(ScreenWidth() / 2) + monster.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon[0], FG_GREEN);
+				Draw((int)(ScreenWidth() / 2) + monster.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon, FG_GREEN);
 			}
 		}
 
@@ -371,7 +371,7 @@ protected:
 int main() {
 
 	// set character set to Unicode-16
-	// _setmode(_fileno(stdout), _O_U16TEXT);
+	_setmode(_fileno(stdout), _O_U16TEXT);
 
 	// username = start();
 

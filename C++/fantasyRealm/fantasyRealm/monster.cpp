@@ -6,8 +6,11 @@
 
 using namespace std;
 
-static wstring getMonsterName(wstring type);
 static wstring getMonsterType();
+static wstring getMonsterName(wstring type);
+static wchar_t getMonsterIcon(wstring name);
+
+
 static wstring trashMonsters[] = { L"Crow", L"Rat", L"Worm" };
 static wstring smallMonsters[] = { L"Gnome", L"Fairy", L"Cockatrice", L"Enchanted Clothing",
 	L"Faery", L"Goblin", L"Hobbit", L"Imp", L"Jackelope", L"Kodama", L"Leprechaun", L"Pirhana",
@@ -38,14 +41,15 @@ class monster {
 public:
 	wstring name;
 	wstring type;
-	wstring icon;
+	wchar_t icon;
 	int color = 0x000A;
 	int x;
 	int y;
 	monster() {
 		this->type = getMonsterType();
 		this->name = getMonsterName(this->type);
-		this->icon = tolower(this->name[0]);
+		// this->icon = tolower(this->name[0]);
+		this->icon = getMonsterIcon(this->name);
 		this->x = rand() % 200 - 100;
 		this->y = rand() % 200 - 100;
 	}
@@ -114,3 +118,7 @@ static wstring getMonsterName(wstring type) {
 	return name;
 }
 
+static wchar_t getMonsterIcon(wstring name) {
+	// if (name == L"Rat") { return 'u\00A5'; }
+	return tolower(name[0]);
+}
