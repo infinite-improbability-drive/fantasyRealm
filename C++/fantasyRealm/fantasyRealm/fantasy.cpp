@@ -73,7 +73,7 @@ public:
 	void drawBattle();
 	void drawQuit();
 	void isSolid();
-	void isMonster();
+	int isMonster();
 
 private:
 	struct player {
@@ -93,6 +93,7 @@ private:
 	enum menu {status, items, equipment};
 	mode current;
 	bool move;
+	int enemy;
 
 protected:
 	virtual bool OnUserCreate() {
@@ -170,7 +171,7 @@ protected:
 					}
 				}
 				// check if monster
-				isMonster();
+				enemy = isMonster();
 
 				// move
 				if (move) {
@@ -189,7 +190,7 @@ protected:
 					}
 				}
 				// check if monster
-				isMonster();
+				enemy = isMonster();
 
 				// move
 				if (move) {
@@ -207,7 +208,7 @@ protected:
 					}
 				}
 				// check if monster
-				isMonster();
+				enemy = isMonster();
 
 				if (move) {
 					player.x += 1; 
@@ -224,14 +225,16 @@ protected:
 					}
 				}
 				// check if monster
-				isMonster();
+				enemy = isMonster();
 
 				if (move) {
 					player.y += 1; 
 				}
 			}
+
+			// random battle
 			if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
-				if (rand() % 100 > 85) {
+				if (rand() % 10000 < 2) {
 					current = battle;
 				}
 			}
@@ -296,8 +299,14 @@ protected:
 
 		// battle
 		// [Y] win battle
+		if (current == battle) {
+			
+		}
+		
+		// [Y] win battle
 		if (m_keys[89].bPressed && current == battle) {
-				current = play;
+			here.monsters.erase(here.monsters.begin() + enemy);
+			current = play;
 		}
 
 
@@ -506,7 +515,7 @@ void fantasy::drawBattle() {
 	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
 
 	// title
-	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Battle!", 0x000F);
+	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Battle!     " + here.monsters[enemy].name + L" vs. " + player.name, 0x000F);
 
 	// message
 	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to win?", 0x000F);
@@ -531,17 +540,21 @@ void fantasy::drawQuit() {
 	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
 }
 
-void fantasy::isMonster() {
+int fantasy::isMonster() {
+	// monster mon;
 	int i = 0;
 	for (monster monster : here.monsters) {
 		if (((monster.y == player.y) && ((monster.x + 1 == player.x) || (monster.x - 1 == player.x))) || 
 			((monster.x == player.x) && ((monster.y + 1 == player.y) || (monster.y - 1 == player.y)))) {
 			current = battle;
-			here.monsters.erase(here.monsters.begin() + i);
+
+			// return i;
+			// here.monsters.erase(here.monsters.begin() + i);
 			break;
 		}
 		i += 1;
 	}
+	return i;
 }
 
 

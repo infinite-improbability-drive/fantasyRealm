@@ -21,7 +21,7 @@ static wstring largeMonsters[] = { L"Alpha Wolf", L"Behemoth", L"Demon King", L"
 static wstring veryLargeMonsters[] = { L"Crow", L"Rat", L"Worm" };
 static wstring rareMonsters[] = { L"Crow", L"Rat", L"Worm" };
 static wstring veryRareMonsters[] = { L"Unicorn" };
-static wstring veryLargeAndRareMonsters[] = { L"Crow", L"Rat", L"Worm" };
+static wstring veryLargeAndRareMonsters[] = { L"Nightwalker", L"Bigfoot" };
 static wstring giantMonsters[] = { L"Gamera" };
 static wstring bossMonsters[] = { L"Crow", L"Rat", L"Worm" };
 
@@ -80,6 +80,21 @@ static wstring getMonsterName(wstring type) {
 	}
 	else if (type == L"large") {
 		name = largeMonsters[rand() % (sizeof(largeMonsters) / sizeof(largeMonsters[0]))];
+	}
+	else if (type == L"very_large") {
+		name = veryLargeMonsters[rand() % (sizeof(veryLargeMonsters) / sizeof(veryLargeMonsters[0]))];
+	}
+	else if (type == L"rare") {
+		name = rareMonsters[rand() % (sizeof(rareMonsters) / sizeof(rareMonsters[0]))];
+	}
+	else if (type == L"very_rare") {
+		name = veryRareMonsters[rand() % (sizeof(veryRareMonsters) / sizeof(veryRareMonsters[0]))];
+	}
+	else if (type == L"very_large_and_rare") {
+		name = veryLargeAndRareMonsters[rand() % (sizeof(veryLargeAndRareMonsters) / sizeof(veryLargeAndRareMonsters[0]))];
+	}
+	else if (type == L"giant") {
+		name = giantMonsters[rand() % (sizeof(giantMonsters) / sizeof(giantMonsters[0]))];
 	}
 	return name;
 }
