@@ -532,12 +532,15 @@ void fantasy::drawQuit() {
 }
 
 void fantasy::isMonster() {
+	int i = 0;
 	for (monster monster : here.monsters) {
 		if (((monster.y == player.y) && ((monster.x + 1 == player.x) || (monster.x - 1 == player.x))) || 
 			((monster.x == player.x) && ((monster.y + 1 == player.y) || (monster.y - 1 == player.y)))) {
 			current = battle;
+			here.monsters.erase(here.monsters.begin() + i);
 			break;
 		}
+		i += 1;
 	}
 }
 
