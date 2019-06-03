@@ -25,14 +25,14 @@ public:
 		this->x = rand() % 200 - 100;
 		this->y = rand() % 200 - 100;
 	}
-	place(wstring type) {
+	place(wstring type, int x, int y) {
 		srand(clock() + rand() % 10000);
 		int i = rand() % 1000;
 		this->name = L"Exit";
 		this->type = type;
 		this->solid = false;
-		this->x = rand() % 20 - 10;
-		this->y = rand() % 20 - 10;
+		this->x = x;
+		this->y = y;
 	}
 	place(wstring name, wstring type, int x, int y, bool solid) {
 		this->name = name;

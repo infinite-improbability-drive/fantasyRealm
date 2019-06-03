@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "place.cpp"
+// #include "player.cpp"
 #include "monster.cpp"
 #include <string>
 #include <vector>
@@ -36,17 +37,22 @@ public:
 			monsters.push_back(monster());
 		}
 	}
-	realm(wstring name, wstring type, realm *parent, int x, int y) {
+	realm(place here, realm *parent, int width, int height) {
 		if (type != L"realm") {
-			this->name = name;
-			this->type = type;
+			this->name = here.name;
+			this->type = here.type;
 			this->parent = parent;
-			this->x = x;
-			this->y = y;
-			places.push_back(place(L"exit"));
-			for (int i = 0; i < 60; i++) {
-				for (int j = 0; j < 30; j++) {
-					if (i == 0 || j == 0 || i == 59 || j == 29) {
+			this->x = here.x;
+			this->y = here.y;
+			int m = rand() % width;
+			int n = rand() % height;
+
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++) {
+					if (i == m && j == n) {
+						places.push_back(place(L"exit", m, n));
+					}
+					if (i == 0 || j == 0 || i == width - 1 || j == height - 1) {
 						places.push_back(place(L"X", L"X", i, j, true));
 					}
 				}

@@ -156,6 +156,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ability.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="fantasy.cpp" />
     <ClCompile Include="item.cpp" />
@@ -168,6 +169,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="place.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="realm.cpp" />
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>

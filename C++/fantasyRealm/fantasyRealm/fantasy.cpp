@@ -54,15 +54,12 @@ using namespace std;
 
 #include "olcConsoleGameEngine.h"
 // #include "item.cpp"
+#include "player.cpp"
 #include "realm.cpp"
-#include "weapon.cpp"
 #include <Windows.h>
-
-wstring userrole;
 
 
 wstring input();
-
 
 class fantasy : public olcConsoleGameEngine {
 public:
@@ -78,18 +75,6 @@ public:
 	int isMonster();
 
 private:
-	struct player {
-		wstring name;
-		wstring role;
-		vector<wstring> actions;
-		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
-		vector<item> inventory;
-		weapon weapon;
-		int wits;
-		int brave;
-		int x;
-		int y;
-	};
 	player player;
 	realm here;
 	realm r;
@@ -106,6 +91,7 @@ protected:
 		mode current = play;
 		move = true;
 		srand(clock() + time(nullptr));
+		// player = player;
 		const realm here = realm(player.wits, player.brave);
 		return true;
 	}
@@ -255,12 +241,14 @@ protected:
 								break;
 							}
 							else {
-								realm location = realm(place.name, place.type, &here, place.x, place.y);
+								int width = 60;
+								int height = 30;
+								realm location = realm(place, &here, width, height);
 								r = here;
 								here = location;
 								here.parent = &r;
-								player.x = rand() % 20 - 10;
-								player.y = rand() % 20 - 10;
+								player.x = rand() % width;
+								player.y = rand() % height;
 								// here = location;
 								break;
 							}
@@ -415,6 +403,7 @@ void fantasy::start() {
 	wprintf(L"\n");
 	player.role = input();
 	player.weapon = weapon();
+	player.ability = ability();
 
 	wprintf(L"You must think you're pretty clever.\n");
 	wprintf(L"Just how clever are you? (1-10):\n");
@@ -437,7 +426,7 @@ void fantasy::start() {
 	player.y = 10;
 
 	wcout << "Hello " << player.name << " the " << player.role << ".\n";
-	wcout << "The " << player.role << " class uses the ability _ and the " << player.weapon.name << " starting weapon.\n";
+	wcout << "The " << player.role << " class uses the ability " << player.ability.name << " and the " << player.weapon.name << " starting weapon.\n";
 
 	system("pause");
 	// wprintf(L"Press enter to begin:\n");

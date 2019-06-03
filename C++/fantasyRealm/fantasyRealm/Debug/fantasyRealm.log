@@ -1,11 +1,13 @@
 ﻿  pch.cpp
+  ability.cpp
   action.cpp
   fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(108): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(93): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   item.cpp
   monster.cpp
   name.cpp
   place.cpp
+  player.cpp
   realm.cpp
   weapon.cpp
   Generating Code...
