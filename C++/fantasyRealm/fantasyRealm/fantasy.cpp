@@ -1,5 +1,5 @@
 /*
-OneLoneCoder.com - Command Line player
+OneLoneCoder.com - Command Line player1
 "Give me a break, I'm on holiday..." - @Javidx9
 License
 ~~~~~~~
@@ -25,7 +25,7 @@ license here: https://github.com/OneLoneCoder/videos/blob/master/LICENSE
 Cheers!
 Background
 ~~~~~~~~~~
-Classic player! Controls are Arrow keys Left & Right, eat food, grow larger, avoid self!
+Classic player1! Controls are Arrow keys Left & Right, eat food, grow larger, avoid self!
 Author
 ~~~~~~
 Twitter: @javidx9
@@ -48,9 +48,11 @@ Last Updated: 24/06/2017
 #include <fcntl.h>
 #include <io.h>
 #include <time.h>
+#include <vector>
 #include <wchar.h>
 
 using namespace std;
+using std::vector;
 
 #include "olcConsoleGameEngine.h"
 // #include "item.cpp"
@@ -68,6 +70,7 @@ public:
 	}
 	void start();
 	void drawHeader();
+	void drawMessage(player player);
 	void drawMenu();
 	void drawBattle();
 	void drawQuit();
@@ -75,11 +78,16 @@ public:
 	int isMonster();
 
 private:
-	player player;
+	vector<player> party;
+	player player1;
+	player someone;
 	realm here;
 	realm r;
-	enum mode {play, pause, menu, shop, battle, random_battle, quit};
+	enum mode {play, pause, talk, menu, shop, battle, random_battle, quit};
 	enum menu {status, items, equipment};
+	vector<wstring> actions;
+	vector<wstring> menu_actions = { L"Status", L"Items", L"Equipment", L"Exit" };
+	vector<item> inventory;
 	mode current;
 	bool move;
 	int enemy;
@@ -91,8 +99,8 @@ protected:
 		mode current = play;
 		move = true;
 		srand(clock() + time(nullptr));
-		// player = player;
-		const realm here = realm(player.wits, player.brave);
+		party.push_back(player1);
+		const realm here = realm(player1.wits, player1.brave);
 		return true;
 	}
 
@@ -148,12 +156,12 @@ protected:
 
 		if (current == play) {
 
-			// move player
+			// move player1
 			// left
 			if (m_keys[0x25].bPressed) {
 				// check if solid 
 				for (place place : here.places) {
-					if ((place.y == player.y) && (place.x + 1 == player.x)) {
+					if ((place.y == player1.y) && (place.x + 1 == player1.x)) {
 						if (place.solid) {
 							move = false;
 							break;
@@ -165,14 +173,14 @@ protected:
 
 				// move
 				if (move) {
-					player.x -= 1; 
+					player1.x -= 1; 
 				}
 			}
 			// up
 			if (m_keys[0x26].bPressed) {
 				// check if solid object
 				for (place place : here.places) {
-					if ((place.x == player.x) && (place.y + 1 == player.y)) {
+					if ((place.x == player1.x) && (place.y + 1 == player1.y)) {
 						if (place.solid) {
 							move = false;
 							break;
@@ -184,13 +192,13 @@ protected:
 
 				// move
 				if (move) {
-					player.y -= 1;
+					player1.y -= 1;
 				}
 			}
 			// right
 			if (m_keys[0x27].bPressed) {	// right
 				for (place place : here.places) {
-					if ((place.y == player.y) && (place.x - 1 == player.x)) {
+					if ((place.y == player1.y) && (place.x - 1 == player1.x)) {
 						if (place.solid) {
 							move = false;
 							break;
@@ -201,13 +209,13 @@ protected:
 				enemy = isMonster();
 
 				if (move) {
-					player.x += 1; 
+					player1.x += 1; 
 				}
 			}
 			// down
 			if (m_keys[0x28].bPressed) {	// down
 				for (place place : here.places) {
-					if ((place.x == player.x) && (place.y - 1 == player.y)) {
+					if ((place.x == player1.x) && (place.y - 1 == player1.y)) {
 						if (place.solid) {
 							move = false;
 							break;
@@ -218,7 +226,7 @@ protected:
 				enemy = isMonster();
 
 				if (move) {
-					player.y += 1; 
+					player1.y += 1; 
 				}
 			}
 
@@ -231,12 +239,12 @@ protected:
 			move = true;
 			// [ENTER] enter location
 			if (m_keys[13].bPressed) {
-				if (std::find(player.actions.begin(), player.actions.end(), L"Enter") != player.actions.end()) {
+				if (std::find(actions.begin(), actions.end(), L"Enter") != actions.end()) {
 					for (place place : here.places) {
-						if (player.x == place.x && player.y == place.y) {
+						if (player1.x == place.x && player1.y == place.y) {
 							if (place.type == L"exit") {
-								player.x = here.x;
-								player.y = here.y;
+								player1.x = here.x;
+								player1.y = here.y;
 								here = r;
 								break;
 							}
@@ -247,8 +255,12 @@ protected:
 								r = here;
 								here = location;
 								here.parent = &r;
-								player.x = rand() % width;
-								player.y = rand() % height;
+								player1.x = rand() % width;
+								player1.y = rand() % height;
+								someone = player();
+								someone.x = rand() % width;
+								someone.y = rand() % height;
+
 								// here = location;
 								break;
 							}
@@ -256,7 +268,7 @@ protected:
 					}
 				}
 				else {
-					player.actions.push_back(L"Enter");
+					actions.push_back(L"Enter");
 				}
 			}
 		}
@@ -264,11 +276,11 @@ protected:
 		
 		// [M] menu
 		if (m_keys[77].bPressed) {
-			if (std::find(player.actions.begin(), player.actions.end(), L"Menu") != player.actions.end()) {
+			if (std::find(actions.begin(), actions.end(), L"Menu") != actions.end()) {
 				current = menu;
 			}
 			else {
-				player.actions.push_back(L"Menu");
+				actions.push_back(L"Menu");
 			}
 		}
 			// [S] status
@@ -288,7 +300,17 @@ protected:
 				current = play;
 			}
 
-
+		// [T] menu
+		if (m_keys[84].bPressed) {
+			if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
+				if (player1.x == someone.x && player1.y == someone.y) {
+					current = talk;
+				}
+			}
+			else {
+				actions.push_back(L"Talk");
+			}
+		}
 		// battle
 		// [Y] win battle
 		if (current == battle) {
@@ -308,11 +330,11 @@ protected:
 
 		// [Q] quit
 		if (m_keys[81].bPressed) {
-			if (std::find(player.actions.begin(), player.actions.end(), L"Quit") != player.actions.end()) {
+			if (std::find(actions.begin(), actions.end(), L"Quit") != actions.end()) {
 				current = quit;
 			}
 			else {
-				player.actions.push_back(L"Quit");
+				actions.push_back(L"Quit");
 			}
 		}
 
@@ -334,43 +356,49 @@ protected:
 
 		// draw realm
 		for (place place : here.places) {
-			if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > 5) {
-				Draw((int) (ScreenWidth() / 2) + place.x - player.x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - player.y, place.name[0], FG_WHITE);
+			if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > 5) {
+				Draw((int) (ScreenWidth() / 2) + place.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, place.name[0], FG_WHITE);
 			}
 		}
 
 		// draw monsters
 		for (monster monster : here.monsters) {
-			if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player.y) > 5) {
-				Draw((int) (ScreenWidth() / 2) + monster.x - player.x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon, monster.color);
+			if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y) > 5) {
+				Draw((int) (ScreenWidth() / 2) + monster.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y, monster.icon, monster.color);
 			}
 		}
 
 		// draw map hints
 		for (place place : here.places) {
 			// top
-			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) <= 5) {
-				Draw((int)(ScreenWidth() / 2) + place.x - player.x, 6, L"^"[0], FG_WHITE);
+			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) <= 5) {
+				Draw((int)(ScreenWidth() / 2) + place.x - player1.x, 6, L"^"[0], FG_WHITE);
 			}
 			// bottom
-			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > ScreenHeight() - 1) {
-				Draw((int)(ScreenWidth() / 2) + place.x - player.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
+			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > ScreenHeight() - 1) {
+				Draw((int)(ScreenWidth() / 2) + place.x - player1.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
 			}
 
 			// left
-			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player.x) < 2) {
-				Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, L"<"[0], FG_WHITE);
+			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) < 2) {
+				Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L"<"[0], FG_WHITE);
 			}
 			// right
-			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player.x) > ScreenWidth() + 1) {
-				Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, L">"[0], FG_WHITE);
+			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) > ScreenWidth() + 1) {
+				Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L">"[0], FG_WHITE);
 			}
 		}
 
-		// draw player
-		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player.name[0], FG_WHITE);
+		// draw player1
+		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+
+		// draw someone
+		if (here.type.compare(L"realm") != 0) {
+			Draw((int)(ScreenWidth() / 2) + someone.x - player1.x, (int)(ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
+		}
 
 		// draw menus
+		if (current == talk) { drawMessage(someone); }		// draw quit
 		if (current == menu) {	 drawMenu(); }		// draw menu
 		if (current == battle) { drawBattle(); }	// draw battle
 		if (current == quit) {	 drawQuit(); }		// draw quit
@@ -406,7 +434,7 @@ void fantasy::start() {
 	wprintf(L"Welcome to the fantasy realm.\n");
 
 	wprintf(L"Please enter your name:\n");
-	player.name = input();
+	player1.name = input();
 
 	wprintf(L"Please choose your class-\n");
 	wstring roles[] = { L"Bard", L"Knight", L"Sorcerer" };
@@ -419,32 +447,32 @@ void fantasy::start() {
 		}
 	}
 	wprintf(L"\n");
-	player.role = input();
-	player.weapon = weapon();
-	player.ability = ability();
+	player1.role = input();
+	player1.weapon = weapon();
+	player1.ability = ability();
 
 	wprintf(L"You must think you're pretty clever.\n");
 	wprintf(L"Just how clever are you? (1-10):\n");
-	cin >> player.wits;
-	while (player.wits < 1 || player.wits > 11) {
+	cin >> player1.wits;
+	while (player1.wits < 1 || player1.wits > 11) {
 		wprintf(L"Try again. \n");
 		wprintf(L"Just how clever are you? (1-10):\n");
-		cin >> player.wits;
+		cin >> player1.wits;
 	}
 
 	wprintf(L"You must be brave to traverse these realms.\n");
 	wprintf(L"How brave do you think you are? (1-10):\n");
-	cin >> player.brave;
-	while (player.brave < 1 || player.brave > 11) {
+	cin >> player1.brave;
+	while (player1.brave < 1 || player1.brave > 11) {
 		wprintf(L"Just how brave are you, really? (1-10):\n");
-		cin >> player.brave;
+		cin >> player1.brave;
 	}
 
-	player.x = 10;
-	player.y = 10;
+	player1.x = 10;
+	player1.y = 10;
 
-	wcout << "Hello " << player.name << " the " << player.role << ".\n";
-	wcout << "The " << player.role << " class uses the ability " << player.ability.name << " and the " << player.weapon.name << " starting weapon.\n";
+	wcout << "Hello " << player1.name << " the " << player1.role << ".\n";
+	wcout << "The " << player1.role << " class uses the ability " << player1.ability.name << " and the " << player1.weapon.name << " starting weapon.\n";
 
 	system("pause");
 	// wprintf(L"Press enter to begin:\n");
@@ -474,18 +502,18 @@ void fantasy::drawHeader() {
 		DrawStringAlpha(2, 1, here.name + L" type = " + here.type + L" parent = " + here.parent->name, 0x000F);
 	}
 
-	// player title
-	wstring title = L"" + player.name + L" the Lv 1 " + player.role;
+	// player1 title
+	wstring title = L"" + player1.name + L" the Lv 1 " + player1.role;
 	DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
-	// player position
-	DrawStringAlpha(ScreenWidth() - (to_wstring(-player.y).length() + 6), 2, L"y = " + to_wstring(-player.y), 0x000F);
-	DrawStringAlpha(ScreenWidth() - (to_wstring(player.x).length() + 6), 3, L"x = " + to_wstring(player.x), 0x000F);
+	// player1 position
+	DrawStringAlpha(ScreenWidth() - (to_wstring(-player1.y).length() + 6), 2, L"y = " + to_wstring(-player1.y), 0x000F);
+	DrawStringAlpha(ScreenWidth() - (to_wstring(player1.x).length() + 6), 3, L"x = " + to_wstring(player1.x), 0x000F);
 	// # of monsters
 	DrawStringAlpha(ScreenWidth() - (to_wstring(here.monsters.size()).length() + 18), 4, L"# of monsters = " + to_wstring(here.monsters.size()), 0x000F);
 
 	// collision detection
 	for (place place : here.places) {
-		if (player.x == place.x && player.y == place.y) {
+		if (player1.x == place.x && player1.y == place.y) {
 			DrawStringAlpha(2, 2, L"You have arrived at " + place.name + L" type = " + place.type, 0x000F);
 		}
 	}
@@ -497,13 +525,26 @@ void fantasy::drawHeader() {
 	}
 	// commands
 	int i = 2;
-	for (wstring action : player.actions) {
+	for (wstring action : actions) {
 		DrawStringAlpha(i, 4, action, 0x000F);
 		i = i + action.length() + 2;
 	}
 
 	// bottom border
 	DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
+}
+
+void fantasy::drawMessage(player player) {
+	int margin = 10;
+
+	// border
+	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
+	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
+	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
+	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
+
+	// message
+	// DrawStringAlpha(margin + 3, margin + 1, player.speak(), 0x000F);
 }
 
 void fantasy::drawMenu() {
@@ -518,8 +559,8 @@ void fantasy::drawMenu() {
 	DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
 
 	// menu commands
-	int i = player.menu_actions[0].length();
-	for (wstring action : player.menu_actions) {
+	int i = menu_actions[0].length();
+	for (wstring action : menu_actions) {
 		DrawStringAlpha(margin + 3 + i, margin + 3, action, 0x000F);
 		i = i + action.length() + 2;
 	}
@@ -536,7 +577,7 @@ void fantasy::drawBattle() {
 	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
 
 	// title
-	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Battle!     " + here.monsters[enemy].name + L" vs. " + player.name, 0x000F);
+	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Battle!     " + here.monsters[enemy].name + L" vs. " + player1.name, 0x000F);
 
 	// message
 	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to win?", 0x000F);
@@ -565,8 +606,8 @@ int fantasy::isMonster() {
 	// monster mon;
 	int i = 0;
 	for (monster monster : here.monsters) {
-		if (((monster.y == player.y) && ((monster.x + 1 == player.x) || (monster.x - 1 == player.x))) || 
-			((monster.x == player.x) && ((monster.y + 1 == player.y) || (monster.y - 1 == player.y)))) {
+		if (((monster.y == player1.y) && ((monster.x + 1 == player1.x) || (monster.x - 1 == player1.x))) || 
+			((monster.x == player1.x) && ((monster.y + 1 == player1.y) || (monster.y - 1 == player1.y)))) {
 			current = battle;
 
 			// return i;

@@ -10,9 +10,6 @@ class player {
 public:
 	wstring name;
 	wstring role;
-	vector<wstring> actions;
-	vector<wstring> menu_actions = { L"Status", L"Items", L"Equipment", L"Exit" };
-	vector<item> inventory;
 	weapon weapon;
 	ability ability;
 	int wits;
@@ -25,5 +22,9 @@ public:
 	player(wstring name) {
 		this->name = name;
 	}
+	// wstring speak();
 };
 
+// wstring player::speak() {
+// 	return L"Hi how are you?";
+// };
