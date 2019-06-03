@@ -53,8 +53,9 @@ Last Updated: 24/06/2017
 using namespace std;
 
 #include "olcConsoleGameEngine.h"
-#include "item.cpp"
+// #include "item.cpp"
 #include "realm.cpp"
+#include "weapon.cpp"
 #include <Windows.h>
 
 wstring userrole;
@@ -83,6 +84,7 @@ private:
 		vector<wstring> actions;
 		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
 		vector<item> inventory;
+		weapon weapon;
 		int wits;
 		int brave;
 		int x;
@@ -412,6 +414,7 @@ void fantasy::start() {
 	}
 	wprintf(L"\n");
 	player.role = input();
+	player.weapon = weapon();
 
 	wprintf(L"You must think you're pretty clever.\n");
 	wprintf(L"Just how clever are you? (1-10):\n");
@@ -434,11 +437,14 @@ void fantasy::start() {
 	player.y = 10;
 
 	wcout << "Hello " << player.name << " the " << player.role << ".\n";
-	wprintf(L"Press enter to begin:\n");
+	wcout << "The " << player.role << " class uses the ability _ and the " << player.weapon.name << " starting weapon.\n";
+
+	system("pause");
+	// wprintf(L"Press enter to begin:\n");
 	// string enter;
-	while ((0x8000 & GetAsyncKeyState((unsigned char)('\x12'))) != 0); {
-		input();
-	}
+	// while ((0x8000 & GetAsyncKeyState((unsigned char)('\x12'))) != 0); {
+	// 	input();
+	// }
 }
 
 wstring input() {
@@ -467,6 +473,8 @@ void fantasy::drawHeader() {
 	// player position
 	DrawStringAlpha(ScreenWidth() - (to_wstring(-player.y).length() + 6), 2, L"y = " + to_wstring(-player.y), 0x000F);
 	DrawStringAlpha(ScreenWidth() - (to_wstring(player.x).length() + 6), 3, L"x = " + to_wstring(player.x), 0x000F);
+	// # of monsters
+	DrawStringAlpha(ScreenWidth() - (to_wstring(here.monsters.size()).length() + 18), 4, L"# of monsters = " + to_wstring(here.monsters.size()), 0x000F);
 
 	// collision detection
 	for (place place : here.places) {

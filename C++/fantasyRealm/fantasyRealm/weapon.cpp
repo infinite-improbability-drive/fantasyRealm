@@ -8,7 +8,7 @@ class weapon : item {
 public:
 	wstring name;
 	weapon() {
-		this->name = L"Dirty Socks";
+		this->name = L"Dead Fish";
 	}
 	weapon(wstring name) {
 		this->name = name;
