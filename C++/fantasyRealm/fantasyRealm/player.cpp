@@ -22,9 +22,9 @@ public:
 	player(wstring name) {
 		this->name = name;
 	}
-	// wstring speak();
+	wstring speak() {
+		return L"Hi how are you?";
+	}
 };
 
-// wstring player::speak() {
-// 	return L"Hi how are you?";
-// };
+

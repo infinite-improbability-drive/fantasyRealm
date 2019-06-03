@@ -544,7 +544,7 @@ void fantasy::drawMessage(player player) {
 	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
 
 	// message
-	// DrawStringAlpha(margin + 3, margin + 1, player.speak(), 0x000F);
+	DrawStringAlpha(margin + 3, margin + 1, player.speak(), 0x000F);
 }
 
 void fantasy::drawMenu() {
