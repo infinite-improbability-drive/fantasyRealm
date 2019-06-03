@@ -53,6 +53,7 @@ Last Updated: 24/06/2017
 using namespace std;
 
 #include "olcConsoleGameEngine.h"
+#include "item.cpp"
 #include "realm.cpp"
 #include <Windows.h>
 
@@ -81,6 +82,7 @@ private:
 		wstring role;
 		vector<wstring> actions;
 		vector<wstring> menu_actions = {L"Status", L"Items", L"Equipment", L"Exit"};
+		vector<item> inventory;
 		int wits;
 		int brave;
 		int x;

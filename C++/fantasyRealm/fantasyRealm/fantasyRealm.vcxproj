@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="action.cpp" />
     <ClCompile Include="fantasy.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="name.cpp" />
     <ClCompile Include="pch.cpp">
@@ -168,6 +169,7 @@
     </ClCompile>
     <ClCompile Include="place.cpp" />
     <ClCompile Include="realm.cpp" />
+    <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
