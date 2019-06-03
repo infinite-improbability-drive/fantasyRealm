@@ -317,7 +317,7 @@ protected:
 		}
 
 			// [Y] quit game
-			if (m_keys[89].bPressed && current == quit) {
+			if ((m_keys[89].bPressed) && current == quit) {
 				exit(0);
 			}
 
@@ -334,20 +334,38 @@ protected:
 
 		// draw realm
 		for (place place : here.places) {
-			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > 5) {
-				Draw((int)(ScreenWidth() / 2) + place.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, place.name[0], FG_WHITE);
+			if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > 5) {
+				Draw((int) (ScreenWidth() / 2) + place.x - player.x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - player.y, place.name[0], FG_WHITE);
 			}
 		}
 
 		// draw monsters
 		for (monster monster : here.monsters) {
-			if (((int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y) > 5) {
-				Draw((int)(ScreenWidth() / 2) + monster.x - player.x, (int)(ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon, monster.color);
+			if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player.y) > 5) {
+				Draw((int) (ScreenWidth() / 2) + monster.x - player.x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player.y, monster.icon, monster.color);
 			}
 		}
 
 		// draw map hints
+		for (place place : here.places) {
+			// top
+			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) <= 5) {
+				Draw((int)(ScreenWidth() / 2) + place.x - player.x, 6, L"^"[0], FG_WHITE);
+			}
+			// bottom
+			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y) > ScreenHeight() - 1) {
+				Draw((int)(ScreenWidth() / 2) + place.x - player.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
+			}
 
+			// left
+			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player.x) < 2) {
+				Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, L"<"[0], FG_WHITE);
+			}
+			// right
+			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player.x) > ScreenWidth() + 1) {
+				Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player.y, L">"[0], FG_WHITE);
+			}
+		}
 
 		// draw player
 		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player.name[0], FG_WHITE);
