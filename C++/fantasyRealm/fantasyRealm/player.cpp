@@ -17,7 +17,8 @@ public:
 	int x;
 	int y;
 	player() {
-		this->name = L"Hubris";
+		this->name = L"Billy";
+		// this->name = L"Hubris";
 	}
 	player(wstring name) {
 		this->name = name;

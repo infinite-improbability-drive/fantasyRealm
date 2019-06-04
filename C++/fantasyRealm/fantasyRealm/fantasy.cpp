@@ -69,13 +69,6 @@ public:
 		m_sAppName = L"fantasy realm";
 	}
 	void start();
-	void drawHeader();
-	void drawMessage(player player);
-	void drawMenu();
-	void drawBattle();
-	void drawQuit();
-	void isSolid();
-	int isMonster();
 
 private:
 	vector<player> party;
@@ -83,22 +76,37 @@ private:
 	player someone;
 	realm here;
 	realm r;
-	enum mode {play, pause, talk, menu, shop, battle, random_battle, quit};
-	enum menu {status, items, equipment};
-	vector<wstring> actions;
-	vector<wstring> menu_actions = { L"Status", L"Items", L"Equipment", L"Exit" };
-	vector<item> inventory;
+	enum mode {play, pause, talk, menu_mode, shop, battle, random_battle, quit};
+	enum menu {main, party_menu, status, items, equipment, exit_menu};
+	map<menu, wstring> menu_actions = { {party_menu, L"Party"}, {status, L"Status"}, {items, L"Items"}, {equipment, L"Equipment"}, {exit_menu, L"Exit"} };
 	mode current;
+	menu current_menu;
+	// vector<menu, int> mz = { {main, 0 }};
+	vector<wstring> actions;
+	vector<item> inventory;
 	bool move;
 	int enemy;
+
+	void drawHeader();
+	void drawMessage(player player, player::dialogue message);
+	void drawMenu(menu item);
+	void drawParty();
+	void drawStatus();
+	void drawItems();
+	void drawEquipment();
+	void drawBattle();
+	void drawQuit();
+	// void isSolid();
+	int isMonster();
 
 protected:
 	virtual bool OnUserCreate() {
 		// seed random number generator
 		// int r = rand() % 1000;
-		mode current = play;
-		move = true;
 		srand(clock() + time(nullptr));
+		mode current = play;
+		menu current_menu = main;
+		move = true;
 		party.push_back(player1);
 		const realm here = realm(player1.wits, player1.brave);
 		return true;
@@ -273,38 +281,44 @@ protected:
 			}
 		}
 
-		if (current == talk) {
-			for (int i = 0; i < 256; i++) {
-				if (m_keys[i].bPressed) {
-					current = play;
-				}
-			}
-		}
+
 		// [M] menu
 		if (m_keys[77].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Menu") != actions.end()) {
-				current = menu;
+				current = menu_mode;
 			}
 			else {
 				actions.push_back(L"Menu");
 			}
 		}
+		// Menu Party Status Items Equipment Exit 
+		if (current == menu_mode) {
+
+			// left
+			if (current_menu == main && m_keys[0x25].bPressed) { current_menu = exit_menu; }
+			else if (current_menu == exit_menu && m_keys[0x25].bPressed) { current_menu = equipment; }
+			else if (current_menu == equipment && m_keys[0x25].bPressed) { current_menu = items; }
+			else if (current_menu == items && m_keys[0x25].bPressed) { current_menu = status; }
+			else if (current_menu == status && m_keys[0x25].bPressed) { current_menu = party_menu; }
+			else if (current_menu == party_menu && m_keys[0x25].bPressed) { current_menu = main; }
+
+			// right
+			if (current_menu == main && m_keys[0x27].bPressed) { current_menu = party_menu; }
+			else if (current_menu == party_menu && m_keys[0x27].bPressed) { current_menu = status; }
+			else if (current_menu == status && m_keys[0x27].bPressed) { current_menu = items; }
+			else if (current_menu == items && m_keys[0x27].bPressed) { current_menu = equipment; }
+			else if (current_menu == equipment && m_keys[0x27].bPressed) { current_menu = exit_menu; }
+			else if (current_menu == exit_menu && m_keys[0x27].bPressed) { current_menu = main; }
+
 			// [S] status
-			if (m_keys[83].bPressed && current == menu) {
-				current = play;
-			}
+			if (m_keys[83].bPressed) { current_menu = status; }
 			// [I] items
-			if (m_keys[73].bPressed && current == menu) {
-				current = play;
-			}
+			if (m_keys[73].bPressed) { current_menu = items; }
 			// [Q] equipment
-			if (m_keys[81].bPressed && current == menu) {
-				current = play;
-			}
-			// [E] return to game
-			if (m_keys[69].bPressed && current == menu) {
-				current = play;
-			}
+			if (m_keys[81].bPressed) { current_menu = equipment; }
+			// [E] return to gamem
+			if (m_keys[69].bPressed) { current = play; }
+		}
 
 		// [T] talk
 		if (m_keys[84].bPressed) {
@@ -315,6 +329,13 @@ protected:
 			}
 			else {
 				actions.push_back(L"Talk");
+			}
+		}
+		if (current == talk) {
+			for (int i = 0; i < 256; i++) {
+				if (m_keys[i].bPressed) {
+					current = play;
+				}
 			}
 		}
 		// battle
@@ -343,16 +364,17 @@ protected:
 				actions.push_back(L"Quit");
 			}
 		}
-
+		if (current == quit) {
 			// [Y] quit game
-			if ((m_keys[89].bPressed) && current == quit) {
+			if (m_keys[89].bPressed) {
 				exit(0);
 			}
 
 			// [N] return to game
-			if (m_keys[78].bPressed && current == quit) {
+			if (m_keys[78].bPressed) {
 				current = play;
 			}
+		}
 
 // -------- HEADER --------
 
@@ -404,10 +426,13 @@ protected:
 		}
 
 		// draw menus
-		if (current == talk) { drawMessage(someone); }		// draw message
-		if (current == menu) {	 drawMenu(); }		// draw menu
-		if (current == battle) { drawBattle(); }	// draw battle
-		if (current == quit) {	 drawQuit(); }		// draw quit
+		if (current == talk) { drawMessage(someone, someone.disgust); }		// draw message
+		if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
+		// if (current == status) { drawStatus(); }		// draw status
+		// if (current == items) { drawItems(); }			// draw items
+		// if (current == equipment) { drawEquipment(); }	// draw equipment
+		if (current == battle) { drawBattle(); }		// draw battle
+		if (current == quit) {	 drawQuit(); }			// draw quit
 
 
 		return true;
@@ -540,9 +565,9 @@ void fantasy::drawHeader() {
 	DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
 }
 
-void fantasy::drawMessage(player player) {
+void fantasy::drawMessage(player player, player::dialogue message) {
 
-	int width = player.speak(player.disgust).length() + 4;
+	int width = player.speak(message).length() + 4;
 	int height = 5;
 	int offset = 5;
 
@@ -560,17 +585,17 @@ void fantasy::drawMessage(player player) {
 
 	// Draw((int) (ScreenWidth() / 2) + someone.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
 
-
 	// name
 	DrawStringAlpha(left + 2, top + 1, player.name, 0x000F);
 
 	// message
-	DrawStringAlpha(left + 2, top + 3, player.speak(player.disgust), 0x000F);
+	DrawStringAlpha(left + 2, top + 3, player.speak(message), 0x000F);
 
 	// if (player.speak.next != nullptr) {}
 }
 
-void fantasy::drawMenu() {
+
+void fantasy::drawMenu(menu item) {
 	int margin = 10;
 
 	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left		'|'
@@ -581,12 +606,42 @@ void fantasy::drawMenu() {
 	// title
 	DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
 
+	
 	// menu commands
-	int i = menu_actions[0].length();
-	for (wstring action : menu_actions) {
-		DrawStringAlpha(margin + 3 + i, margin + 3, action, 0x000F);
-		i = i + action.length() + 2;
+	int i = 0;
+	auto it = menu_actions.begin();
+	while (it != menu_actions.end()) {
+		if (it->first == item) {
+			DrawStringAlpha(margin + 4 + i, margin + 3, L"[" + it->second + L"]", 0x000F);
+		}
+		else {
+			DrawStringAlpha(margin + 5 + i, margin + 3, it->second, 0x000F);
+		}
+		i = i + it->second.size() + 2;
+		it++;
 	}
+	
+
+
+	switch (item) {
+	case party_menu:
+		drawParty();
+	case status:
+		drawStatus();
+	case items:
+		drawItems();
+	case equipment:
+		drawEquipment();
+	}
+}
+
+void fantasy::drawParty() {
+}
+void fantasy::drawStatus() {
+}
+void fantasy::drawItems() {
+}
+void fantasy::drawEquipment() {
 }
 
 void fantasy::drawBattle() {
@@ -605,6 +660,13 @@ void fantasy::drawBattle() {
 	// message
 	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to win?", 0x000F);
 	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
+
+	// draw player1
+	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+
+	// draw monster
+	// Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+
 }
 
 void fantasy::drawQuit() {
