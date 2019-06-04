@@ -306,7 +306,7 @@ protected:
 				current = play;
 			}
 
-		// [T] menu
+		// [T] talk
 		if (m_keys[84].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
 				if (player1.x == someone.x && player1.y == someone.y) {
@@ -542,7 +542,7 @@ void fantasy::drawHeader() {
 
 void fantasy::drawMessage(player player) {
 
-	int width = player.speak().length() + 4;
+	int width = player.speak(player.disgust).length() + 4;
 	int height = 5;
 	int offset = 5;
 
@@ -565,7 +565,7 @@ void fantasy::drawMessage(player player) {
 	DrawStringAlpha(left + 2, top + 1, player.name, 0x000F);
 
 	// message
-	DrawStringAlpha(left + 2, top + 3, player.speak(), 0x000F);
+	DrawStringAlpha(left + 2, top + 3, player.speak(player.disgust), 0x000F);
 
 	// if (player.speak.next != nullptr) {}
 }

@@ -22,9 +22,16 @@ public:
 	player(wstring name) {
 		this->name = name;
 	}
-	wstring speak() {
-		return L"Hi how are you?";
+	enum dialogue { greeting, introduction, exclamation, disgust };
+	wstring speak(dialogue thoughts) {
+		if (thoughts == greeting) {
+			return L"Hi how are you?";
+		}
+		else {
+			return L"Go away! I don't want to talk to you!";
+		}
 	}
+
 };
 
 
