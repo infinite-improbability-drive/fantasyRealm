@@ -44,8 +44,8 @@ public:
 			this->parent = parent;
 			this->x = here.x;
 			this->y = here.y;
-			int m = rand() % width;
-			int n = rand() % height;
+			int m = rand() % (width - 2) + 1;
+			int n = rand() % (height - 2) + 1;
 
 			for (int i = 0; i < width; i++) {
 				for (int j = 0; j < height; j++) {

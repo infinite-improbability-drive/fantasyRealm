@@ -255,11 +255,11 @@ protected:
 								r = here;
 								here = location;
 								here.parent = &r;
-								player1.x = rand() % width;
-								player1.y = rand() % height;
+								player1.x = rand() % (width - 2) + 1;
+								player1.y = rand() % (height - 2) + 1;
 								someone = player();
-								someone.x = rand() % width;
-								someone.y = rand() % height;
+								someone.x = rand() % (width - 2) + 1;
+								someone.y = rand() % (height - 2) + 1;
 
 								// here = location;
 								break;
@@ -273,7 +273,13 @@ protected:
 			}
 		}
 
-		
+		if (current == talk) {
+			for (int i = 0; i < 256; i++) {
+				if (m_keys[i].bPressed) {
+					current = play;
+				}
+			}
+		}
 		// [M] menu
 		if (m_keys[77].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Menu") != actions.end()) {
@@ -398,7 +404,7 @@ protected:
 		}
 
 		// draw menus
-		if (current == talk) { drawMessage(someone); }		// draw quit
+		if (current == talk) { drawMessage(someone); }		// draw message
 		if (current == menu) {	 drawMenu(); }		// draw menu
 		if (current == battle) { drawBattle(); }	// draw battle
 		if (current == quit) {	 drawQuit(); }		// draw quit
@@ -535,16 +541,33 @@ void fantasy::drawHeader() {
 }
 
 void fantasy::drawMessage(player player) {
-	int margin = 10;
+
+	int width = player.speak().length() + 4;
+	int height = 5;
+	int offset = 5;
+
+	int left = (int)(ScreenWidth() / 2) + player.x - player1.x - (width / 2);
+	int right = (int)(ScreenWidth() / 2) + player.x - player1.x + (width / 2);
+	int top = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + player1.y - (height / 2) - offset;
+	int bottom = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + player1.y + (height / 2) - offset;
+
 
 	// border
-	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
-	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
-	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
-	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
+	DrawLine(left, top, left, bottom, 0x007C, FG_WHITE);	// left
+	DrawLine(left, top, right, top, 0x002D, FG_WHITE);		// top
+	DrawLine(right, top, right, bottom, 0x007C, FG_WHITE);	// right
+	DrawLine(left, bottom, right, bottom, 0x002D, FG_WHITE);	// bottom
+
+	// Draw((int) (ScreenWidth() / 2) + someone.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
+
+
+	// name
+	DrawStringAlpha(left + 2, top + 1, player.name, 0x000F);
 
 	// message
-	DrawStringAlpha(margin + 3, margin + 1, player.speak(), 0x000F);
+	DrawStringAlpha(left + 2, top + 3, player.speak(), 0x000F);
+
+	// if (player.speak.next != nullptr) {}
 }
 
 void fantasy::drawMenu() {
