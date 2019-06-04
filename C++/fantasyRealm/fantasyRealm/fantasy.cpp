@@ -316,8 +316,8 @@ protected:
 			if (m_keys[73].bPressed) { current_menu = items; }
 			// [Q] equipment
 			if (m_keys[81].bPressed) { current_menu = equipment; }
-			// [E] return to gamem
-			if (m_keys[69].bPressed) { current = play; }
+			// [E] return to game
+			if (m_keys[69].bPressed || (m_keys[13].bPressed && current_menu == exit_menu)) { current = play; }
 		}
 
 		// [T] talk
@@ -598,10 +598,15 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 void fantasy::drawMenu(menu item) {
 	int margin = 10;
 
-	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left		'|'
-	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top		'-'
-	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right	'|'
-	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom	'-'
+	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x2502, FG_WHITE);									// left		'|'
+	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x2500, FG_WHITE);										// top		'-'
+	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x2502, FG_WHITE);	// right	'|'
+	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x2500, FG_WHITE);	// bottom	'-'
+
+	Draw(margin, margin, 0x250C, FG_WHITE);
+	Draw(ScreenWidth() - margin, margin, 0x2510, FG_WHITE);
+	Draw(margin, ScreenHeight() - margin, 0x2514, FG_WHITE);
+	Draw(ScreenWidth() - margin, ScreenHeight() - margin, 0x2518, FG_WHITE);
 
 	// title
 	DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
@@ -612,17 +617,15 @@ void fantasy::drawMenu(menu item) {
 	auto it = menu_actions.begin();
 	while (it != menu_actions.end()) {
 		if (it->first == item) {
-			DrawStringAlpha(margin + 4 + i, margin + 3, L"[" + it->second + L"]", 0x000F);
+			DrawStringAlpha(margin + 3 + i, margin + 3, L"[" + it->second + L"]", 0x000F);
 		}
 		else {
-			DrawStringAlpha(margin + 5 + i, margin + 3, it->second, 0x000F);
+			DrawStringAlpha(margin + 4 + i, margin + 3, it->second, 0x000F);
 		}
 		i = i + it->second.size() + 2;
 		it++;
 	}
 	
-
-
 	switch (item) {
 	case party_menu:
 		drawParty();
