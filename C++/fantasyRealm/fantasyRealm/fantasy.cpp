@@ -88,6 +88,7 @@ private:
 	int enemy;
 
 	void drawHeader();
+	void drawWindow(int left, int right, int top, int bottom, wstring title);
 	void drawMessage(player player, player::dialogue message);
 	void drawMenu(menu item);
 	void drawParty();
@@ -321,6 +322,13 @@ protected:
 		}
 
 		// [T] talk
+		if (current == talk) {
+			for (int i = 0; i < 256; i++) {
+				if (m_keys[i].bPressed) {
+					current = play;
+				}
+			}
+		}
 		if (m_keys[84].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
 				if (player1.x == someone.x && player1.y == someone.y) {
@@ -329,13 +337,6 @@ protected:
 			}
 			else {
 				actions.push_back(L"Talk");
-			}
-		}
-		if (current == talk) {
-			for (int i = 0; i < 256; i++) {
-				if (m_keys[i].bPressed) {
-					current = play;
-				}
 			}
 		}
 		// battle
@@ -565,28 +566,34 @@ void fantasy::drawHeader() {
 	DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
 }
 
+void fantasy::drawWindow(int left, int right, int top, int bottom, wstring title) {
+	DrawLine(left, top + 1, left, bottom - 1, 0x2502, FG_WHITE);		// left
+	DrawLine(left + 1, top, right - 1, top, 0x2500, FG_WHITE);			// top
+	DrawLine(right, top + 1, right, bottom - 1, 0x2502, FG_WHITE);		// right
+	DrawLine(left + 1, bottom, right - 1, bottom, 0x2500, FG_WHITE);	// bottom
+
+	Draw(left, top, 0x250C, FG_WHITE);
+	Draw(right, top, 0x2510, FG_WHITE);
+	Draw(left, bottom, 0x2514, FG_WHITE);
+	Draw(right, bottom, 0x2518, FG_WHITE);
+
+	Fill(left + 1, top + 1, right, bottom, L' ');
+
+	DrawStringAlpha(left + 2, top + 1, title, 0x000F);
+}
+
 void fantasy::drawMessage(player player, player::dialogue message) {
 
 	int width = player.speak(message).length() + 4;
 	int height = 5;
-	int offset = 5;
+	int offset = 4;
 
 	int left = (int)(ScreenWidth() / 2) + player.x - player1.x - (width / 2);
 	int right = (int)(ScreenWidth() / 2) + player.x - player1.x + (width / 2);
 	int top = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + player1.y - (height / 2) - offset;
 	int bottom = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + player1.y + (height / 2) - offset;
 
-
-	// border
-	DrawLine(left, top, left, bottom, 0x007C, FG_WHITE);	// left
-	DrawLine(left, top, right, top, 0x002D, FG_WHITE);		// top
-	DrawLine(right, top, right, bottom, 0x007C, FG_WHITE);	// right
-	DrawLine(left, bottom, right, bottom, 0x002D, FG_WHITE);	// bottom
-
-	// Draw((int) (ScreenWidth() / 2) + someone.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
-
-	// name
-	DrawStringAlpha(left + 2, top + 1, player.name, 0x000F);
+	drawWindow(left, right, top, bottom, player.name);
 
 	// message
 	DrawStringAlpha(left + 2, top + 3, player.speak(message), 0x000F);
@@ -598,29 +605,22 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 void fantasy::drawMenu(menu item) {
 	int margin = 10;
 
-	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x2502, FG_WHITE);									// left		'|'
-	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x2500, FG_WHITE);										// top		'-'
-	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x2502, FG_WHITE);	// right	'|'
-	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x2500, FG_WHITE);	// bottom	'-'
+	int left = margin;
+	int right = ScreenWidth() - margin;
+	int top = margin;
+	int bottom = ScreenHeight() - margin;
 
-	Draw(margin, margin, 0x250C, FG_WHITE);
-	Draw(ScreenWidth() - margin, margin, 0x2510, FG_WHITE);
-	Draw(margin, ScreenHeight() - margin, 0x2514, FG_WHITE);
-	Draw(ScreenWidth() - margin, ScreenHeight() - margin, 0x2518, FG_WHITE);
+	drawWindow(left, right, top, bottom, L"Menu");
 
-	// title
-	DrawStringAlpha(margin + 3, margin + 1, L"Menu", 0x000F);
-
-	
 	// menu commands
 	int i = 0;
 	auto it = menu_actions.begin();
 	while (it != menu_actions.end()) {
 		if (it->first == item) {
-			DrawStringAlpha(margin + 3 + i, margin + 3, L"[" + it->second + L"]", 0x000F);
+			DrawStringAlpha(left + 3 + i, top + 3, L"[" + it->second + L"]", 0x000F);
 		}
 		else {
-			DrawStringAlpha(margin + 4 + i, margin + 3, it->second, 0x000F);
+			DrawStringAlpha(left + 4 + i, top + 3, it->second, 0x000F);
 		}
 		i = i + it->second.size() + 2;
 		it++;
@@ -648,24 +648,21 @@ void fantasy::drawEquipment() {
 }
 
 void fantasy::drawBattle() {
-	int margin = 25;
+	int margin = 15;
 
-	Fill(margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, L' ');
+	int left = margin;
+	int right = ScreenWidth() - margin;
+	int top = (margin / 2) + (5 / 2);
+	int bottom = ScreenHeight() - (margin / 2) + (5 / 2);
 
-	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
-	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
-	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
-	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
-
-	// title
-	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Battle!     " + here.monsters[enemy].name + L" vs. " + player1.name, 0x000F);
+	drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + player1.name);
 
 	// message
-	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to win?", 0x000F);
-	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
+	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to win?", 0x000F);
+	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
 	// draw player1
-	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+	// Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
 
 	// draw monster
 	// Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
@@ -673,21 +670,18 @@ void fantasy::drawBattle() {
 }
 
 void fantasy::drawQuit() {
-	int margin = 25;
+	int margin = 17;
 
-	Fill(margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, L' ');
+	int left = margin;
+	int right = ScreenWidth() - margin;
+	int top = margin;
+	int bottom = ScreenHeight() - margin;
 
-	DrawLine(margin, ScreenHeight() - margin, margin, margin, 0x007C, FG_WHITE);									// left
-	DrawLine(margin, margin, ScreenWidth() - margin, margin, 0x002D, FG_WHITE);										// top
-	DrawLine(ScreenWidth() - margin, margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x007C, FG_WHITE);	// right
-	DrawLine(margin, ScreenHeight() - margin, ScreenWidth() - margin, ScreenHeight() - margin, 0x002D, FG_WHITE);	// bottom
-
-	// title
-	DrawStringAlpha(margin + 3, margin + 1 - 10, L"Quit?", 0x000F);
+	drawWindow(left, right, top, bottom, L"Quit?");
 
 	// message
-	DrawStringAlpha(margin + 7, margin + 1 - 8, L"Are you sure you want to quit?", 0x000F);
-	DrawStringAlpha(margin + 7, margin + 1 - 6, L"[Y] Yes [N] No", 0x000F);
+	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to quit?", 0x000F);
+	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 }
 
 int fantasy::isMonster() {
