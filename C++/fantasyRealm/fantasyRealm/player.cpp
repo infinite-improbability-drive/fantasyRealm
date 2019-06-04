@@ -25,7 +25,7 @@ public:
 	player(wstring name) {
 		this->name = name;
 	}
-	enum dialogue { greeting, introduction, exclamation, join, disgust };
+	enum dialogue { greeting, introduction, exclamation, join, joined, disgust };
 	dialogue thoughts;
 	wstring speak(dialogue thoughts) {
 		switch (thoughts) {
@@ -34,7 +34,9 @@ public:
 		case introduction:
 			return L"My name is " + name + L" the " + role + L".";
 		case join:
-			return L" Would you have any need for a " + role + L" during your travels?";
+			return L"Would you have any need for a " + role + L" during your travels? [Y] Yes    [N] No";
+		case joined:
+			return L"Alright, let's have an adventure then!";
 		case disgust:
 			return L"Go away! I don't want to talk to you!";
 		default:
