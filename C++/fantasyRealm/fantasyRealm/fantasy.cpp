@@ -269,8 +269,6 @@ protected:
 								someone = player();
 								someone.x = rand() % (width - 2) + 1;
 								someone.y = rand() % (height - 2) + 1;
-
-								// here = location;
 								break;
 							}
 						}
@@ -324,10 +322,16 @@ protected:
 		// [T] talk
 		if (current == talk) {
 			for (int i = 0; i < 256; i++) {
+				if (i == 84) { continue; }
 				if (m_keys[i].bPressed) {
 					current = play;
 				}
 			}
+			if (m_keys[84].bPressed) {
+				if (someone.thoughts == someone.greeting) { someone.thoughts = someone.introduction; }
+				else if (someone.thoughts == someone.introduction) { someone.thoughts = someone.join; }
+			}
+
 		}
 		if (m_keys[84].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
@@ -427,7 +431,7 @@ protected:
 		}
 
 		// draw menus
-		if (current == talk) { drawMessage(someone, someone.disgust); }		// draw message
+		if (current == talk) { drawMessage(someone, someone.thoughts); }		// draw message
 		if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
 		// if (current == status) { drawStatus(); }		// draw status
 		// if (current == items) { drawItems(); }			// draw items
@@ -655,17 +659,19 @@ void fantasy::drawBattle() {
 	int top = (margin / 2) + (5 / 2);
 	int bottom = ScreenHeight() - (margin / 2) + (5 / 2);
 
-	drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + player1.name);
+	if (current == battle) {
+		drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + player1.name);
+	}
 
 	// message
 	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to win?", 0x000F);
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
 	// draw player1
-	// Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
 
 	// draw monster
-	// Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+	Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (5 / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
 
 }
 
