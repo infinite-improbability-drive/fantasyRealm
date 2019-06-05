@@ -4,11 +4,14 @@
 
 using namespace std;
 
-// first names
-wstring names::first[5] = { L"Elsie", L"Olga", L"Harold", L"Charlotte", L"Leopold" };
+wstring names::roles[15] = {
+	L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist",
+	L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool"
+};
 
-// last names
-wstring last[479] = {
+wstring names::first[5] = { L"Elsie", L"Charlotte", L"Harold", L"Leopold", L"Olga" };
+
+wstring names::last[479] = {
 	// World population = 7.55 billion
 	// China - 1.40 billion
 	L"Wang", L"Wong", L"Li", L"Lee", L"Zhang", L"Cheung", L"Liu", L"Lau", L"Chen",
@@ -153,8 +156,7 @@ wstring last[479] = {
 
 };
 
-// full names
-wstring full[479] = {
+wstring names::full[479] = {
 
 	// Ancient Names
 	// Sumerian 4500 BC - 2004 BC
@@ -360,24 +362,24 @@ wstring full[479] = {
 
 };
 
-wstring barbarian[6] = { L"Conan", L"Erlich", L"Krudr", L"Gimleim", L"Kull", L"Sonya" };
-wstring bard[6] = { L"Florian", L"Wolfgang", L"Carl", L"Elton", L"Gerald", L"Lenny" };
-wstring cleric[5] = { L"Joan", L"Nelly", L"Maria", L"Pious", L"Simon" };
-wstring demon_hunter[5] = { L"Blair", L"Bloodling", L"Damien", L"Jason", L"Michael" };
-wstring druid[4] = { L"Crow Bear", L"Crazy Horse", L"Flying Snake", L"Wolf Spider" };
-wstring knight[12] = { L"Alexander", L"Alfred", L"Arthur", L"Brianne", L"Charles", L"Cid", L"Edward", L"Henry", L"Heinrich", L"Richard", L"Seigfried", L"William" };
-wstring paladin[3] = { L"Alfonse", L"Marcus", L"Sanford" };
-wstring pugilist[3] = { L"Bonesaw", L"Hunter", L"Nikita" };
-wstring pyromancer[5] = { L"Rose", L"Lorelei", L"Veronica", L"Nadia", L"Jack" };
-wstring samurai[4] = { L"Mushashi", L"Miyamoto", L"Jubei", L"Saotome" };
-wstring sniper[2] = { L"Apollo", L"Artemis" };
-wstring sorcerer[4] = { L"Elektra", L"Esther", L"Helena", L"Nightshade" };
-wstring thief[6] = { L"Martin", L"Jimmy", L"Katsumi", L"Hayato", L"Beau", L"Justin" };
-wstring princess[12] = { L"Ariel", L"Augusta", L"Aurora", L"Euna", L"Eilonwy", L"Harmony", L"Irene", L"Maya", L"Melody", L"Priscilla", L"Rhythm", L"Sonya" };
-wstring fool[4] = { L"Charlie", L"Homer", L"Lemmy", L"Zippo" };
+wstring names::barbarian[6] = { L"Conan", L"Erlich", L"Krudr", L"Gimleim", L"Kull", L"Sonya" };
+wstring names::bard[6] = { L"Florian", L"Wolfgang", L"Carl", L"Elton", L"Gerald", L"Lenny" };
+wstring names::cleric[5] = { L"Joan", L"Nelly", L"Maria", L"Pious", L"Simon" };
+wstring names::demon_hunter[5] = { L"Blair", L"Bloodling", L"Damien", L"Jason", L"Michael" };
+wstring names::druid[4] = { L"Crow Bear", L"Crazy Horse", L"Flying Snake", L"Wolf Spider" };
+wstring names::knight[12] = { L"Alexander", L"Alfred", L"Arthur", L"Brianne", L"Charles", L"Cid", L"Edward", L"Henry", L"Heinrich", L"Richard", L"Seigfried", L"William" };
+wstring names::paladin[3] = { L"Alfonse", L"Marcus", L"Sanford" };
+wstring names::pugilist[3] = { L"Bonesaw", L"Hunter", L"Nikita" };
+wstring names::pyromancer[5] = { L"Rose", L"Lorelei", L"Veronica", L"Nadia", L"Jack" };
+wstring names::samurai[4] = { L"Mushashi", L"Miyamoto", L"Jubei", L"Saotome" };
+wstring names::sniper[2] = { L"Apollo", L"Artemis" };
+wstring names::sorcerer[4] = { L"Elektra", L"Esther", L"Helena", L"Nightshade" };
+wstring names::thief[6] = { L"Martin", L"Jimmy", L"Katsumi", L"Hayato", L"Beau", L"Justin" };
+wstring names::princess[12] = { L"Ariel", L"Augusta", L"Aurora", L"Euna", L"Eilonwy", L"Harmony", L"Irene", L"Maya", L"Melody", L"Priscilla", L"Rhythm", L"Sonya" };
+wstring names::fool[4] = { L"Charlie", L"Homer", L"Lemmy", L"Zippo" };
 
 
-wstring towns[2363] = {
+wstring names::towns[2363] = {
 
 	// Planet Earth
 	// North America
@@ -534,38 +536,80 @@ wstring towns[2363] = {
 	L"EGG Installation", L"Power Plant", L"Airport", L"HAARP Facility", L"Sun"
 };
 
-wstring antarctic[176] = {
+wstring names::antarctic_bases[176] = {
 	// Antarctica
 // Research Stations
 L"Aboa", L"Aguirre Cerda", L"Amundsen–Scott South Pole", L"Arctowski", L"Arrival Heights Laboratory", L"Arrival Heights Satellite", L"Artigas", L"Arturo Parodi", L"Arturo Prat", L"Asuka", L"Beaver Lake", L"Belgrano I", L"Belgrano II", L"Belgrano III", L"Bellingshausen", L"Bharati", L"Borga", L"Brockton", L"Brown", L"Byrd", L"Cámara", L"Carvajal", L"Station T", L"Casey", L"Charcot", L"Collins", L"Comandante Ferraz", L"Concordia", L"Dakshin Gangotri", L"Dallmann", L"Davis", L"Deception", L"Dirck Gerritsz Laboratory", L"Dobrowolski", L"Oasis", L"Dome Fuji", L"Drescher", L"Druzhba", L"Drúzhnaya 1", L"Drúzhnaya 2", L"Drúzhnaya 3", L"Drúzhnaya 4", L"Dumont d'Urville", L"E Base", L"East Base", L"Eco-Nelson", L"Eduardo Frei", L"and", L"Villa Las Estrellas", L"Eights", L"Ellsworth", L"Elichiribehety", L"Station D", L"Escudero", L"Esperanza", L"Filchner", L"Fossil Bluff", L"Station KG", L"Gabriel de Castilla", L"General Bernardo O'Higgins", L"Georg Forster", L"German Antarctic Receiving Station", L"Giacomo Bove", L"Gondwana", L"González Videla", L"Great Wall", L"Guillermo Mann", L"Hallett", L"Halley", L"Jang Bogo", L"Jinnah", L"Juan Carlos Primero", L"Jubany", L"Carlini", L"Julio Ripamonti", L"King Baudouin #1", L"King Baudouin #2", L"King Sejong", L"Kohnen", L"Komsomolskaya", L"Kunlun", L"Law", L"Lázarev", L"Lenie", L"Leningradskaya", L"Little America", L"Little Rockford", L"Machu Picchu", L"Maitri", L"Maldonado", L"Marambio", L"Mario Zucchelli", L"Matienzo", L"Maudheim", L"Mawson", L"McMurdo", L"Melchior", L"Mendel", L"Mir", L"Mirny", L"Mizuho", L"Molodyozhnaya", L"Neumayer I", L"Neumayer II", L"Neumayer III", L"Norway", L"Novolazarevskaya", L"Oasis", L"Dobrowolski", L"Oazis 2", L"Orcadas", L"Palmer", L"Petrel", L"Pionérskaya", L"Plateau", L"Pobeda", L"Pole of inaccessibility", L"Port Martin", L"Primavera", L"Princess Elisabeth", L"Progress", L"Risopatrón", L"Rothera", L"Station R", L"Russkaya", L"Salyut", L"San Martín", L"SANAE I", L"SANAE II", L"SANAE III", L"SANAE IV", L"Sarie Marais", L"Scott Base", L"Shirreff", L"Signy", L"Station H", L"Site 2", L"Syowa", L"Siple", L"Sobral", L"Sodrúzhestvo", L"South Ice", L"Sovetskaya", L"Soyuz", L"St. Kliment Ohridski", L"Station A", L"Station B", L"Station C", L"Station D", L"Station E", L"Station F", L"Faraday", L"Station G", L"Station J", L"Station N", L"Station O", L"Station P", L"Station T", L"Station V", L"Station W", L"Station Y", L"Svea", L"Taishan", L"Tor", L"Troll", L"Union Glacier", L"Vanda", L"Vechernyaya", L"Vernadsky", L"Vostok", L"Vostok I", L"Wasa", L"Weddell 1", L"World Park", L"Yelcho", L"Zhongshan",
 };
 
-wstring ores[15] = {
+wstring names::ores[15] = {
 	L"Adamantyte", L"Bauxite", L"Chromium", L"Copper", L"Diamond", L"Gold",
 	L"Iron", L"Lead", L"Manganese", L"Mithril", L"Nickel", L"Platinum",
 	L"Silver", L"Tin", L"Titanium"
 };
 
-wstring caves[17] = {
+wstring names::caveTypes[17] = {
 	L"Deepest", L"Dark", L"Deep", L"Deeper", L"Darker", L"Darkest", L"Mysterious",
 	L"Luminous", L"Skull", L"Faerie", L"Troll", L"Goblin", L"Bandit", L"Mercenary",
 	L"Demon's", L"Dwarven", L"Beast's"
 };
-wstring cave[10] = {
+wstring names::caves[10] = {
 	L"Underground Waterway", L"Antlion's Den", L"Manscorpion's Den",
 	L"Master's Ichor Chamber", L"Underworld"
 };
-wstring elements[6] = {
+wstring names::elements[6] = {
 	L"Air", L"Chaos", L"Earth", L"Fire", L"Light", L"Water"
 };
-wstring farms[8] = {
+wstring names::farms[8] = {
 	L"Blueberry", L"Raspberry", L"Barley", L"Beetroot", L"Wheat", L"Carrot", L"Potato", L"Cranberry"
 };
-wstring special[10] = {
+wstring names::specials[10] = {
 	L"Arcadia", L"Crystal Caves", L"Decrepid Crypt", L"Fishing Village",
 	L"Nightmare Cathedral", L"Northern Camp", L"Orc Encampment",
 	L"Peasant Hamlet", L"Royal Gardens", L"Windswept Valley"
 };
 
-// L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist",
-// L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool"};
+
+
+
+wstring names::role() { return roles[rand() % (sizeof(roles) / sizeof(roles[0]))]; }
+wstring names::firstName() { return first[rand() % (sizeof(first) / sizeof(first[0]))]; }
+wstring names::lastName() { return last[rand() % (sizeof(last) / sizeof(last[0]))]; }
+wstring names::fullName() { return full[rand() % (sizeof(full) / sizeof(full[0]))]; }
+wstring names::fullName(wstring role) {
+	int i = rand() % 20 + 1;
+	if (i == 1) { 
+		return full[rand() % (sizeof(full) / sizeof(full[0]))]; 
+	} 
+	else if (i == 20) {
+		if (role == L"Barbarian") {			return barbarian[rand() % (sizeof(barbarian) / sizeof(barbarian[0]))]; }
+		else if (role == L"Bard") {			return bard[rand() % (sizeof(bard) / sizeof(bard[0]))]; }
+		else if (role == L"Cleric") {		return cleric[rand() % (sizeof(cleric) / sizeof(cleric[0]))]; }
+		else if (role == L"Demon Hunter") { return demon_hunter[rand() % (sizeof(demon_hunter) / sizeof(demon_hunter[0]))]; }
+		else if (role == L"Druid") {		return druid[rand() % (sizeof(druid) / sizeof(druid[0]))]; }
+		else if (role == L"Knight") {		return knight[rand() % (sizeof(knight) / sizeof(knight[0]))]; }
+		else if (role == L"Paladin") {		return paladin[rand() % (sizeof(paladin) / sizeof(paladin[0]))]; }
+		else if (role == L"Pugilist") {		return pugilist[rand() % (sizeof(pugilist) / sizeof(pugilist[0]))]; }
+		else if (role == L"Pyromancer") {	return pyromancer[rand() % (sizeof(pyromancer) / sizeof(pyromancer[0]))]; }
+		else if (role == L"Samurai") {		return samurai[rand() % (sizeof(samurai) / sizeof(samurai[0]))]; }
+		else if (role == L"Sniper") {		return sniper[rand() % (sizeof(sniper) / sizeof(sniper[0]))]; }
+		else if (role == L"Sorcerer") {		return sorcerer[rand() % (sizeof(sorcerer) / sizeof(sorcerer[0]))]; }
+		else if (role == L"Thief") {		return thief[rand() % (sizeof(thief) / sizeof(thief[0]))]; }
+		else if (role == L"Princess") {		return princess[rand() % (sizeof(princess) / sizeof(princess[0]))]; }
+		else if (role == L"Fool") {			return fool[rand() % (sizeof(fool) / sizeof(fool[0]))];	}
+		else {								return L"Clarence Thompkins"; }
+	}
+	else { 
+		return firstName() + L" " + lastName(); 
+	} 
+}
+
+wstring names::townName() { return towns[rand() % (sizeof(towns) / sizeof(towns[0]))]; }
+wstring names::cave() { return caves[rand() % (sizeof(caves) / sizeof(caves[0]))]; }
+wstring names::caveType() { return caveTypes[rand() % (sizeof(caveTypes) / sizeof(caveTypes[0]))]; }
+wstring names::ore() { return ores[rand() % (sizeof(ores) / sizeof(ores[0]))]; }
+wstring names::element() { return elements[rand() % (sizeof(elements) / sizeof(elements[0]))]; }
+wstring names::farm() { return farms[rand() % (sizeof(farms) / sizeof(farms[0]))]; }
+wstring names::special() { return specials[rand() % (sizeof(specials) / sizeof(specials[0]))]; }
+wstring names::base() { return antarctic_bases[rand() % (sizeof(antarctic_bases) / sizeof(antarctic_bases[0]))]; }
+

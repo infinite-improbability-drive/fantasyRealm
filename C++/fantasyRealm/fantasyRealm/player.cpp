@@ -22,9 +22,10 @@ public:
 	bool selected = false;
 	player() {
 		names names;
-		this->name = names.first[rand() % (sizeof(names.first) / sizeof(names.first[0]))];
-		this->role = L"Shortstop";
+		this->role = names.role();
+		this->name = names.fullName(this->role);
 		this->thoughts = greeting;
+		// this->role = L"Shortstop";
 		// this->stats.push_back({ L"Strength", 1 });
 		// this->name = L"Billy";
 		// this->name = L"Hubris";

@@ -9,38 +9,56 @@ using namespace std;
 class names {
 public:
 
-	// first names
+	// roles
+	static wstring roles[15];
+	static wstring role();
+
+	// names
 	static wstring first[5];
-	wstring last[479];
-	wstring full[479];
+	static wstring firstName();
+	static wstring last[479];
+	static wstring lastName();
+	static wstring full[479];
+	static wstring fullName();
+	static wstring fullName(wstring role);
 
-	wstring barbarian[6];
-	wstring bard[6];
-	wstring cleric[5];
-	wstring demon_hunter[5];
-	wstring druid[4];
-	wstring knight[12];
-	wstring paladin[3];
-	wstring pugilist[3];
-	wstring pyromancer[5];
-	wstring samurai[4];
-	wstring sniper[2];
-	wstring sorcerer[4];
-	wstring thief[6];
-	wstring princess[12];
-	wstring fool[4];
+	static wstring barbarian[6];
+	static wstring bard[6];
+	static wstring cleric[5];
+	static wstring demon_hunter[5];
+	static wstring druid[4];
+	static wstring knight[12];
+	static wstring paladin[3];
+	static wstring pugilist[3];
+	static wstring pyromancer[5];
+	static wstring samurai[4];
+	static wstring sniper[2];
+	static wstring sorcerer[4];
+	static wstring thief[6];
+	static wstring princess[12];
+	static wstring fool[4];
 
-	wstring towns[2363];
-	wstring antarctic[176];
+	// places
+	static wstring towns[2363];
+	static wstring townName();
+	static wstring caves[10];
+	static wstring cave();
+	static wstring caveTypes[17];
+	static wstring caveType();
+	static wstring ores[15];
+	static wstring ore();
+	static wstring elements[6];
+	static wstring element();
+	static wstring farms[8];
+	static wstring farm();
 
-	wstring ores[15];
+	// special
+	static wstring specials[10];
+	static wstring special();
+	static wstring antarctic_bases[176];
+	static wstring base();
 
-	wstring caves[17];
-	wstring cave[10];
-	wstring elements[6];
-	wstring farms[8];
-	wstring special[10];
-
+	// monsters
 
 };
 
