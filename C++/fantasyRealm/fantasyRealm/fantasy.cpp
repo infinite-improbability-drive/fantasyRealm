@@ -126,7 +126,7 @@ protected:
 			int i = 0;
 			// move monsters
 			for (monster monster : here.monsters) {
-				int randomize = rand() % 4096 + 1;
+				int randomize = rand() % 10000 + 1;
 				if (randomize == 1) {
 					monster.x += 1;
 				}
@@ -301,48 +301,154 @@ protected:
 		}
 		// Menu Party Status Items Equipment Exit 
 		if (current == menu_mode) {
+			// main
 			if (current_menu == main) {
-				if (m_keys[0x25].bPressed) { 
-					current_menu = exit_menu; 
+				// left
+				if (m_keys[0x25].bPressed) {
+					current_menu = exit_menu;
 					menu_actions.find(current_menu)->second.second = true;
-				}		// left
+				}
+				// right
 				else if (m_keys[0x27].bPressed) { 
 					current_menu = party_menu; 
 					menu_actions.find(current_menu)->second.second = true;
-				}	// right
+				}
 			}
+
+			// party
 			else if (current_menu == party_menu) {
-				// menu_actions.find(current_menu)->second.second = true;
-				if (m_keys[0x25].bPressed) { current_menu = main; }				// left
-				else if (m_keys[0x27].bPressed) { current_menu = status; 
+				// left
+				if (m_keys[0x25].bPressed) { 
+					int i = 0;
+					bool selected = false;
+					for (player member : party) {
+						if (member.selected) {
+							selected = true;
+							break;
+						}
+						i++;
+					}
+					if (selected) {
+						if (i == 0) {
+							party[i].selected = false;
+							party[party.size() - 1].selected = true;
+						}
+						else {
+							party[i].selected = false;
+							party[i - 1].selected = true;
+						}
+					}
+					else {
+						current_menu = main;
+					}
+				}
+				// right
+				else if (m_keys[0x27].bPressed) { 
+					int i = 0;
+					bool selected = false;
+					for (player member : party) {
+						if (member.selected) {
+							selected = true;
+							break;
+						}
+						i++;
+					}
+					if (selected) {
+						if (i == party.size() - 1) {
+							party[i].selected = false;
+							party[0].selected = true;
+						}
+						else {
+							party[i].selected = false;
+							party[i + 1].selected = true;
+						}
+					}
+					else {
+						current_menu = status;
+						menu_actions.find(current_menu)->second.second = true;
+					}
+				}
+				// up
+				else if (m_keys[0x26].bPressed) {
+					int i = 0;
+					for (player member : party) { party[i].selected = false; i++; }
+					// current_player = nobody;
 					menu_actions.find(current_menu)->second.second = true;
-				}		// right
-				else if (m_keys[0x26].bPressed) { 
-					current_player = nobody; 
-					menu_actions.find(current_menu)->second.second = true;
-				}	// up
-				else if (m_keys[0x28].bPressed) { 
-					current_player = player1; 
+				}
+				// down
+				else if (m_keys[0x28].bPressed) {
+					// current_player = player1; 
+					party.front().selected = true;
 					menu_actions.find(current_menu)->second.second = false;
-				}	// down
+				}
 				// if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
 			}
 			else if (current_menu == status) {
 				// menu_actions.find(current_menu)->second.second = true;
+				// left
 				if (m_keys[0x25].bPressed) { 
-					current_menu = party_menu; 
-					current_player = nobody;
-					menu_actions.find(current_menu)->second.second = true;
-				}		// left
-				else if (m_keys[0x27].bPressed) { current_menu = items; }		// right
+					int i = 0;
+					bool selected = false;
+					for (player member : party) {
+						if (member.selected) {
+							selected = true;
+							break;
+						}
+						i++;
+					}
+					if (selected) {
+						if (i == 0) {
+							party[i].selected = false;
+							party[party.size() - 1].selected = true;
+						}
+						else {
+							party[i].selected = false;
+							party[i - 1].selected = true;
+						}
+					}
+					else {
+						current_menu = party_menu;
+						// current_player = nobody;
+						menu_actions.find(current_menu)->second.second = true;
+					}
+				}
+				// right
+				else if (m_keys[0x27].bPressed) { 
+					int i = 0;
+					bool selected = false;
+					for (player member : party) {
+						if (member.selected) {
+							selected = true;
+							break;
+						}
+						i++;
+					}
+					if (selected) {
+						if (i == party.size() - 1) {
+							party[i].selected = false;
+							party[0].selected = true;
+						}
+						else {
+							party[i].selected = false;
+							party[i + 1].selected = true;
+						}
+					}
+					else {
+						current_menu = items;
+					}
+				}
+				// up
 				else if (m_keys[0x26].bPressed) {
-					current_player = nobody;
+					int i = 0;
+					for (player member : party) { party[i].selected = false; i++; }
 					menu_actions.find(current_menu)->second.second = true;
-				}	// up
+				}
+				// down
 				else if (m_keys[0x28].bPressed) {
 					current_player = player1;
+					party.front().selected = true;
 					menu_actions.find(current_menu)->second.second = false;
-				}	// down
+				}
 				// menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == items) {
@@ -714,7 +820,7 @@ void fantasy::drawMenu(menu item) {
 void fantasy::drawParty(int start) {
 	int i = 0;
 	for (player player : party) {
-		if (player.name == current_player.name) {
+		if (player.selected) {
 			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
 		}
 		else {
@@ -726,7 +832,7 @@ void fantasy::drawParty(int start) {
 void fantasy::drawStatus(int start) {
 	int i = 0;
 	for (player player : party) {
-		if (player.name == current_player.name) {
+		if (player.selected) {
 			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
 		}
 		else {

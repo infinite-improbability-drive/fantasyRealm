@@ -12,14 +12,18 @@ public:
 	wstring role;
 	weapon weapon;
 	ability ability;
+	// vector<wstring, int> stats;
+	int level;
 	int wits;
 	int brave;
 	int x;
 	int y;
+	bool selected = false;
 	player() {
 		this->name = L"Billy";
 		this->role = L"Shortstop";
 		this->thoughts = greeting;
+		// this->stats.push_back({ L"Strength", 1 });
 		// this->name = L"Hubris";
 	}
 	player(wstring name) {
