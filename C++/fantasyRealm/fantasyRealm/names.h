@@ -12,6 +12,8 @@ public:
 	// roles
 	static wstring roles[15];
 	static wstring role();
+	static wstring weapons[15];
+	static wstring weaponName(wstring role);
 	static wstring magics[12];
 	static wstring magic();
 

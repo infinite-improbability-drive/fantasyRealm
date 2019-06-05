@@ -5,10 +5,10 @@
 using namespace std;
 
 wstring names::roles[15] = {
-	L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist",
-	L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool"
+	L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist", L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool"
 }; 
-
+wstring names::weapons[15] = {
+   L"Club", L"3-string Lute", L"Talisman", L"Warglaives", L"Oaken Staff", L"Copper Sword", L"Divine Longsword +5", L"Fists", L"PyroFlame", L"Master's Katana", L"Short Bow", L"Wand", L"Bandit Knife", L"Royal Crown", L"Straw Hat" };
 wstring names::magics[12] = {
 	L"Blood Magic", L"Black Magic", L"Dark Arts", L"Divine", L"Holy", L"Medium", L"Necromancy", L"Psychic", L"Pyromancy", L"Shapeshift", L"Sorcery", L"Unholy",
 };
@@ -564,6 +564,27 @@ wstring names::specials[10] = {
 
 
 wstring names::role() { return roles[rand() % (sizeof(roles) / sizeof(roles[0]))]; }
+wstring names::weaponName(wstring role) { 
+	if (role == L"Barbarian") { return L"Club"; }
+	else if (role == L"Bard") { return L"3-string Lute"; }
+	else if (role == L"Cleric") { return L"Talisman"; }
+	else if (role == L"Demon Hunter") { return L"Warglaives"; }
+	else if (role == L"Druid") { return L"Oaken Staff"; }
+	else if (role == L"Knight") { return L"Copper Sword"; }
+	else if (role == L"Paladin") { return L"Divine Longsword +5"; }
+	else if (role == L"Pugilist") { return L"Fists"; }
+	else if (role == L"Pyromancer") { return L"PyroFlame"; }
+	else if (role == L"Samurai") { return L"Master's Katana"; }
+	else if (role == L"Sniper") { return L"Short Bow"; }
+	else if (role == L"Sorcerer") { return L"Wand"; }
+	else if (role == L"Thief") { return L"Bandit Knife"; }
+	else if (role == L"Princess") { return L"Royal Crown"; }
+	else if (role == L"Fool") { return L"Straw Hat"; }
+	else { return L"Dead Fish"; }
+};
+
+
+
 wstring names::firstName() { return first[rand() % (sizeof(first) / sizeof(first[0]))]; }
 wstring names::lastName() { return last[rand() % (sizeof(last) / sizeof(last[0]))]; }
 wstring names::fullName() { return full[rand() % (sizeof(full) / sizeof(full[0]))]; }

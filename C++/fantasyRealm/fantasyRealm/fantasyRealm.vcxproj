@@ -156,6 +156,7 @@
     <ClInclude Include="names.h" />
     <ClInclude Include="olcConsoleGameEngine.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />

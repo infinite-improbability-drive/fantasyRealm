@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "names.h"
 #include "ability.cpp"
-#include "weapon.cpp"
+#include "weapon.h"
 #include <string>
 #include <vector>
 
@@ -11,7 +11,7 @@ class player {
 public:
 	wstring name;
 	wstring role;
-	weapon weapon;
+	weapon _weapon;
 	ability ability;
 	// vector<wstring, int> stats;
 	int level;
@@ -24,6 +24,7 @@ public:
 		names names;
 		this->role = names.role();
 		this->name = names.fullName(this->role);
+		this->_weapon = weapon(this->role);
 		this->thoughts = greeting;
 		// this->role = L"Shortstop";
 		// this->stats.push_back({ L"Strength", 1 });

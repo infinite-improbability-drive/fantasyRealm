@@ -55,7 +55,7 @@ using namespace std;
 using std::vector;
 
 #include "olcConsoleGameEngine.h"
-// #include "item.cpp"
+#include "item.h"
 #include "player.cpp"
 #include "realm.cpp"
 #include <Windows.h>
@@ -672,7 +672,18 @@ void fantasy::start() {
 		}
 	}
 	player1.role = input();
-	player1.weapon = weapon();
+	bool isRole;
+	for (wstring role : roles) {
+		if (player1.role == role) {
+			isRole = true;
+		}
+		else {
+			isRole = false;
+		}
+
+	}
+	if (!isRole) { player1.role = L"Fool"; }
+	player1._weapon = weapon(player1.role);
 	player1.ability = ability();
 
 	wprintf(L"You must think you're pretty clever.\n");
@@ -696,7 +707,7 @@ void fantasy::start() {
 	player1.y = 10;
 
 	wcout << "Hello " << player1.name << " the " << player1.role << ".\n";
-	wcout << "The " << player1.role << " class uses the ability " << player1.ability.name << " and the " << player1.weapon.name << " starting weapon.\n";
+	wcout << "The " << player1.role << " class uses the ability " << player1.ability.name << " and the " << player1._weapon.name << " starting weapon.\n";
 
 	system("pause");
 }
@@ -825,6 +836,10 @@ void fantasy::drawParty(int start) {
 	for (player player : party) {
 		if (player.selected) {
 			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
+			DrawStringAlpha(start + 3, start + 7, player.name, 0x000F);
+			DrawStringAlpha(start + 3, start + 8, player.role, 0x000F);
+			DrawStringAlpha(start + 3, start + 9, player._weapon.name, 0x000F);
+
 		}
 		else {
 			DrawStringAlpha(start + 4 + i, start + 5, player.name, 0x000F);
