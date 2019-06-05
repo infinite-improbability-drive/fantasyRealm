@@ -156,7 +156,7 @@ wstring names::last[479] = {
 
 };
 
-wstring names::full[479] = {
+wstring names::full[485] = {
 
 	// Ancient Names
 	// Sumerian 4500 BC - 2004 BC
@@ -336,29 +336,11 @@ wstring names::full[479] = {
 	L"Emmanuel Macron",
 
 	// Japanese Emporers
-	L"Jimmu", L"Suizei", L"Annei", L"Itoku", L"Kōshō", L"Kōan", L"Kōrei",
-	L"Kōgen", L"Kaika", L"Sujin", L"Suinin", L"Keikō", L"Seimu", L"Chūai",
-	L"Jingū", L"Ōjin", L"Nintoku", L"Richū", L"Hanzei", L"Ingyō", L"Ankō",
-	L"Yūryaku", L"Seinei", L"Kenzō", L"Ninken", L"Buretsu", L"Keitai",
-	L"Ankan", L"Senka", L"Kinmei", L"Bidatsu", L"Yōmei", L"Sushun",
-	L"Suiko", L"Jomei", L"Kōgyoku", L"Kōtoku", L"Saimei", L"Tenji",
-	L"Kōbun", L"Tenmu", L"Jitō", L"Monmu", L"Genmei", L"Genshō", L"Shōmu",
-	L"Kōken", L"Junnin", L"Shōtoku", L"Kōnin", L"Kanmu", L"Heizei", L"Saga",
-	L"Junna", L"Ninmyō", L"Montoku", L"Seiwa", L"Yōzei", L"Kōkō", L"Uda",
-	L"Daigo", L"Suzaku", L"Murakami", L"Reizei", L"En'yū", L"Kazan",
-	L"Ichijō", L"Sanjō", L"Go-Ichijō", L"Go-Suzaku", L"Go-Reizei",
-	L"Go-Sanjō", L"Shirakawa", L"Horikawa", L"Toba", L"Sutoku", L"Konoe",
-	L"Go-Shirakawa", L"Nijō", L"Rokujō", L"Takakura", L"Antoku",
-	L"Go-Toba", L"Tsuchimikado", L"Juntoku", L"Chūkyō", L"Go-Horikawa",
-	L"Shijō", L"Go-Saga", L"Go-Fukakusa", L"Kameyama", L"Go-Uda",
-	L"Fushimi", L"Go-Fushimi", L"Go-Nijō", L"Hanazono", L"Go-Daigo",
-	L"Kōgon", L"Kōmyō", L"Sukō", L"Go-Kōgon", L"Go-En'yū", L"Go-Komatsu",
-	L"Go-Murakami", L"Chōkei", L"Go-Kameyama", L"Go-Komatsu", L"Shōkō",
-	L"Go-Hanazono", L"Go-Tsuchimikado", L"Go-Kashiwabara", L"Go-Nara",
-	L"Ōgimachi", L"Go-Yōzei", L"Go-Mizunoo", L"Meishō", L"Go-Kōmyō",
-	L"Go-Sai", L"Reigen", L"Higashiyama", L"Nakamikado", L"Sakuramachi",
-	L"Momozono", L"Go-Sakuramachi", L"Go-Momozono", L"Kōkaku", L"Ninkō",
-	L"Kōmei", L"Meiji", L"Taishō", L"Shōwa", L"Akihito", L"Naruhito"
+	L"Jimmu", L"Suizei", L"Annei", L"Itoku", L"Kōshō", L"Kōan", L"Kōrei", L"Kōgen", L"Kaika", L"Sujin", L"Suinin", L"Keikō", L"Seimu", L"Chūai", L"Jingū", L"Ōjin", L"Nintoku", L"Richū", L"Hanzei", L"Ingyō", L"Ankō",	L"Yūryaku", L"Seinei", L"Kenzō", L"Ninken", L"Buretsu", L"Keitai", L"Ankan", L"Senka", L"Kinmei", L"Bidatsu", L"Yōmei", L"Sushun", L"Suiko", L"Jomei", L"Kōgyoku", L"Kōtoku", L"Saimei", L"Tenji", L"Kōbun", L"Tenmu", L"Jitō", L"Monmu", L"Genmei", L"Genshō", L"Shōmu", L"Kōken", L"Junnin", L"Shōtoku", L"Kōnin", L"Kanmu", L"Heizei", L"Saga", L"Junna", L"Ninmyō", L"Montoku", L"Seiwa", L"Yōzei", L"Kōkō", L"Uda", L"Daigo", L"Suzaku", L"Murakami", L"Reizei", L"En'yū", L"Kazan",	L"Ichijō", L"Sanjō", L"Go-Ichijō", L"Go-Suzaku", L"Go-Reizei", L"Go-Sanjō", L"Shirakawa", L"Horikawa", L"Toba", L"Sutoku", L"Konoe", L"Go-Shirakawa", L"Nijō", L"Rokujō", L"Takakura", L"Antoku",	L"Go-Toba", L"Tsuchimikado", L"Juntoku", L"Chūkyō", L"Go-Horikawa",	L"Shijō", L"Go-Saga", L"Go-Fukakusa", L"Kameyama", L"Go-Uda",	L"Fushimi", L"Go-Fushimi", L"Go-Nijō", L"Hanazono", L"Go-Daigo", L"Kōgon", L"Kōmyō", L"Sukō", L"Go-Kōgon", L"Go-En'yū", L"Go-Komatsu", L"Go-Murakami", L"Chōkei", L"Go-Kameyama", L"Go-Komatsu", L"Shōkō",	L"Go-Hanazono", L"Go-Tsuchimikado", L"Go-Kashiwabara", L"Go-Nara", L"Ōgimachi", L"Go-Yōzei", L"Go-Mizunoo", L"Meishō", L"Go-Kōmyō",	L"Go-Sai", L"Reigen", L"Higashiyama", L"Nakamikado", L"Sakuramachi", L"Momozono", L"Go-Sakuramachi", L"Go-Momozono", L"Kōkaku", L"Ninkō", L"Kōmei", L"Meiji", L"Taishō", L"Shōwa", L"Akihito", L"Naruhito"
+
+	// cool names
+	L"Bonesteel Flexhammer", L"Grim Deathson", L"Tom Spiderman", L"Grimgrace Shimshade", L"Flim-flam", L"Michael Bonesteel"
+
 
 };
 

@@ -647,6 +647,8 @@ void fantasy::start() {
 	wprintf(L"Please enter your name:\n");
 	player1.name = input();
 
+	if (player1.name == L"") { player1.name = names::fullName(); }
+
 	wprintf(L"Please choose your class-\n");
 	wstring roles[] = { L"Bard", L"Knight", L"Sorcerer" };
 	for (wstring role : roles) {
