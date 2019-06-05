@@ -2,7 +2,7 @@
   ability.cpp
   action.cpp
   fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(109): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(110): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   item.cpp
   monster.cpp
   name.cpp

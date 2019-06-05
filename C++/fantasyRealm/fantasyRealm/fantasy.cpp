@@ -72,6 +72,7 @@ public:
 
 private:
 	vector<player> party;
+	vector<player> npcs;
 	player player1;
 	player current_player;
 	player someone;
@@ -276,6 +277,7 @@ protected:
 								someone = player();
 								someone.x = rand() % (width - 2) + 1;
 								someone.y = rand() % (height - 2) + 1;
+								npcs.push_back(someone);
 								break;
 							}
 						}
@@ -312,7 +314,9 @@ protected:
 			else if (current_menu == party_menu) {
 				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = main; }				// left
-				else if (m_keys[0x27].bPressed) { current_menu = status; }		// right
+				else if (m_keys[0x27].bPressed) { current_menu = status; 
+					menu_actions.find(current_menu)->second.second = true;
+				}		// right
 				else if (m_keys[0x26].bPressed) { 
 					current_player = nobody; 
 					menu_actions.find(current_menu)->second.second = true;
@@ -391,6 +395,15 @@ protected:
 			if (m_keys[89].bPressed && someone.thoughts == someone.join) {
 				someone.thoughts = someone.joined;
 				party.push_back(someone);
+				int i = 0;
+				for (player npc : npcs) {
+					if (npc.x == someone.x && npc.y == someone.y) {
+						break;
+					}
+					i++;
+				}
+				npcs.erase(npcs.begin() + i);
+				someone = nobody;
 			}
 
 		}
