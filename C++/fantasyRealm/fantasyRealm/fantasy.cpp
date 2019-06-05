@@ -56,7 +56,7 @@ using std::vector;
 
 #include "olcConsoleGameEngine.h"
 #include "item.h"
-#include "player.cpp"
+#include "player.h"
 #include "realm.cpp"
 #include <Windows.h>
 
@@ -705,6 +705,7 @@ void fantasy::start() {
 
 	player1.x = 10;
 	player1.y = 10;
+	player1.level = 1;
 
 	wcout << "Hello " << player1.name << " the " << player1.role << ".\n";
 	wcout << "The " << player1.role << " class uses the ability " << player1.ability.name << " and the " << player1._weapon.name << " starting weapon.\n";
@@ -782,7 +783,7 @@ void fantasy::drawWindow(int left, int right, int top, int bottom, wstring title
 
 void fantasy::drawMessage(player player, player::dialogue message) {
 
-	int width = player.speak(message).length() + 4;
+	int width = max(player.speak(message).length(), player.name.length()) + 4;
 	int height = 5;
 	int offset = 4;
 
@@ -836,9 +837,7 @@ void fantasy::drawParty(int start) {
 	for (player player : party) {
 		if (player.selected) {
 			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
-			DrawStringAlpha(start + 3, start + 7, player.name, 0x000F);
-			DrawStringAlpha(start + 3, start + 8, player.role, 0x000F);
-			DrawStringAlpha(start + 3, start + 9, player._weapon.name, 0x000F);
+			DrawStringAlpha(start + 3, start + 7, player.name + L" the " + to_wstring(player.level) + L" " + player.role, 0x000F);
 
 		}
 		else {
@@ -852,6 +851,8 @@ void fantasy::drawStatus(int start) {
 	for (player player : party) {
 		if (player.selected) {
 			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
+			DrawStringAlpha(start + 3, start + 7, player.name + L" the " + to_wstring(player.level) + L" " + player.role, 0x000F);
+			DrawStringAlpha(start + 3, start + 8, L"Strength:" + to_wstring(1), 0x000F);
 		}
 		else {
 			DrawStringAlpha(start + 4 + i, start + 5, player.name, 0x000F);

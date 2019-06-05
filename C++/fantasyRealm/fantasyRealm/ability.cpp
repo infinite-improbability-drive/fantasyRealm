@@ -1,16 +1,13 @@
 #include "pch.h"
+#include "ability.h"
 #include <string>
 
 using namespace std;
 
-class ability {
-public:
-	wstring name;
-	ability() {
-		this->name = L"Hubris";
-	}
-	ability(wstring name) {
-		this->name = name;
-	}
 
-};
+ability::ability() {
+	this->name = L"Hubris";
+}
+ability::ability(wstring name) {
+	this->name = name;
+}

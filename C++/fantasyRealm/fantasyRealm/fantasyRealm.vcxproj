@@ -152,10 +152,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="names.h" />
     <ClInclude Include="olcConsoleGameEngine.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
