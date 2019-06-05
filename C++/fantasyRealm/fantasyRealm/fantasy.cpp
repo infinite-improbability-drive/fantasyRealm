@@ -80,7 +80,7 @@ private:
 	realm r;
 	enum mode {play, pause, talk, menu_mode, shop, battle, random_battle, quit};
 	enum menu {main, party_menu, status, items, equipment, exit_menu};
-	map<menu, wstring> menu_actions = { {party_menu, L"Party"}, {status, L"Status"}, {items, L"Items"}, {equipment, L"Equipment"}, {exit_menu, L"Exit"} };
+	map<menu, pair<wstring, bool>> menu_actions = { {party_menu, {L"Party", false}}, {status, {L"Status", false} }, {items, {L"Items", false }}, {equipment, {L"Equipment", false }}, {exit_menu, {L"Exit", false }} };
 	mode current;
 	menu current_menu;
 	// vector<menu, int> mz = { {main, 0 }};
@@ -299,35 +299,72 @@ protected:
 		}
 		// Menu Party Status Items Equipment Exit 
 		if (current == menu_mode) {
-
-			if (current_menu != party_menu) { current_player = nobody; }
-
 			if (current_menu == main) {
-				if (m_keys[0x25].bPressed) { current_menu = exit_menu; }		// left
-				else if (m_keys[0x27].bPressed) { current_menu = party_menu; }	// right
+				if (m_keys[0x25].bPressed) { 
+					current_menu = exit_menu; 
+					menu_actions.find(current_menu)->second.second = true;
+				}		// left
+				else if (m_keys[0x27].bPressed) { 
+					current_menu = party_menu; 
+					menu_actions.find(current_menu)->second.second = true;
+				}	// right
 			}
 			else if (current_menu == party_menu) {
+				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = main; }				// left
 				else if (m_keys[0x27].bPressed) { current_menu = status; }		// right
-				else if (m_keys[0x28].bPressed) { current_player = player1; }	// down
+				else if (m_keys[0x26].bPressed) { 
+					current_player = nobody; 
+					menu_actions.find(current_menu)->second.second = true;
+				}	// up
+				else if (m_keys[0x28].bPressed) { 
+					current_player = player1; 
+					menu_actions.find(current_menu)->second.second = false;
+				}	// down
+				// if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
 			}
 			else if (current_menu == status) {
-				if (m_keys[0x25].bPressed) { current_menu = party_menu; }		// left
+				// menu_actions.find(current_menu)->second.second = true;
+				if (m_keys[0x25].bPressed) { 
+					current_menu = party_menu; 
+					current_player = nobody;
+					menu_actions.find(current_menu)->second.second = true;
+				}		// left
 				else if (m_keys[0x27].bPressed) { current_menu = items; }		// right
+				else if (m_keys[0x26].bPressed) {
+					current_player = nobody;
+					menu_actions.find(current_menu)->second.second = true;
+				}	// up
+				else if (m_keys[0x28].bPressed) {
+					current_player = player1;
+					menu_actions.find(current_menu)->second.second = false;
+				}	// down
+				// menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == items) {
+				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = status; }			// left
 				else if (m_keys[0x27].bPressed) { current_menu = equipment; }	// right
+				menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == equipment) {
+				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = items; }			// left
 				else if (m_keys[0x27].bPressed) { current_menu = exit_menu; }	// right
+				menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == exit_menu) {
+				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = equipment; }		// left
 				else if (m_keys[0x27].bPressed) { current_menu = main; }		// right
 				else if (m_keys[13].bPressed) { current = play; }				// enter
+				if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
 			}
+
+			// if (current_menu != main && current_player.name == L"") { menu_actions.find(current_menu)->second.second = true; }
+
+			// if (current_menu != party_menu) { current_player = nobody; }
+			// else if (current_menu != status) { current_player = nobody; }
 
 			// [S] status
 			if (m_keys[83].bPressed) { current_menu = status; }
@@ -644,13 +681,13 @@ void fantasy::drawMenu(menu item) {
 	int i = 0;
 	auto it = menu_actions.begin();
 	while (it != menu_actions.end()) {
-		if (it->first == item) {
-			DrawStringAlpha(left + 3 + i, top + 3, L"[" + it->second + L"]", 0x000F);
+		if (it->first == item && it->second.second == true) {
+			DrawStringAlpha(left + 3 + i, top + 3, L"[" + it->second.first + L"]", 0x000F);
 		}
 		else {
-			DrawStringAlpha(left + 4 + i, top + 3, it->second, 0x000F);
+			DrawStringAlpha(left + 4 + i, top + 3, it->second.first, 0x000F);
 		}
-		i = i + it->second.size() + 2;
+		i = i + it->second.first.size() + 2;
 		it++;
 	}
 
