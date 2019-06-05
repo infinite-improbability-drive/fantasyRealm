@@ -5,7 +5,7 @@
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(110): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   item.cpp
   monster.cpp
-  name.cpp
+  names.cpp
   place.cpp
   player.cpp
   realm.cpp

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "name.cpp"
+#include "names.h"
 #include "time.h"
 #include <iostream>
 #include <string>
@@ -44,7 +44,7 @@ public:
 };
 
 static wstring getName(int i) {
-	name names = name();
+	names names;
 	wstring here;
 
 	if (i == 1000) {}

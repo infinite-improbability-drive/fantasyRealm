@@ -445,26 +445,22 @@ protected:
 				}
 				// down
 				else if (m_keys[0x28].bPressed) {
-					current_player = player1;
+					// current_player = player1;
 					party.front().selected = true;
 					menu_actions.find(current_menu)->second.second = false;
 				}
-				// menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == items) {
-				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = status; }			// left
 				else if (m_keys[0x27].bPressed) { current_menu = equipment; }	// right
 				menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == equipment) {
-				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = items; }			// left
 				else if (m_keys[0x27].bPressed) { current_menu = exit_menu; }	// right
 				menu_actions.find(current_menu)->second.second = true;
 			}
 			else if (current_menu == exit_menu) {
-				// menu_actions.find(current_menu)->second.second = true;
 				if (m_keys[0x25].bPressed) { current_menu = equipment; }		// left
 				else if (m_keys[0x27].bPressed) { current_menu = main; }		// right
 				else if (m_keys[13].bPressed) { current = play; }				// enter
@@ -648,7 +644,6 @@ int main() {
 void fantasy::start() {
 
 	wprintf(L"Welcome to the fantasy realm.\n");
-
 	wprintf(L"Please enter your name:\n");
 	player1.name = input();
 
@@ -659,10 +654,9 @@ void fantasy::start() {
 			wcout << role << ", ";
 		}
 		else {
-			wcout << role << ". ";
+			wcout << role << ".\n";
 		}
 	}
-	wprintf(L"\n");
 	player1.role = input();
 	player1.weapon = weapon();
 	player1.ability = ability();
@@ -691,11 +685,6 @@ void fantasy::start() {
 	wcout << "The " << player1.role << " class uses the ability " << player1.ability.name << " and the " << player1.weapon.name << " starting weapon.\n";
 
 	system("pause");
-	// wprintf(L"Press enter to begin:\n");
-	// string enter;
-	// while ((0x8000 & GetAsyncKeyState((unsigned char)('\x12'))) != 0); {
-	// 	input();
-	// }
 }
 
 wstring input() {

@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "names.h"
 #include "ability.cpp"
 #include "weapon.cpp"
 #include <string>
@@ -20,10 +21,12 @@ public:
 	int y;
 	bool selected = false;
 	player() {
-		this->name = L"Billy";
+		names names;
+		this->name = names.first[rand() % (sizeof(names.first) / sizeof(names.first[0]))];
 		this->role = L"Shortstop";
 		this->thoughts = greeting;
 		// this->stats.push_back({ L"Strength", 1 });
+		// this->name = L"Billy";
 		// this->name = L"Hubris";
 	}
 	player(wstring name) {
