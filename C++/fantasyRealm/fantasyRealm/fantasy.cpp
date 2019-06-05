@@ -117,6 +117,7 @@ protected:
 		inventory.push_back(item());
 		inventory.push_back(item());
 		inventory.push_back(item());
+		inventory.push_back(item(L"Map Crystal"));
 		const realm here = realm(player1.wits, player1.brave);
 		return true;
 	}
@@ -578,24 +579,35 @@ protected:
 		}
 
 		// draw map hints
+		// int i = 0;
+		// vector<int> j;
+		// for (item item : inventory) {
+			// if (item.name == L"Map Crystal") {
+				// j.push_back(rand() % here.places.size());
+			// }
+		// }
 		for (place place : here.places) {
-			// top
-			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) <= 5) {
-				Draw((int)(ScreenWidth() / 2) + place.x - player1.x, 6, L"^"[0], FG_WHITE);
-			}
-			// bottom
-			if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > ScreenHeight() - 1) {
-				Draw((int)(ScreenWidth() / 2) + place.x - player1.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
-			}
-
-			// left
-			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) < 2) {
-				Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L"<"[0], FG_WHITE);
-			}
-			// right
-			if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) > ScreenWidth() + 1) {
-				Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L">"[0], FG_WHITE);
-			}
+			// for (int k : j) {
+				// if (i == k) {
+					// top
+					if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) <= 5) {
+						Draw((int)(ScreenWidth() / 2) + place.x - player1.x, 6, L"^"[0], FG_WHITE);
+					}
+					// bottom
+					if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > ScreenHeight() - 1) {
+						Draw((int)(ScreenWidth() / 2) + place.x - player1.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
+					}
+					// left
+					if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) < 2) {
+						Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L"<"[0], FG_WHITE);
+					}
+					// right
+					if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) > ScreenWidth() + 1) {
+						Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L">"[0], FG_WHITE);
+					}
+				// }
+			// }
+			// i++;
 		}
 
 		// draw player1

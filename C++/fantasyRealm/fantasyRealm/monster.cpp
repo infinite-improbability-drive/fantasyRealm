@@ -17,8 +17,10 @@ static map<wstring, int> trashMonsters = {
 static map<wstring, int> smallMonsters = { 
 	{L"Brownie", 0x0008}, {L"Cockatrice", 0x0008}, {L"Enchanted Clothing", 0x000F}, {L"Faery", 0x000D}, {L"Fairy", 0x000E}, {L"Gnome", 0x000E}, {L"Goblin", 0x0002}, {L"Hobbit", 0x0006}, {L"Imp", 0x0005}, {L"Kodama", 0x000F}, {L"Pirhana", 0x000F}, {L"Pixie", 0x000F}, {L"Rat", 0x000F}, {L"Slime", 0x000F}, {L"Sprite", 0x000F}, {L"Welp", 0x000F}, {L"Will-o'-the-wisp", 0x000F}, {L"Will-o'-wisp", 0x000F}, {L"Wisp", 0x000F} };
 static map<wstring, int> normalMonsters = { 
-	{L"Bandit", 0x0006}, {L"Basilisk", 0x0002}, {L"Centaur", 0x000F}, {L"Demon", 0x000C}, {L"Djinn", 0x000F}, {L"Dryad", 0x000A}, {L"Elemental", 0x000F}, {L"Enchanted Furniture", 0x000F}, {L"Faun", 0x000F}, {L"Ghoul", 0x000F}, {L"Giant Rat", 0x000F}, {L"Green Man", 0x000F}, {L"Harpy", 0x000F}, {L"Lamia", 0x0001}, {L"Large Slime", 0x0002}, {L"Mermaid", 0x000B}, {L"Naga", 0x000B}, {L"Nymph", 0x000B}, {L"Orc", 0x000A}, {L"Satyr", 0x0006}, {L"Siren", 0x000E}, {L"Tengu", 0x0005}, {L"Vampire", 0x000F}, {L"Wendigo", 0x0008}, {L"Werewolf", 0x0008}, {L"Wolf", 0x0008}, {L"Yokai", 0x000B}, {L"Zombie", 0x000A} };
-static map<wstring, int> largeMonsters = { 
+	{L"Bandit", 0x0006}, {L"Basilisk", 0x0002}, {L"Centaur", 0x000F}, {L"Demon", 0x000C}, {L"Djinn", 0x000F}, {L"Dryad", 0x000A}, {L"Elemental", 0x000F}, {L"Enchanted Furniture", 0x000F}, {L"Faun", 0x000F}, {L"Ghoul", 0x000F}, {L"Giant Rat", 0x000F}, {L"Green Man", 0x000F}, {L"Harpy", 0x000F}, {L"Lamia", 0x0001}, {L"Large Slime", 0x0002}, {L"Mermaid", 0x000B}, {L"Naga", 0x000B}, {L"Nymph", 0x000B}, {L"Orc", 0x000A}, {L"Satyr", 0x0006}, {L"Siren", 0x000E}, {L"Tengu", 0x0005},  {L"Wendigo", 0x0008}, {L"Werewolf", 0x0008}, {L"Wolf", 0x0008}, {L"Yokai", 0x000B} };
+static map<wstring, int> ghosts = { {L"Animal Spirit", 0x0008}, {L"Banshee", 0x0008}, {L"Geist", 0x0008},  {L"Ghost", 0x0008}, {L"Poltergeist", 0x0008}, {L"Preta", 0x0008}, {L"Wraith", 0x0008} };
+static map<wstring, int> undead = { {L"Ghoul", 0x0008}, {L"Mummy", 0x0008}, {L"Vampire", 0x000F}, {L"Zombie", 0x000A} };
+static map<wstring, int> largeMonsters = {
 	{L"Alpha Wolf", 0x000F}, {L"Alpha Werewolf", 0x0008},{L"Behemoth", 0x000F}, {L"Chimera", 0x000F}, {L"Cyclops", 0x000F}, {L"Demon King", 0x000F}, {L"Dire Wolf", 0x000F}, {L"Giantic Rat", 0x000F}, {L"Goblin King", 0x000F}, {L"Golem", 0x000F}, {L"Griffin", 0x000F}, {L"Hydra", 0x000F}, {L"Land Shark", 0x000F}, {L"Manticore", 0x000F}, {L"Minotaur", 0x000F}, {L"Ogre", 0x000F}, {L"Orc Captain", 0x000F}, {L"Scorpion Man", 0x000F}, {L"Were-bear", 0x000F} };
 static map<wstring, int> veryLargeMonsters = { 
 	{L"Dragon", 0x000F}, {L"Giant", 0x0008}, {L"Man-Eating Tree", 0x000A}, {L"John Henry", 0x0008} };
@@ -46,6 +48,7 @@ public:
 	wstring name;
 	wstring type;
 	wchar_t icon;
+
 	int color;
 	int x;
 	int y;

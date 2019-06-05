@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="item.h" />
     <ClInclude Include="names.h" />
     <ClInclude Include="olcConsoleGameEngine.h" />
     <ClInclude Include="pch.h" />

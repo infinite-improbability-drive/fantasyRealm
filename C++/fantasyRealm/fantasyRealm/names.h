@@ -12,13 +12,15 @@ public:
 	// roles
 	static wstring roles[15];
 	static wstring role();
+	static wstring magics[12];
+	static wstring magic();
 
 	// names
 	static wstring first[5];
 	static wstring firstName();
 	static wstring last[479];
 	static wstring lastName();
-	static wstring full[485];
+	static wstring full[528];
 	static wstring fullName();
 	static wstring fullName(wstring role);
 

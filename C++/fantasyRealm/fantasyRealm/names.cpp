@@ -7,6 +7,10 @@ using namespace std;
 wstring names::roles[15] = {
 	L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist",
 	L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool"
+}; 
+
+wstring names::magics[12] = {
+	L"Blood Magic", L"Black Magic", L"Dark Arts", L"Divine", L"Holy", L"Medium", L"Necromancy", L"Psychic", L"Pyromancy", L"Shapeshift", L"Sorcery", L"Unholy",
 };
 
 wstring names::first[5] = { L"Elsie", L"Charlotte", L"Harold", L"Leopold", L"Olga" };
@@ -156,7 +160,7 @@ wstring names::last[479] = {
 
 };
 
-wstring names::full[485] = {
+wstring names::full[528] = {
 
 	// Ancient Names
 	// Sumerian 4500 BC - 2004 BC
@@ -341,6 +345,11 @@ wstring names::full[485] = {
 	// cool names
 	L"Bonesteel Flexhammer", L"Grim Deathson", L"Tom Spiderman", L"Grimgrace Shimshade", L"Flim-flam", L"Michael Bonesteel"
 
+	// Fighting Baseball (NES)
+	L"Sleve McDichael", L"Onson Sweemey", L"Darryl Archideld", L"Anatoli Smorin", L"Rey McSriff", L"Glennallen Mixon", L"Mario McRlwain", L"Raul Chamgerlain", L"Kevin Nogilny", L"Tony Smehrik", L"Bobson Dugnutt", L"Willie Dustice", L"Jeromy Gride", L"Scott Dourque", L"Shown Furcotte", L"Dean Wesrey", L"Mike Truk", L"Dwigt Rortugal", L"Tim Sandaele", L"Karl Dandleton", L"Mike Sernandez", L"Todd Bonzalez",
+
+	// Atlanta Braves (NBA), Houston Astros (NBA), Buffalo Sabres (NHL), Bostin Bruins (NHL) Players 1993-1997
+	L"Greg McMichael", L"Don Sweeney", L"Dave Archibald", L"Rey Sanchez", L"Fred McGriff", L"Otis Nixon", L"Glenallen Hill", L"Dave McLlwain", L"Alexander Mogilny", L"Richard Smehlick", L"Ron Tugnutt", L"David Justice", L"Curtis Pride", L"Ray Bourque", L"Darren Turcotte", L"Glen Wesley", L"John Kruk", L"Mark Portugal", L"Tim Salmon", L"Casey Candaele", L"Terry Pendleton", L"Tony Fernandez", L"Luis Gonzales"
 
 };
 
