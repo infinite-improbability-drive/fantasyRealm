@@ -4,6 +4,7 @@
 
 #include "ability.h"
 #include "weapon.h"
+#include <map>
 #include <string>
 
 using namespace std;
@@ -27,8 +28,14 @@ public:
 	enum dialogue { greeting, introduction, exclamation, join, joined, disgust };
 	dialogue thoughts;
 	wstring speak(dialogue thoughts);
-	enum stats { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
-	// vector<wstring, stats> stats;
+	enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
+	// std::map<statistics, pair<wstring, int>> stats;
+	struct stat {
+		wstring name;
+		int value;
+	};
+	stat stats[luck + 1] = { {L"Strength", 1}, {L"Defense", 1}, {L"Stamina", 1}, {L"Perception", 1}, {L"Accuracy", 1}, {L"Agility", 1}, {L"Intellect", 1}, {L"Wisdom", 1}, {L"Spirit", 1}, {L"Charisma", 1}, {L"Luck", 1}, };
+
 };
 
 #endif

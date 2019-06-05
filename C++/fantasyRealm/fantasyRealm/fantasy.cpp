@@ -851,8 +851,12 @@ void fantasy::drawStatus(int start) {
 	for (player player : party) {
 		if (player.selected) {
 			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
-			DrawStringAlpha(start + 3, start + 7, player.name + L" the " + to_wstring(player.level) + L" " + player.role, 0x000F);
-			DrawStringAlpha(start + 3, start + 8, L"Strength:" + to_wstring(1), 0x000F);
+			DrawStringAlpha(start + 3, start + 7, player.name + L" the Lv " + to_wstring(player.level) + L" " + player.role, 0x000F);
+			int k = 0;
+			for (auto stat : player.stats) {
+				DrawStringAlpha(start + 5, start + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
+				k++;
+			}
 		}
 		else {
 			DrawStringAlpha(start + 4 + i, start + 5, player.name, 0x000F);

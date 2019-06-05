@@ -17,6 +17,8 @@ player::player() {
 	this->thoughts = greeting;
 	this->level = 1;
 	this->selected = false;
+	enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
+	this->stats[strength].value = 4;
 	// this->role = L"Shortstop";
 	// this->stats.push_back({ L"Strength", 1 });
 	// this->name = L"Billy";
