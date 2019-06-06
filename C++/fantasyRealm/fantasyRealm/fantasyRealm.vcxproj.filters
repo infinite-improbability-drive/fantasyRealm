@@ -39,6 +39,9 @@
     <ClInclude Include="action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="place.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

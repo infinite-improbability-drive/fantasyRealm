@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "place.cpp"
+#include "place.h"
 // #include "player.cpp"
 #include "monster.cpp"
 #include <string>

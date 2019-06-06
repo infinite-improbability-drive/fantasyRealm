@@ -56,6 +56,7 @@ using std::vector;
 
 #include "olcConsoleGameEngine.h"
 #include "item.h"
+#include "names.h"
 #include "player.h"
 #include "realm.cpp"
 #include <Windows.h>
