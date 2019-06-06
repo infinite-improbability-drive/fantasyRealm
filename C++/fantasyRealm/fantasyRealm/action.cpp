@@ -1,12 +1,11 @@
 #include "pch.h"
-#include "place.cpp"
+#include "action.h"
 #include <string>
 
 using namespace std;
 
-class action {
-public:
-	wstring name;
-};
-
-// actions - enter, exit, look, menu, quit, 
+action::action() {
+	this->name = L"Weakling Punch";
+	this->physical_damage = 1;
+	this->magic_damage = 1;
+}

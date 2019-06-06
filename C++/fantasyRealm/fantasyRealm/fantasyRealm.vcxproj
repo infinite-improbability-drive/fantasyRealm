@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="action.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="names.h" />
     <ClInclude Include="olcConsoleGameEngine.h" />
