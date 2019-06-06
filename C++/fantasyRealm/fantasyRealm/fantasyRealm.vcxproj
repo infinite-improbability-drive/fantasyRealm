@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="action.h" />
+    <ClInclude Include="fantasy.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="names.h" />

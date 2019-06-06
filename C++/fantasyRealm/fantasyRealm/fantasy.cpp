@@ -55,585 +55,539 @@ using namespace std;
 using std::vector;
 
 #include "olcConsoleGameEngine.h"
+#include "fantasy.h"
 #include "item.h"
 #include "names.h"
 #include "player.h"
 #include "realm.h"
 #include <Windows.h>
 
+bool fantasy::OnUserCreate() {
+	// seed random number generator
+	// int r = rand() % 1000;
+	srand(clock() + time(nullptr));
+	mode current = play;
+	menu current_menu = main;
+	move = true;
+	party.push_back(player1);
+	inventory.push_back(item());
+	inventory.push_back(item());
+	inventory.push_back(item());
+	inventory.push_back(item());
+	inventory.push_back(item());
+	inventory.push_back(item(L"Map Crystal"));
+	const realm here = realm(player1.wits, player1.brave);
+	return true;
+}
 
-wstring input();
-
-class fantasy : public olcConsoleGameEngine {
-public:
-	fantasy() {
-		m_sAppName = L"fantasy realm";
-	}
-	void start();
-
-private:
-	vector<player> party;
-	vector<player> npcs;
-	player player1;
-	player current_player;
-	player someone;
-	player nobody;
-	realm here;
-	realm r;
-	enum mode {play, pause, talk, menu_mode, shop, battle, random_battle, quit};
-	enum menu {main, party_menu, status, items, equipment, exit_menu};
-	map<menu, pair<wstring, bool>> menu_actions = { {party_menu, {L"Party", false}}, {status, {L"Status", false} }, {items, {L"Items", false }}, {equipment, {L"Equipment", false }}, {exit_menu, {L"Exit", false }} };
-	mode current;
-	menu current_menu;
-	// vector<menu, int> mz = { {main, 0 }};
-	vector<wstring> actions;
-	vector<item> inventory;
-	bool move;
-	int enemy;
-
-	void drawHeader();
-	void drawWindow(int left, int right, int top, int bottom, wstring title);
-	void drawMessage(player player, player::dialogue message);
-	void drawMenu(menu item);
-	void drawParty(int start);
-	void drawStatus(int start);
-	void drawItems(int start);
-	void drawEquipment(int start);
-	void drawBattle();
-	void drawQuit();
-	// void isSolid();
-	int isMonster();
-
-protected:
-	virtual bool OnUserCreate() {
-		// seed random number generator
-		// int r = rand() % 1000;
-		srand(clock() + time(nullptr));
-		mode current = play;
-		menu current_menu = main;
-		move = true;
-		party.push_back(player1);
-		inventory.push_back(item());
-		inventory.push_back(item());
-		inventory.push_back(item());
-		inventory.push_back(item());
-		inventory.push_back(item());
-		inventory.push_back(item(L"Map Crystal"));
-		const realm here = realm(player1.wits, player1.brave);
-		return true;
-	}
-
-	virtual bool OnUpdate() {
-		if (current == play) {
-			int i = 0;
-			// move monsters
-			for (monster monster : here.monsters) {
-				int randomize = rand() % 10000 + 1;
-				if (randomize == 1) {
-					monster.x += 1;
-				}
-				else if (randomize == 2) {
-					monster.y += 1;
-				}
-				else if (randomize == 3) {
-					monster.x -= 1;
-				}
-				else if (randomize == 4) {
-					monster.y -= 1;
-				}
-				else if (randomize == 5) {
-					monster.x += 1;
-					monster.y += 1;
-				}
-				else if (randomize == 6) {
-					monster.x += 1;
-					monster.y -= 1;
-				}
-				else if (randomize == 7) {
-					monster.y += 1;
-					monster.x -= 1;
-				}
-				else if (randomize == 8) {
-					monster.x -= 1;
-					monster.y -= 1;
-				}
-				else {
-				}
-				here.monsters[i] = monster;
-				i += 1;
+bool fantasy::OnUpdate() {
+	if (current == play) {
+		int i = 0;
+		// move monsters
+		for (monster monster : here.monsters) {
+			int randomize = rand() % 10000 + 1;
+			if (randomize == 1) {
+				monster.x += 1;
 			}
+			else if (randomize == 2) {
+				monster.y += 1;
+			}
+			else if (randomize == 3) {
+				monster.x -= 1;
+			}
+			else if (randomize == 4) {
+				monster.y -= 1;
+			}
+			else if (randomize == 5) {
+				monster.x += 1;
+				monster.y += 1;
+			}
+			else if (randomize == 6) {
+				monster.x += 1;
+				monster.y -= 1;
+			}
+			else if (randomize == 7) {
+				monster.y += 1;
+				monster.x -= 1;
+			}
+			else if (randomize == 8) {
+				monster.x -= 1;
+				monster.y -= 1;
+			}
+			else {
+			}
+			here.monsters[i] = monster;
+			i += 1;
 		}
-		return true;
 	}
+	return true;
+}
 
-	virtual bool OnUserUpdate(float fElapsedTime) {
+bool fantasy::OnUserUpdate(float fElapsedTime) {
 
-		// clear screen
-		Fill(0, 0, ScreenWidth(), ScreenHeight(), L' ');
+	// clear screen
+	Fill(0, 0, ScreenWidth(), ScreenHeight(), L' ');
 
 // -------- LOGIC --------
 
-		if (current == play) {
+	if (current == play) {
 
-			// move player1
-			// left
-			if (m_keys[0x25].bPressed) {
-				// check if solid 
-				for (place place : here.places) {
-					if ((place.y == player1.y) && (place.x + 1 == player1.x)) {
-						if (place.solid) {
-							move = false;
-							break;
-						}
+		// move player1
+		// left
+		if (m_keys[0x25].bPressed) {
+			// check if solid 
+			for (place place : here.places) {
+				if ((place.y == player1.y) && (place.x + 1 == player1.x)) {
+					if (place.solid) {
+						move = false;
+						break;
 					}
 				}
-				// check if monster
-				enemy = isMonster();
-
-				// move
-				if (move) {
-					player1.x -= 1; 
-				}
 			}
-			// up
-			if (m_keys[0x26].bPressed) {
-				// check if solid object
-				for (place place : here.places) {
-					if ((place.x == player1.x) && (place.y + 1 == player1.y)) {
-						if (place.solid) {
-							move = false;
-							break;
-						}
+			// check if monster
+			enemy = isMonster();
+
+			// move
+			if (move) {
+				player1.x -= 1; 
+			}
+		}
+		// up
+		if (m_keys[0x26].bPressed) {
+			// check if solid object
+			for (place place : here.places) {
+				if ((place.x == player1.x) && (place.y + 1 == player1.y)) {
+					if (place.solid) {
+						move = false;
+						break;
 					}
 				}
-				// check if monster
-				enemy = isMonster();
-
-				// move
-				if (move) {
-					player1.y -= 1;
-				}
 			}
-			// right
-			if (m_keys[0x27].bPressed) {	// right
-				for (place place : here.places) {
-					if ((place.y == player1.y) && (place.x - 1 == player1.x)) {
-						if (place.solid) {
-							move = false;
-							break;
-						}
+			// check if monster
+			enemy = isMonster();
+
+			// move
+			if (move) {
+				player1.y -= 1;
+			}
+		}
+		// right
+		if (m_keys[0x27].bPressed) {	// right
+			for (place place : here.places) {
+				if ((place.y == player1.y) && (place.x - 1 == player1.x)) {
+					if (place.solid) {
+						move = false;
+						break;
 					}
 				}
-				// check if monster
-				enemy = isMonster();
-
-				if (move) {
-					player1.x += 1; 
-				}
 			}
-			// down
-			if (m_keys[0x28].bPressed) {	// down
-				for (place place : here.places) {
-					if ((place.x == player1.x) && (place.y - 1 == player1.y)) {
-						if (place.solid) {
-							move = false;
-							break;
-						}
+			// check if monster
+			enemy = isMonster();
+
+			if (move) {
+				player1.x += 1; 
+			}
+		}
+		// down
+		if (m_keys[0x28].bPressed) {	// down
+			for (place place : here.places) {
+				if ((place.x == player1.x) && (place.y - 1 == player1.y)) {
+					if (place.solid) {
+						move = false;
+						break;
 					}
 				}
-				// check if monster
-				enemy = isMonster();
-
-				if (move) {
-					player1.y += 1; 
-				}
 			}
+			// check if monster
+			enemy = isMonster();
 
-			// random battle
-			if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
-				if (rand() % 10000 < 2) {
-					current = random_battle;
-				}
-			}
-			move = true;
-			// [ENTER] enter location
-			if (m_keys[13].bPressed) {
-				if (std::find(actions.begin(), actions.end(), L"Enter") != actions.end()) {
-					for (place place : here.places) {
-						if (player1.x == place.x && player1.y == place.y) {
-							if (place.type == L"exit") {
-								player1.x = here.x;
-								player1.y = here.y;
-								here = r;
-								break;
-							}
-							else {
-								int width = 60;
-								int height = 30;
-								realm location = realm(place, &here, width, height);
-								r = here;
-								here = location;
-								here.parent = &r;
-								player1.x = rand() % (width - 2) + 1;
-								player1.y = rand() % (height - 2) + 1;
-								someone = player();
-								someone.x = rand() % (width - 2) + 1;
-								someone.y = rand() % (height - 2) + 1;
-								npcs.push_back(someone);
-								break;
-							}
-						}
-					}
-				}
-				else {
-					actions.push_back(L"Enter");
-				}
+			if (move) {
+				player1.y += 1; 
 			}
 		}
 
-
-		// [M] menu
-		if (m_keys[77].bPressed) {
-			if (std::find(actions.begin(), actions.end(), L"Menu") != actions.end()) {
-				current = menu_mode;
+		// random battle
+		if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
+			if (rand() % 10000 < 2) {
+				current = random_battle;
+			}
+		}
+		move = true;
+		// [ENTER] enter location
+		if (m_keys[13].bPressed) {
+			if (std::find(actions.begin(), actions.end(), L"Enter") != actions.end()) {
+				for (place place : here.places) {
+					if (player1.x == place.x && player1.y == place.y) {
+						if (place.type == L"exit") {
+							player1.x = here.x;
+							player1.y = here.y;
+							here = r;
+							break;
+						}
+						else {
+							int width = 60;
+							int height = 30;
+							realm location = realm(place, &here, width, height);
+							r = here;
+							here = location;
+							here.parent = &r;
+							player1.x = rand() % (width - 2) + 1;
+							player1.y = rand() % (height - 2) + 1;
+							someone = player();
+							someone.x = rand() % (width - 2) + 1;
+							someone.y = rand() % (height - 2) + 1;
+							npcs.push_back(someone);
+							break;
+						}
+					}
+				}
 			}
 			else {
-				actions.push_back(L"Menu");
+				actions.push_back(L"Enter");
 			}
 		}
-		// Menu Party Status Items Equipment Exit 
-		if (current == menu_mode) {
-			// main
-			if (current_menu == main) {
-				// left
-				if (m_keys[0x25].bPressed) {
-					current_menu = exit_menu;
-					menu_actions.find(current_menu)->second.second = true;
-				}
-				// right
-				else if (m_keys[0x27].bPressed) { 
-					current_menu = party_menu; 
-					menu_actions.find(current_menu)->second.second = true;
-				}
-			}
+	}
 
-			// party
-			else if (current_menu == party_menu) {
-				// left
-				if (m_keys[0x25].bPressed) { 
-					int i = 0;
-					bool selected = false;
-					for (player member : party) {
-						if (member.selected) {
-							selected = true;
-							break;
-						}
-						i++;
-					}
-					if (selected) {
-						if (i == 0) {
-							party[i].selected = false;
-							party[party.size() - 1].selected = true;
-						}
-						else {
-							party[i].selected = false;
-							party[i - 1].selected = true;
-						}
-					}
-					else {
-						current_menu = main;
-					}
-				}
-				// right
-				else if (m_keys[0x27].bPressed) { 
-					int i = 0;
-					bool selected = false;
-					for (player member : party) {
-						if (member.selected) {
-							selected = true;
-							break;
-						}
-						i++;
-					}
-					if (selected) {
-						if (i == party.size() - 1) {
-							party[i].selected = false;
-							party[0].selected = true;
-						}
-						else {
-							party[i].selected = false;
-							party[i + 1].selected = true;
-						}
-					}
-					else {
-						current_menu = status;
-						menu_actions.find(current_menu)->second.second = true;
-					}
-				}
-				// up
-				else if (m_keys[0x26].bPressed) {
-					int i = 0;
-					for (player member : party) { party[i].selected = false; i++; }
-					// current_player = nobody;
-					menu_actions.find(current_menu)->second.second = true;
-				}
-				// down
-				else if (m_keys[0x28].bPressed) {
-					// current_player = player1; 
-					party.front().selected = true;
-					menu_actions.find(current_menu)->second.second = false;
-				}
-				// if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
-			}
-			else if (current_menu == status) {
-				// menu_actions.find(current_menu)->second.second = true;
-				// left
-				if (m_keys[0x25].bPressed) { 
-					int i = 0;
-					bool selected = false;
-					for (player member : party) {
-						if (member.selected) {
-							selected = true;
-							break;
-						}
-						i++;
-					}
-					if (selected) {
-						if (i == 0) {
-							party[i].selected = false;
-							party[party.size() - 1].selected = true;
-						}
-						else {
-							party[i].selected = false;
-							party[i - 1].selected = true;
-						}
-					}
-					else {
-						current_menu = party_menu;
-						// current_player = nobody;
-						menu_actions.find(current_menu)->second.second = true;
-					}
-				}
-				// right
-				else if (m_keys[0x27].bPressed) { 
-					int i = 0;
-					bool selected = false;
-					for (player member : party) {
-						if (member.selected) {
-							selected = true;
-							break;
-						}
-						i++;
-					}
-					if (selected) {
-						if (i == party.size() - 1) {
-							party[i].selected = false;
-							party[0].selected = true;
-						}
-						else {
-							party[i].selected = false;
-							party[i + 1].selected = true;
-						}
-					}
-					else {
-						current_menu = items;
-					}
-				}
-				// up
-				else if (m_keys[0x26].bPressed) {
-					int i = 0;
-					for (player member : party) { party[i].selected = false; i++; }
-					menu_actions.find(current_menu)->second.second = true;
-				}
-				// down
-				else if (m_keys[0x28].bPressed) {
-					// current_player = player1;
-					party.front().selected = true;
-					menu_actions.find(current_menu)->second.second = false;
-				}
-			}
-			else if (current_menu == items) {
-				if (m_keys[0x25].bPressed) { current_menu = status; }			// left
-				else if (m_keys[0x27].bPressed) { current_menu = equipment; }	// right
+
+	// [M] menu
+	if (m_keys[77].bPressed) {
+		if (std::find(actions.begin(), actions.end(), L"Menu") != actions.end()) {
+			current = menu_mode;
+		}
+		else {
+			actions.push_back(L"Menu");
+		}
+	}
+	// Menu Party Status Items Equipment Exit 
+	if (current == menu_mode) {
+		// main
+		if (current_menu == main) {
+			// left
+			if (m_keys[0x25].bPressed) {
+				current_menu = exit_menu;
 				menu_actions.find(current_menu)->second.second = true;
 			}
-			else if (current_menu == equipment) {
-				if (m_keys[0x25].bPressed) { current_menu = items; }			// left
-				else if (m_keys[0x27].bPressed) { current_menu = exit_menu; }	// right
+			// right
+			else if (m_keys[0x27].bPressed) { 
+				current_menu = party_menu; 
 				menu_actions.find(current_menu)->second.second = true;
 			}
-			else if (current_menu == exit_menu) {
-				if (m_keys[0x25].bPressed) { current_menu = equipment; }		// left
-				else if (m_keys[0x27].bPressed) { current_menu = main; }		// right
-				else if (m_keys[13].bPressed) { current = play; }				// enter
-				if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
-			}
-
-			// if (current_menu != main && current_player.name == L"") { menu_actions.find(current_menu)->second.second = true; }
-
-			// if (current_menu != party_menu) { current_player = nobody; }
-			// else if (current_menu != status) { current_player = nobody; }
-
-			// [S] status
-			if (m_keys[83].bPressed) { current_menu = status; }
-			// [I] items
-			if (m_keys[73].bPressed) { current_menu = items; }
-			// [Q] equipment
-			if (m_keys[81].bPressed) { current_menu = equipment; }
-			// [E] return to game
-			if (m_keys[69].bPressed) { current = play; }
 		}
 
-		// [T] talk
-		if (current == talk) {
-			for (int i = 0; i < 256; i++) {
-				if (i == 84) { continue; }
-				if (m_keys[i].bPressed) {
-					current = play;
-				}
-			}
-			if (m_keys[84].bPressed) {
-				if (someone.thoughts == someone.greeting) { someone.thoughts = someone.introduction; }
-				else if (someone.thoughts == someone.introduction) { someone.thoughts = someone.join; }
-			}
-			if (m_keys[89].bPressed && someone.thoughts == someone.join) {
-				someone.thoughts = someone.joined;
-				party.push_back(someone);
+		// party
+		else if (current_menu == party_menu) {
+			// left
+			if (m_keys[0x25].bPressed) { 
 				int i = 0;
-				for (player npc : npcs) {
-					if (npc.x == someone.x && npc.y == someone.y) {
+				bool selected = false;
+				for (player member : party) {
+					if (member.selected) {
+						selected = true;
 						break;
 					}
 					i++;
 				}
-				npcs.erase(npcs.begin() + i);
-				someone = nobody;
-			}
-
-		}
-		if (m_keys[84].bPressed) {
-			if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
-				if (player1.x == someone.x && player1.y == someone.y) {
-					current = talk;
+				if (selected) {
+					if (i == 0) {
+						party[i].selected = false;
+						party[party.size() - 1].selected = true;
+					}
+					else {
+						party[i].selected = false;
+						party[i - 1].selected = true;
+					}
+				}
+				else {
+					current_menu = main;
 				}
 			}
-			else {
-				actions.push_back(L"Talk");
+			// right
+			else if (m_keys[0x27].bPressed) { 
+				int i = 0;
+				bool selected = false;
+				for (player member : party) {
+					if (member.selected) {
+						selected = true;
+						break;
+					}
+					i++;
+				}
+				if (selected) {
+					if (i == party.size() - 1) {
+						party[i].selected = false;
+						party[0].selected = true;
+					}
+					else {
+						party[i].selected = false;
+						party[i + 1].selected = true;
+					}
+				}
+				else {
+					current_menu = status;
+					menu_actions.find(current_menu)->second.second = true;
+				}
+			}
+			// up
+			else if (m_keys[0x26].bPressed) {
+				int i = 0;
+				for (player member : party) { party[i].selected = false; i++; }
+				// current_player = nobody;
+				menu_actions.find(current_menu)->second.second = true;
+			}
+			// down
+			else if (m_keys[0x28].bPressed) {
+				// current_player = player1; 
+				party.front().selected = true;
+				menu_actions.find(current_menu)->second.second = false;
+			}
+			// if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
+		}
+		else if (current_menu == status) {
+			// menu_actions.find(current_menu)->second.second = true;
+			// left
+			if (m_keys[0x25].bPressed) { 
+				int i = 0;
+				bool selected = false;
+				for (player member : party) {
+					if (member.selected) {
+						selected = true;
+						break;
+					}
+					i++;
+				}
+				if (selected) {
+					if (i == 0) {
+						party[i].selected = false;
+						party[party.size() - 1].selected = true;
+					}
+					else {
+						party[i].selected = false;
+						party[i - 1].selected = true;
+					}
+				}
+				else {
+					current_menu = party_menu;
+					// current_player = nobody;
+					menu_actions.find(current_menu)->second.second = true;
+				}
+			}
+			// right
+			else if (m_keys[0x27].bPressed) { 
+				int i = 0;
+				bool selected = false;
+				for (player member : party) {
+					if (member.selected) {
+						selected = true;
+						break;
+					}
+					i++;
+				}
+				if (selected) {
+					if (i == party.size() - 1) {
+						party[i].selected = false;
+						party[0].selected = true;
+					}
+					else {
+						party[i].selected = false;
+						party[i + 1].selected = true;
+					}
+				}
+				else {
+					current_menu = items;
+				}
+			}
+			// up
+			else if (m_keys[0x26].bPressed) {
+				int i = 0;
+				for (player member : party) { party[i].selected = false; i++; }
+				menu_actions.find(current_menu)->second.second = true;
+			}
+			// down
+			else if (m_keys[0x28].bPressed) {
+				// current_player = player1;
+				party.front().selected = true;
+				menu_actions.find(current_menu)->second.second = false;
 			}
 		}
-		// battle
-		// [Y] win battle
-		if (current == battle) {
-			
+		else if (current_menu == items) {
+			if (m_keys[0x25].bPressed) { current_menu = status; }			// left
+			else if (m_keys[0x27].bPressed) { current_menu = equipment; }	// right
+			menu_actions.find(current_menu)->second.second = true;
 		}
-		
-		// [Y] win battle
-		if (m_keys[89].bPressed && current == battle) {
-			here.monsters.erase(here.monsters.begin() + enemy);
-			current = play;
+		else if (current_menu == equipment) {
+			if (m_keys[0x25].bPressed) { current_menu = items; }			// left
+			else if (m_keys[0x27].bPressed) { current_menu = exit_menu; }	// right
+			menu_actions.find(current_menu)->second.second = true;
 		}
-		// [Y] win battle
-		if (m_keys[89].bPressed && current == random_battle) {
-			current = play;
+		else if (current_menu == exit_menu) {
+			if (m_keys[0x25].bPressed) { current_menu = equipment; }		// left
+			else if (m_keys[0x27].bPressed) { current_menu = main; }		// right
+			else if (m_keys[13].bPressed) { current = play; }				// enter
+			if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
 		}
 
+		// if (current_menu != main && current_player.name == L"") { menu_actions.find(current_menu)->second.second = true; }
 
-		// [Q] quit
-		if (m_keys[81].bPressed) {
-			if (std::find(actions.begin(), actions.end(), L"Quit") != actions.end()) {
-				current = quit;
-			}
-			else {
-				actions.push_back(L"Quit");
-			}
-		}
-		if (current == quit) {
-			// [Y] quit game
-			if (m_keys[89].bPressed) {
-				exit(0);
-			}
+		// if (current_menu != party_menu) { current_player = nobody; }
+		// else if (current_menu != status) { current_player = nobody; }
 
-			// [N] return to game
-			if (m_keys[78].bPressed) {
+		// [S] status
+		if (m_keys[83].bPressed) { current_menu = status; }
+		// [I] items
+		if (m_keys[73].bPressed) { current_menu = items; }
+		// [Q] equipment
+		if (m_keys[81].bPressed) { current_menu = equipment; }
+		// [E] return to game
+		if (m_keys[69].bPressed) { current = play; }
+	}
+
+	// [T] talk
+	if (current == talk) {
+		for (int i = 0; i < 256; i++) {
+			if (i == 84) { continue; }
+			if (m_keys[i].bPressed) {
 				current = play;
 			}
 		}
+		if (m_keys[84].bPressed) {
+			if (someone.thoughts == someone.greeting) { someone.thoughts = someone.introduction; }
+			else if (someone.thoughts == someone.introduction) { someone.thoughts = someone.join; }
+		}
+		if (m_keys[89].bPressed && someone.thoughts == someone.join) {
+			someone.thoughts = someone.joined;
+			party.push_back(someone);
+			int i = 0;
+			for (player npc : npcs) {
+				if (npc.x == someone.x && npc.y == someone.y) {
+					break;
+				}
+				i++;
+			}
+			npcs.erase(npcs.begin() + i);
+			someone = nobody;
+		}
+
+	}
+	if (m_keys[84].bPressed) {
+		if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
+			if (player1.x == someone.x && player1.y == someone.y) {
+				current = talk;
+			}
+		}
+		else {
+			actions.push_back(L"Talk");
+		}
+	}
+	// battle
+	// [Y] win battle
+	if (current == battle) {
+			
+	}
+		
+	// [Y] win battle
+	if (m_keys[89].bPressed && current == battle) {
+		here.monsters.erase(here.monsters.begin() + enemy);
+		current = play;
+	}
+	// [Y] win battle
+	if (m_keys[89].bPressed && current == random_battle) {
+		current = play;
+	}
+
+
+	// [Q] quit
+	if (m_keys[81].bPressed) {
+		if (std::find(actions.begin(), actions.end(), L"Quit") != actions.end()) {
+			current = quit;
+		}
+		else {
+			actions.push_back(L"Quit");
+		}
+	}
+	if (current == quit) {
+		// [Y] quit game
+		if (m_keys[89].bPressed) {
+			exit(0);
+		}
+
+		// [N] return to game
+		if (m_keys[78].bPressed) {
+			current = play;
+		}
+	}
 
 // -------- HEADER --------
 
-		drawHeader();
+	drawHeader();
 
 // -------- GAME WORLD --------
 
-		// draw realm
-		for (place place : here.places) {
-			if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > 5) {
-				Draw((int) (ScreenWidth() / 2) + place.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, place.name[0], FG_WHITE);
-			}
+	// draw realm
+	for (place place : here.places) {
+		if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > 5) {
+			Draw((int) (ScreenWidth() / 2) + place.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, place.name[0], FG_WHITE);
 		}
-
-		// draw monsters
-		for (monster monster : here.monsters) {
-			if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y) > 5) {
-				Draw((int) (ScreenWidth() / 2) + monster.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y, monster.icon, monster.color);
-			}
-		}
-
-		// draw map hints
-		// int i = 0;
-		// vector<int> j;
-		// for (item item : inventory) {
-			// if (item.name == L"Map Crystal") {
-				// j.push_back(rand() % here.places.size());
-			// }
-		// }
-		for (place place : here.places) {
-			// for (int k : j) {
-				// if (i == k) {
-					// top
-					if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) <= 5) {
-						Draw((int)(ScreenWidth() / 2) + place.x - player1.x, 6, L"^"[0], FG_WHITE);
-					}
-					// bottom
-					if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > ScreenHeight() - 1) {
-						Draw((int)(ScreenWidth() / 2) + place.x - player1.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
-					}
-					// left
-					if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) < 2) {
-						Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L"<"[0], FG_WHITE);
-					}
-					// right
-					if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) > ScreenWidth() + 1) {
-						Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L">"[0], FG_WHITE);
-					}
-				// }
-			// }
-			// i++;
-		}
-
-		// draw player1
-		Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
-
-		// draw someone
-		if (here.type.compare(L"realm") != 0) {
-			Draw((int)(ScreenWidth() / 2) + someone.x - player1.x, (int)(ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
-		}
-
-		// draw menus
-		if (current == talk) { drawMessage(someone, someone.thoughts); }		// draw message
-		if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
-		// if (current == status) { drawStatus(); }		// draw status
-		// if (current == items) { drawItems(); }			// draw items
-		// if (current == equipment) { drawEquipment(); }	// draw equipment
-		if (current == battle) { drawBattle(); }		// draw battle
-		if (current == quit) {	 drawQuit(); }			// draw quit
-
-
-		return true;
 	}
 
-};
+	// draw monsters
+	for (monster monster : here.monsters) {
+		if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y) > 5) {
+			Draw((int) (ScreenWidth() / 2) + monster.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y, monster.icon, monster.color);
+		}
+	}
 
+	// draw map hints
+	// int i = 0;
+	// vector<int> j;
+	// for (item item : inventory) {
+		// if (item.name == L"Map Crystal") {
+			// j.push_back(rand() % here.places.size());
+		// }
+	// }
+	for (place place : here.places) {
+		// for (int k : j) {
+			// if (i == k) {
+				// top
+				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) <= 5) {
+					Draw((int)(ScreenWidth() / 2) + place.x - player1.x, 6, L"^"[0], FG_WHITE);
+				}
+				// bottom
+				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > ScreenHeight() - 1) {
+					Draw((int)(ScreenWidth() / 2) + place.x - player1.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
+				}
+				// left
+				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) < 2) {
+					Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L"<"[0], FG_WHITE);
+				}
+				// right
+				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) > ScreenWidth() + 1) {
+					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L">"[0], FG_WHITE);
+				}
+			// }
+		// }
+		// i++;
+	}
+
+	// draw player1
+	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+
+	// draw someone
+	if (here.type.compare(L"realm") != 0) {
+		Draw((int)(ScreenWidth() / 2) + someone.x - player1.x, (int)(ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
+	}
+
+	// draw menus
+	if (current == talk) { drawMessage(someone, someone.thoughts); }		// draw message
+	if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
+	// if (current == status) { drawStatus(); }		// draw status
+	// if (current == items) { drawItems(); }			// draw items
+	// if (current == equipment) { drawEquipment(); }	// draw equipment
+	if (current == battle) { drawBattle(); }		// draw battle
+	if (current == quit) {	 drawQuit(); }			// draw quit
+
+
+	return true;
+}
 
 int main() {
 
@@ -644,7 +598,7 @@ int main() {
 
 
 	// use olcConsoleGameEngine derived app
-	static fantasy game;
+	fantasy game;
 	game.start();
 
 	game.ConstructConsole(150, 40, 8, 16);
@@ -714,7 +668,7 @@ void fantasy::start() {
 	system("pause");
 }
 
-wstring input() {
+wstring fantasy::input() {
 	string out;
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 	getline(cin, out);
@@ -800,7 +754,6 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 
 	// if (player.speak.next != nullptr) {}
 }
-
 
 void fantasy::drawMenu(menu item) {
 	int margin = 10;
