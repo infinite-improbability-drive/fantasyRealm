@@ -836,7 +836,7 @@ void fantasy::drawBattle() {
 	int top = (margin / 2) + (5 / 2);
 	int bottom = ScreenHeight() - (margin / 2) + (5 / 2);
 
-	if (current == battle) {
+	if (current == battle && enemy < here.monsters.size()) {
 		drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + player1.name);
 	}
 
@@ -848,7 +848,9 @@ void fantasy::drawBattle() {
 	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
 
 	// draw monster
-	Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (5 / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
+	if (current == battle && enemy < here.monsters.size()) {
+		Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (5 / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
+	}
 
 }
 

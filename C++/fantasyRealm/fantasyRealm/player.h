@@ -6,6 +6,7 @@
 #include "weapon.h"
 #include <map>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -35,7 +36,8 @@ public:
 		int value;
 	};
 	stat stats[luck + 1] = { {L"Strength", 1}, {L"Defense", 1}, {L"Stamina", 1}, {L"Perception", 1}, {L"Accuracy", 1}, {L"Agility", 1}, {L"Intellect", 1}, {L"Wisdom", 1}, {L"Spirit", 1}, {L"Charisma", 1}, {L"Luck", 1}, };
-
+	player::stat getStats(wstring role, player::stat stats[]);
+	player::stat randomStats(stat stats[], vector<int> bonuses, int points);
 };
 
 #endif
