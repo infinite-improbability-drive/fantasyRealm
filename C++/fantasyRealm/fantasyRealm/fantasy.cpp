@@ -58,7 +58,7 @@ using std::vector;
 #include "item.h"
 #include "names.h"
 #include "player.h"
-#include "realm.cpp"
+#include "realm.h"
 #include <Windows.h>
 
 
