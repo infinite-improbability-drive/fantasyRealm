@@ -359,11 +359,15 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				if (selected) {
 					if (i == 0) {
 						party[i].selected = false;
+						party[i].current = false;
 						party[party.size() - 1].selected = true;
+						party[party.size() - 1].current = true;
 					}
 					else {
 						party[i].selected = false;
+						party[i].current = false;
 						party[i - 1].selected = true;
+						party[i - 1].current = true;
 					}
 				}
 				else {
@@ -386,11 +390,15 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				if (selected) {
 					if (i == party.size() - 1) {
 						party[i].selected = false;
+						party[i].current = false;
 						party[0].selected = true;
+						party[0].current = true;
 					}
 					else {
 						party[i].selected = false;
+						party[i].current = false;
 						party[i + 1].selected = true;
+						party[i + 1].current = true;
 					}
 				}
 				else {
@@ -399,15 +407,81 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 			// up
 			else if (m_keys[0x26].bPressed) {
-				int i = 0;
-				for (player member : party) { party[i].selected = false; i++; }
-				menu_actions.find(current_menu)->second.second = true;
+				bool selected = false;
+				for (player member : party) { if (member.selected) { selected = true; } }
+				if (selected) {
+					int i = 0;
+					for (player member : party) { party[i].selected = false; i++; }
+					menu_actions.find(current_menu)->second.second = true;
+				}
+				else {
+					int i = 0;
+					for (player member : party) {
+						if (member.current) {
+							int j = 0;
+							for (ability skill : member.skills) {
+								if (j == 0) {
+									int k = 0;
+									for (ability skill : member.skills) {
+										party[i].skills[k].selected = false;
+										k++;
+									}
+									party[i].selected = true;
+									break;
+								}
+								else {
+									party[i].skills[j].selected = false;
+									party[i].skills[j - 1].selected = true;
+								}
+								j++;
+							}
+						}
+						i++;
+					}
+				}
 			}
 			// down
 			else if (m_keys[0x28].bPressed) {
+				if (menu_actions.find(current_menu)->second.second) {
+					party.front().selected = true;
+					party.front().current = true;
+					menu_actions.find(current_menu)->second.second = false;
+				}
+				else {
+					int i = 0;
+					for (player member : party) { party[i].selected = false; i++; }
+					int j = 0;
+					int k = 0;
+					for (player member : party) {
+						if (member.current) {
+							bool selected = false;
+							for (ability skill : member.skills) {
+								if (skill.selected) {
+									selected = true;
+									break;
+								}
+								k++;
+							}
+							if (selected) {
+								if (k == member.skills.size() - 1) {
+									party[j].skills[k].selected = false;
+									party[j].skills[0].selected = true;
+								}
+								else {
+									party[j].skills[k].selected = false;
+									party[j].skills[k + 1].selected = true;
+								}
+							}
+							else {
+								party[j].skills.front().selected = true;
+							}
+							break;
+						}
+						j++;
+					}
+
+				}
 				// current_player = party.front();
-				party.front().selected = true;
-				menu_actions.find(current_menu)->second.second = false;
 			}
 		}
 		else if (current_menu == items) {
@@ -812,8 +886,14 @@ void fantasy::drawParty(int top, int left) {
 void fantasy::drawStatus(int top, int left) {
 	int i = 0;
 	for (player player : party) {
-		if (player.selected) {
-			DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
+		if (player.current) {
+			if (player.selected) {
+				DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
+			}
+			else {
+				DrawStringAlpha(left + 4 + i, top + 5, player.name, 0x000F);
+			}
+			// DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
 			DrawStringAlpha(left + 3, top + 7, player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role, 0x000F);
 			int k = 0;
 			for (auto stat : player.stats) {
@@ -838,7 +918,12 @@ void fantasy::drawSkills(int top, int left, player you) {
 	}
 	int i = 0;
 	for (ability skill : you.skills) {
-		DrawStringAlpha(left + max + 9, top + 9 + i, skill.name, 0x000F);
+		if (skill.selected) {
+			DrawStringAlpha(left + max + 9, top + 9 + i, L"[" + skill.name + L"]", 0x000F);
+		}
+		else {
+			DrawStringAlpha(left + max + 10, top + 9 + i, skill.name, 0x000F);
+		}
 		i++;
 	}
 }

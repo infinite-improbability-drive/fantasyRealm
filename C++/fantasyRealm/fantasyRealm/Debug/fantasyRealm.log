@@ -1,6 +1,6 @@
 ﻿  fantasy.cpp
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(69): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(835): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(863): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(875): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(915): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(948): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(960): warning C4018: '<': signed/unsigned mismatch
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe

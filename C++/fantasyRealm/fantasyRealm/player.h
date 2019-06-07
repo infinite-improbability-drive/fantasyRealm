@@ -18,6 +18,7 @@ public:
 	weapon _weapon;
 	vector<ability> skills;
 	bool selected = false;
+	bool current = false;
 	int level;
 	int wits;
 	int brave;
