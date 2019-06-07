@@ -26,11 +26,19 @@ player::player(wstring name) {
 	this->name = name;
 }
 player::player(wstring name, wstring role, int wits, int brave) {
+	this->level = 1;
 	this->name = name;
 	this->role = role;
 	this->wits = wits;
 	this->brave = brave;
+	this->x = rand() % (wits * 100) - (wits * 50);
+	this->y = rand() % (wits * 100) - (wits * 50);
+	*this->stats = getStats(this->role, this->stats);
+	this->_weapon = weapon(this->role);
+	this->skills.push_back(fight());
+	this->skills.push_back(ability(L"Item"));
 }
+
 player::stat player::getStats(wstring role, player::stat stats[]) {
 	srand(clock() + rand() % 10000);
 	int i = rand() % 10;

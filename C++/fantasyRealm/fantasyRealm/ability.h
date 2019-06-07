@@ -23,6 +23,12 @@ public:
 	fight();
 };
 
+class use : public ability {
+public:
+	// wstring name;
+	use();
+};
+
 
 
 #endif

@@ -17,3 +17,6 @@ fight::fight() {
 	this->name = L"Fight";
 	this->action = action::action(L"Fight");
 }
+use::use() {
+	this->name = L"Items";
+}

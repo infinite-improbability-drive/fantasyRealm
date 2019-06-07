@@ -21,7 +21,7 @@ public:
 private:
 	vector<player> party;
 	vector<player> npcs;
-	player player1;
+	// player player1;
 	player current_player;
 	player someone;
 	player nobody;

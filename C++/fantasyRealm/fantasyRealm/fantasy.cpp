@@ -1,5 +1,5 @@
 /*
-OneLoneCoder.com - Command Line player1
+OneLoneCoder.com - Command Line party.front()
 "Give me a break, I'm on holiday..." - @Javidx9
 License
 ~~~~~~~
@@ -25,7 +25,7 @@ license here: https://github.com/OneLoneCoder/videos/blob/master/LICENSE
 Cheers!
 Background
 ~~~~~~~~~~
-Classic player1! Controls are Arrow keys Left & Right, eat food, grow larger, avoid self!
+Classic party.front()! Controls are Arrow keys Left & Right, eat food, grow larger, avoid self!
 Author
 ~~~~~~
 Twitter: @javidx9
@@ -69,14 +69,14 @@ bool fantasy::OnUserCreate() {
 	mode current = play;
 	menu current_menu = main;
 	move = true;
-	party.push_back(player1);
+	// party.push_back(party.front());
 	inventory.push_back(item());
 	inventory.push_back(item());
 	inventory.push_back(item());
 	inventory.push_back(item());
 	inventory.push_back(item());
 	inventory.push_back(item(L"Map Crystal"));
-	const realm here = realm(player1.wits, player1.brave);
+	const realm here = realm(party.front().wits, party.front().brave);
 	return true;
 }
 
@@ -132,12 +132,12 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 	if (current == play) {
 
-		// move player1
+		// move party.front()
 		// left
 		if (m_keys[0x25].bPressed) {
 			// check if solid 
 			for (place place : here.places) {
-				if ((place.y == player1.y) && (place.x + 1 == player1.x)) {
+				if ((place.y == party.front().y) && (place.x + 1 == party.front().x)) {
 					if (place.solid) {
 						move = false;
 						break;
@@ -149,14 +149,14 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 			// move
 			if (move) {
-				player1.x -= 1; 
+				party.front().x -= 1; 
 			}
 		}
 		// up
 		if (m_keys[0x26].bPressed) {
 			// check if solid object
 			for (place place : here.places) {
-				if ((place.x == player1.x) && (place.y + 1 == player1.y)) {
+				if ((place.x == party.front().x) && (place.y + 1 == party.front().y)) {
 					if (place.solid) {
 						move = false;
 						break;
@@ -168,13 +168,13 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 			// move
 			if (move) {
-				player1.y -= 1;
+				party.front().y -= 1;
 			}
 		}
 		// right
 		if (m_keys[0x27].bPressed) {	// right
 			for (place place : here.places) {
-				if ((place.y == player1.y) && (place.x - 1 == player1.x)) {
+				if ((place.y == party.front().y) && (place.x - 1 == party.front().x)) {
 					if (place.solid) {
 						move = false;
 						break;
@@ -185,13 +185,13 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			enemy = isMonster();
 
 			if (move) {
-				player1.x += 1; 
+				party.front().x += 1; 
 			}
 		}
 		// down
 		if (m_keys[0x28].bPressed) {	// down
 			for (place place : here.places) {
-				if ((place.x == player1.x) && (place.y - 1 == player1.y)) {
+				if ((place.x == party.front().x) && (place.y - 1 == party.front().y)) {
 					if (place.solid) {
 						move = false;
 						break;
@@ -202,7 +202,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			enemy = isMonster();
 
 			if (move) {
-				player1.y += 1; 
+				party.front().y += 1; 
 			}
 		}
 
@@ -217,10 +217,10 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		if (m_keys[13].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Enter") != actions.end()) {
 				for (place place : here.places) {
-					if (player1.x == place.x && player1.y == place.y) {
+					if (party.front().x == place.x && party.front().y == place.y) {
 						if (place.type == L"exit") {
-							player1.x = here.x;
-							player1.y = here.y;
+							party.front().x = here.x;
+							party.front().y = here.y;
 							here = r;
 							break;
 						}
@@ -231,8 +231,8 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 							r = here;
 							here = location;
 							here.parent = &r;
-							player1.x = rand() % (width - 2) + 1;
-							player1.y = rand() % (height - 2) + 1;
+							party.front().x = rand() % (width - 2) + 1;
+							party.front().y = rand() % (height - 2) + 1;
 							someone = player();
 							someone.x = rand() % (width - 2) + 1;
 							someone.y = rand() % (height - 2) + 1;
@@ -336,7 +336,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 			// down
 			else if (m_keys[0x28].bPressed) {
-				// current_player = player1; 
+				// current_player = party.front(); 
 				party.front().selected = true;
 				menu_actions.find(current_menu)->second.second = false;
 			}
@@ -404,7 +404,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 			// down
 			else if (m_keys[0x28].bPressed) {
-				// current_player = player1;
+				// current_player = party.front();
 				party.front().selected = true;
 				menu_actions.find(current_menu)->second.second = false;
 			}
@@ -470,7 +470,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	}
 	if (m_keys[84].bPressed) {
 		if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
-			if (player1.x == someone.x && player1.y == someone.y) {
+			if (party.front().x == someone.x && party.front().y == someone.y) {
 				current = talk;
 			}
 		}
@@ -524,15 +524,15 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 	// draw realm
 	for (place place : here.places) {
-		if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > 5) {
-			Draw((int) (ScreenWidth() / 2) + place.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, place.name[0], FG_WHITE);
+		if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y) > 5) {
+			Draw((int) (ScreenWidth() / 2) + place.x - party.front().x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y, place.name[0], FG_WHITE);
 		}
 	}
 
 	// draw monsters
 	for (monster monster : here.monsters) {
-		if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y) > 5) {
-			Draw((int) (ScreenWidth() / 2) + monster.x - player1.x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - player1.y, monster.icon, monster.color);
+		if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - party.front().y) > 5) {
+			Draw((int) (ScreenWidth() / 2) + monster.x - party.front().x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - party.front().y, monster.icon, monster.color);
 		}
 	}
 
@@ -548,32 +548,32 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		// for (int k : j) {
 			// if (i == k) {
 				// top
-				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) <= 5) {
-					Draw((int)(ScreenWidth() / 2) + place.x - player1.x, 6, L"^"[0], FG_WHITE);
+				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y) <= 5) {
+					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, 6, L"^"[0], FG_WHITE);
 				}
 				// bottom
-				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y) > ScreenHeight() - 1) {
-					Draw((int)(ScreenWidth() / 2) + place.x - player1.x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
+				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y) > ScreenHeight() - 1) {
+					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
 				}
 				// left
-				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) < 2) {
-					Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L"<"[0], FG_WHITE);
+				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - party.front().x) < 2) {
+					Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y, L"<"[0], FG_WHITE);
 				}
 				// right
-				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - player1.x) > ScreenWidth() + 1) {
-					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - player1.y, L">"[0], FG_WHITE);
+				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - party.front().x) > ScreenWidth() + 1) {
+					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y, L">"[0], FG_WHITE);
 				}
 			// }
 		// }
 		// i++;
 	}
 
-	// draw player1
-	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+	// draw party.front()
+	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), party.front().name[0], FG_WHITE);
 
 	// draw someone
 	if (here.type.compare(L"realm") != 0) {
-		Draw((int)(ScreenWidth() / 2) + someone.x - player1.x, (int)(ScreenHeight() / 2) + (5 / 2) + someone.y - player1.y, someone.name[0], FG_WHITE);
+		Draw((int)(ScreenWidth() / 2) + someone.x - party.front().x, (int)(ScreenHeight() / 2) + (5 / 2) + someone.y - party.front().y, someone.name[0], FG_WHITE);
 	}
 
 	// draw menus
@@ -612,24 +612,24 @@ void fantasy::start() {
 
 	wprintf(L"Welcome to the fantasy realm.\n");
 	wprintf(L"Please enter your name:\n");
-	player1.name = input();
+	wstring name = input();
 
-	if (player1.name == L"") { player1.name = names::fullName(); }
+	if (name == L"") { name = names::fullName(); }
 
 	wprintf(L"Please choose your class-\n");
 	wstring roles[] = { L"Bard", L"Knight", L"Sorcerer" };
-	for (wstring role : roles) {
-		if (role != roles[roles->length() - 2]) {
-			wcout << role << ", ";
+	for (wstring r : roles) {
+		if (r != roles[roles->length() - 2]) {
+			wcout << r << ", ";
 		}
 		else {
-			wcout << role << ".\n";
+			wcout << r << ".\n";
 		}
 	}
-	player1.role = input();
+	wstring role = input();
 	bool isRole;
-	for (wstring role : roles) {
-		if (player1.role == role) {
+	for (wstring r : roles) {
+		if (role == r) {
 			isRole = true;
 		}
 		else {
@@ -637,31 +637,31 @@ void fantasy::start() {
 		}
 
 	}
-	if (!isRole) { player1.role = L"Fool"; }
+	if (!isRole) { role = L"Fool"; }
 
 	wprintf(L"You must think you're pretty clever.\n");
 	wprintf(L"Just how clever are you? (1-10):\n");
-	cin >> player1.wits;
-	while (player1.wits < 1 || player1.wits > 11) {
+	int wits;
+	cin >> wits;
+	while (wits < 1 || wits > 11) {
 		wprintf(L"Try again. \n");
 		wprintf(L"Just how clever are you? (1-10):\n");
-		cin >> player1.wits;
+		cin >> wits;
 	}
 
 	wprintf(L"You must be brave to traverse these realms.\n");
 	wprintf(L"How brave do you think you are? (1-10):\n");
-	cin >> player1.brave;
-	while (player1.brave < 1 || player1.brave > 11) {
+	int brave;
+	cin >> brave;
+	while (brave < 1 || brave > 11) {
 		wprintf(L"Just how brave are you, really? (1-10):\n");
-		cin >> player1.brave;
+		cin >> brave;
 	}
 
-	player1.x = 10;
-	player1.y = 10;
-	player1.level = 1;
 
-	wcout << "Hello " << player1.name << " the " << player1.role << ".\n";
-	wcout << "The " << player1.role << " class uses the ability " << player1.name << " and the " << player1._weapon.name << " starting weapon.\n";
+	wcout << "Hello " << name << " the " << role << ".\n";
+	party.push_back(player(name, role, wits, brave));
+	wcout << "The " << party.front().role << " class uses the ability " << party.front().name << " and the " << party.front()._weapon.name << " starting weapon.\n";
 
 	system("pause");
 }
@@ -686,18 +686,18 @@ void fantasy::drawHeader() {
 		DrawStringAlpha(2, 1, here.name + L" type = " + here.type + L" parent = " + here.parent->name, 0x000F);
 	}
 
-	// player1 title
-	wstring title = L"" + player1.name + L" the Lv 1 " + player1.role;
+	// party.front() title
+	wstring title = L"" + party.front().name + L" the Lv 1 " + party.front().role;
 	DrawStringAlpha(ScreenWidth() - title.length() - 2, 1, title, 0x000F);
-	// player1 position
-	DrawStringAlpha(ScreenWidth() - (to_wstring(-player1.y).length() + 6), 2, L"y = " + to_wstring(-player1.y), 0x000F);
-	DrawStringAlpha(ScreenWidth() - (to_wstring(player1.x).length() + 6), 3, L"x = " + to_wstring(player1.x), 0x000F);
+	// party.front() position
+	DrawStringAlpha(ScreenWidth() - (to_wstring(-party.front().y).length() + 6), 2, L"y = " + to_wstring(-party.front().y), 0x000F);
+	DrawStringAlpha(ScreenWidth() - (to_wstring(party.front().x).length() + 6), 3, L"x = " + to_wstring(party.front().x), 0x000F);
 	// # of monsters
 	DrawStringAlpha(ScreenWidth() - (to_wstring(here.monsters.size()).length() + 18), 4, L"# of monsters = " + to_wstring(here.monsters.size()), 0x000F);
 
 	// collision detection
 	for (place place : here.places) {
-		if (player1.x == place.x && player1.y == place.y) {
+		if (party.front().x == place.x && party.front().y == place.y) {
 			DrawStringAlpha(2, 2, L"You have arrived at " + place.name + L" type = " + place.type, 0x000F);
 		}
 	}
@@ -740,10 +740,10 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 	int height = 5;
 	int offset = 4;
 
-	int left = (int)(ScreenWidth() / 2) + player.x - player1.x - (width / 2);
-	int right = (int)(ScreenWidth() / 2) + player.x - player1.x + (width / 2);
-	int top = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + player1.y - (height / 2) - offset;
-	int bottom = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + player1.y + (height / 2) - offset;
+	int left = (int)(ScreenWidth() / 2) + player.x - party.front().x - (width / 2);
+	int right = (int)(ScreenWidth() / 2) + player.x - party.front().x + (width / 2);
+	int top = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + party.front().y - (height / 2) - offset;
+	int bottom = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + party.front().y + (height / 2) - offset;
 
 	drawWindow(left, right, top, bottom, player.name);
 
@@ -835,15 +835,15 @@ void fantasy::drawBattle() {
 	int bottom = ScreenHeight() - (margin / 2) + (5 / 2);
 
 	if (current == battle && enemy < here.monsters.size()) {
-		drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + player1.name);
+		drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + party.front().name);
 	}
 
 	// message
 	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to win?", 0x000F);
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
-	// draw player1
-	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (5 / 2), player1.name[0], FG_WHITE);
+	// draw party.front()
+	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (5 / 2), party.front().name[0], FG_WHITE);
 
 	// draw monster
 	if (current == battle && enemy < here.monsters.size()) {
@@ -871,8 +871,8 @@ int fantasy::isMonster() {
 	// monster mon;
 	int i = 0;
 	for (monster monster : here.monsters) {
-		if (((monster.y == player1.y) && ((monster.x + 1 == player1.x) || (monster.x - 1 == player1.x))) || 
-			((monster.x == player1.x) && ((monster.y + 1 == player1.y) || (monster.y - 1 == player1.y)))) {
+		if (((monster.y == party.front().y) && ((monster.x + 1 == party.front().x) || (monster.x - 1 == party.front().x))) || 
+			((monster.x == party.front().x) && ((monster.y + 1 == party.front().y) || (monster.y - 1 == party.front().y)))) {
 			current = battle;
 
 			// return i;
