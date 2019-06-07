@@ -347,6 +347,11 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			// menu_actions.find(current_menu)->second.second = true;
 			// left
 			if (m_keys[0x25].bPressed) { 
+				if (menu_actions.find(current_menu)->second.second) {
+					menu_actions.find(current_menu)->second.second = false;
+					current_menu = party_menu;
+					menu_actions.find(current_menu)->second.second = true;
+				}
 				int i = 0;
 				bool selected = false;
 				for (player member : party) {
@@ -371,9 +376,30 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					}
 				}
 				else {
-					current_menu = party_menu;
-					// current_player = nobody;
-					menu_actions.find(current_menu)->second.second = true;
+					// int i = 0;
+					int j = 0;
+					for (player member : party) {
+						if (member.current) {
+							party[j].selected = true;
+							int k = 0;
+							for (ability skill : member.skills) {
+								// if (party[j].skills[0].selected) {
+								party[j].skills[k].selected = false;
+									// break;
+								// }
+								// else if (party[j].skills[k].selected) {
+									// party[j].skills[k].selected = false;
+									// party[j].skills[k - 1].selected = true;
+									// break;
+								// }
+								k++;
+							}
+							break;
+						}
+						j++;
+						// break;
+						// i++;
+					}
 				}
 			}
 			// right
