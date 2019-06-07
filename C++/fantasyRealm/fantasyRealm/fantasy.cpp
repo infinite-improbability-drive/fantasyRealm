@@ -411,32 +411,32 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				for (player member : party) { if (member.selected) { selected = true; } }
 				if (selected) {
 					int i = 0;
-					for (player member : party) { party[i].selected = false; i++; }
+					for (player member : party) { party[i].selected = false; party[i].current = false; i++; }
 					menu_actions.find(current_menu)->second.second = true;
 				}
 				else {
-					int i = 0;
+					// int i = 0;
+					int j = 0;
 					for (player member : party) {
 						if (member.current) {
-							int j = 0;
+							int k = 0;
 							for (ability skill : member.skills) {
-								if (j == 0) {
-									int k = 0;
-									for (ability skill : member.skills) {
-										party[i].skills[k].selected = false;
-										k++;
-									}
-									party[i].selected = true;
+								if (party[j].skills[0].selected) {
+									party[j].skills[0].selected = false;
+									party[j].selected = true;
 									break;
 								}
-								else {
-									party[i].skills[j].selected = false;
-									party[i].skills[j - 1].selected = true;
+								else if (party[j].skills[k].selected) {
+									party[j].skills[k].selected = false;
+									party[j].skills[k - 1].selected = true;
+									break;
 								}
-								j++;
+								k++;
 							}
 						}
-						i++;
+						j++;
+						// break;
+						// i++;
 					}
 				}
 			}
