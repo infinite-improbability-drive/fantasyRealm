@@ -17,23 +17,22 @@ public:
 		m_sAppName = L"fantasy realm";
 	}
 	void start();
-
 private:
+	enum mode { play, pause, talk, menu_mode, shop, battle, random_battle, quit };
+	mode current;
+	enum menu { main, party_menu, status, items, equipment, exit_menu };
+	int header_rows;
+	vector<wstring> actions;
+	menu current_menu;
+	map<menu, pair<wstring, bool>> menu_actions = { {party_menu, {L"Party", false}}, {status, {L"Status", false} }, {items, {L"Items", false }}, {equipment, {L"Equipment", false }}, {exit_menu, {L"Exit", false }} };
+
+	realm here;
+	realm r;
 	vector<player> party;
 	vector<player> npcs;
-	// player player1;
 	player current_player;
 	player someone;
 	player nobody;
-	realm here;
-	realm r;
-	enum mode { play, pause, talk, menu_mode, shop, battle, random_battle, quit };
-	enum menu { main, party_menu, status, items, equipment, exit_menu };
-	map<menu, pair<wstring, bool>> menu_actions = { {party_menu, {L"Party", false}}, {status, {L"Status", false} }, {items, {L"Items", false }}, {equipment, {L"Equipment", false }}, {exit_menu, {L"Exit", false }} };
-	mode current;
-	menu current_menu;
-	// vector<menu, int> mz = { {main, 0 }};
-	vector<wstring> actions;
 	vector<item> inventory;
 	bool move;
 	int enemy;

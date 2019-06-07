@@ -2,9 +2,9 @@
   ability.cpp
   action.cpp
   fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(68): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(837): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(849): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(69): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(848): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(860): warning C4018: '<': signed/unsigned mismatch
   item.cpp
   monster.cpp
   names.cpp

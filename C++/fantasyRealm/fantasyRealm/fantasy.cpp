@@ -39,6 +39,7 @@ Last Updated: 24/06/2017
 #include "pch.h"
 #include <algorithm>
 #include <codecvt>
+#include <ctime>
 // #include <cstdlib>
 #include <iostream>
 #include <list>
@@ -524,15 +525,15 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 	// draw realm
 	for (place place : here.places) {
-		if (((int) (ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y) > 5) {
-			Draw((int) (ScreenWidth() / 2) + place.x - party.front().x, (int) (ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y, place.name[0], FG_WHITE);
+		if (((int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > header_rows) {
+			Draw((int) (ScreenWidth() / 2) + place.x - party.front().x, (int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, place.name[0], FG_WHITE);
 		}
 	}
 
 	// draw monsters
 	for (monster monster : here.monsters) {
-		if (((int) (ScreenHeight() / 2) + (5 / 2) + monster.y - party.front().y) > 5) {
-			Draw((int) (ScreenWidth() / 2) + monster.x - party.front().x, (int) (ScreenHeight() / 2) + (5 / 2) + monster.y - party.front().y, monster.icon, monster.color);
+		if (((int) (ScreenHeight() / 2) + (header_rows / 2) + monster.y - party.front().y) > header_rows) {
+			Draw((int) (ScreenWidth() / 2) + monster.x - party.front().x, (int) (ScreenHeight() / 2) + (header_rows / 2) + monster.y - party.front().y, monster.icon, monster.color);
 		}
 	}
 
@@ -548,20 +549,20 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		// for (int k : j) {
 			// if (i == k) {
 				// top
-				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y) <= 5) {
-					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, 6, L"^"[0], FG_WHITE);
+				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) <= header_rows) {
+					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, header_rows + 1, L"^"[0], FG_WHITE);
 				}
 				// bottom
-				if (((int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y) > ScreenHeight() - 1) {
+				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > ScreenHeight() - 1) {
 					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
 				}
 				// left
-				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - party.front().x) < 2) {
-					Draw(0, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y, L"<"[0], FG_WHITE);
+				if (((int)(ScreenWidth() / 2) + (header_rows / 2) + place.x - party.front().x) < 3) {
+					Draw(0, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, L"<"[0], FG_WHITE);
 				}
 				// right
-				if (((int)(ScreenWidth() / 2) + (5 / 2) + place.x - party.front().x) > ScreenWidth() + 1) {
-					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (5 / 2) + place.y - party.front().y, L">"[0], FG_WHITE);
+				if (((int)(ScreenWidth() / 2) + (header_rows / 2) + place.x - party.front().x) > ScreenWidth() + 2) {
+					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, L">"[0], FG_WHITE);
 				}
 			// }
 		// }
@@ -569,11 +570,11 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	}
 
 	// draw party.front()
-	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (5 / 2), party.front().name[0], FG_WHITE);
+	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (header_rows / 2), party.front().name[0], FG_WHITE);
 
 	// draw someone
 	if (here.type.compare(L"realm") != 0) {
-		Draw((int)(ScreenWidth() / 2) + someone.x - party.front().x, (int)(ScreenHeight() / 2) + (5 / 2) + someone.y - party.front().y, someone.name[0], FG_WHITE);
+		Draw((int)(ScreenWidth() / 2) + someone.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + someone.y - party.front().y, someone.name[0], FG_WHITE);
 	}
 
 	// draw menus
@@ -714,8 +715,18 @@ void fantasy::drawHeader() {
 		i = i + action.length() + 2;
 	}
 
+	// time
+	auto timenow = chrono::system_clock::to_time_t(chrono::system_clock::now());
+
+	// time_t rawtime;
+	// time(&rawtime);
+	// ctime(&rawtime);
+	// std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+	DrawStringAlpha(2, 5, to_wstring(timenow), 0x000F);
+
 	// bottom border
-	DrawLine(0, 5, ScreenWidth(), 5, 0x003D, FG_WHITE);
+	header_rows = 6;
+	DrawLine(0, header_rows, ScreenWidth(), header_rows, 0x003D, FG_WHITE);
 }
 
 void fantasy::drawWindow(int left, int right, int top, int bottom, wstring title) {
@@ -742,8 +753,8 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 
 	int left = (int)(ScreenWidth() / 2) + player.x - party.front().x - (width / 2);
 	int right = (int)(ScreenWidth() / 2) + player.x - party.front().x + (width / 2);
-	int top = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + party.front().y - (height / 2) - offset;
-	int bottom = (int)(ScreenHeight() / 2) + (5 / 2) - player.y + party.front().y + (height / 2) - offset;
+	int top = (int)(ScreenHeight() / 2) + (header_rows / 2) - player.y + party.front().y - (height / 2) - offset;
+	int bottom = (int)(ScreenHeight() / 2) + (header_rows / 2) - player.y + party.front().y + (height / 2) - offset;
 
 	drawWindow(left, right, top, bottom, player.name);
 
@@ -788,12 +799,12 @@ void fantasy::drawParty(int start) {
 	int i = 0;
 	for (player player : party) {
 		if (player.selected) {
-			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
+			DrawStringAlpha(start + 3 + i, start + header_rows, L"[" + player.name + L"]", 0x000F);
 			DrawStringAlpha(start + 3, start + 7, player.name + L" the " + to_wstring(player.level) + L" " + player.role, 0x000F);
 
 		}
 		else {
-			DrawStringAlpha(start + 4 + i, start + 5, player.name, 0x000F);
+			DrawStringAlpha(start + 4 + i, start + header_rows, player.name, 0x000F);
 		}
 		i = i + player.name.length() + 2;
 	}
@@ -802,16 +813,16 @@ void fantasy::drawStatus(int start) {
 	int i = 0;
 	for (player player : party) {
 		if (player.selected) {
-			DrawStringAlpha(start + 3 + i, start + 5, L"[" + player.name + L"]", 0x000F);
+			DrawStringAlpha(start + 3 + i, start + header_rows, L"[" + player.name + L"]", 0x000F);
 			DrawStringAlpha(start + 3, start + 7, player.name + L" the Lv " + to_wstring(player.level) + L" " + player.role, 0x000F);
 			int k = 0;
 			for (auto stat : player.stats) {
-				DrawStringAlpha(start + 5, start + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
+				DrawStringAlpha(start + header_rows, start + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
 				k++;
 			}
 		}
 		else {
-			DrawStringAlpha(start + 4 + i, start + 5, player.name, 0x000F);
+			DrawStringAlpha(start + 4 + i, start + header_rows, player.name, 0x000F);
 		}
 		i = i + player.name.length() + 2;
 	}
@@ -819,7 +830,7 @@ void fantasy::drawStatus(int start) {
 void fantasy::drawItems(int start) {
 	int i = 0;
 	for (item item : inventory) {
-		DrawStringAlpha(start + 4, start + 5 + i, item.name, 0x000F);
+		DrawStringAlpha(start + 4, start + header_rows + i, item.name, 0x000F);
 		i++;
 	}
 }
@@ -831,8 +842,8 @@ void fantasy::drawBattle() {
 
 	int left = margin;
 	int right = ScreenWidth() - margin;
-	int top = (margin / 2) + (5 / 2);
-	int bottom = ScreenHeight() - (margin / 2) + (5 / 2);
+	int top = (margin / 2) + (header_rows / 2);
+	int bottom = ScreenHeight() - (margin / 2) + (header_rows / 2);
 
 	if (current == battle && enemy < here.monsters.size()) {
 		drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + party.front().name);
@@ -843,11 +854,11 @@ void fantasy::drawBattle() {
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
 	// draw party.front()
-	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (5 / 2), party.front().name[0], FG_WHITE);
+	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2), party.front().name[0], FG_WHITE);
 
 	// draw monster
 	if (current == battle && enemy < here.monsters.size()) {
-		Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (5 / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
+		Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
 	}
 
 }
