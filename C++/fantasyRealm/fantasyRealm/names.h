@@ -14,11 +14,13 @@ public:
 	static wstring role();
 	static wstring weapons[15];
 	static wstring weaponName(wstring role);
+	static wstring abilities[15];
+	static wstring ability(wstring role);
 	static wstring magics[12];
 	static wstring magic();
 
 	// names
-	static wstring first[11];
+	static wstring first[15];
 	static wstring firstName();
 	static wstring last[479];
 	static wstring lastName();

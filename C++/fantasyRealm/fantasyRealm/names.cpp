@@ -4,17 +4,11 @@
 
 using namespace std;
 
-wstring names::roles[15] = {
-	L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist", L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool"
-}; 
-wstring names::weapons[15] = {
-   L"Club", L"3-string Lute", L"Talisman", L"Warglaives", L"Oaken Staff", L"Copper Sword", L"Divine Longsword +5", L"Fists", L"PyroFlame", L"Master's Katana", L"Short Bow", L"Wand", L"Bandit Knife", L"Royal Crown", L"Straw Hat" };
-wstring names::magics[12] = {
-	L"Blood Magic", L"Black Magic", L"Dark Arts", L"Divine", L"Holy", L"Medium", L"Necromancy", L"Psychic", L"Pyromancy", L"Shapeshift", L"Sorcery", L"Unholy",
-};
-
-wstring names::first[11] = { L"Elsie", L"Charlotte", L"Ingrid", L"Olga", L"Sally", L"Billy", L"Charlie", L"Harold", L"John", L"Leopold", L"Tom" };
-
+wstring names::roles[15] = { L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist", L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool" }; 
+wstring names::weapons[15] = { L"Club", L"3-string Lute", L"Talisman", L"Warglaives", L"Oaken Staff", L"Copper Sword", L"Divine Longsword +5", L"Fists", L"PyroFlame", L"Master's Katana", L"Short Bow", L"Wand", L"Bandit Knife", L"Royal Crown", L"Straw Hat" }; 
+wstring names::abilities[15] = {L"Rage", L"Song", L"Holy", L"Unholy", L"Shapeshift", L"SwordTech", L"Holy Arts", L"Evade", L"Flame", L"Bushido", L"Assassin", L"Sorcery", L"Steal", L"Royal", L"Slapstick" };
+wstring names::magics[12] = { L"Blood Magic", L"Black Magic", L"Dark Arts", L"Divine", L"Holy", L"Medium", L"Necromancy", L"Psychic", L"Pyromancy", L"Shapeshift", L"Sorcery", L"Unholy" };
+wstring names::first[15] = { L"Elsie", L"Charlotte", L"Claire", L"Ingrid", L"Maria", L"Olga", L"Sally", L"Billy", L"Charlie", L"Harold", L"Heinrich", L"Karl", L"John", L"Leopold", L"Tom" };
 wstring names::last[479] = {
 	// World population = 7.55 billion
 	// China - 1.40 billion
@@ -583,7 +577,19 @@ wstring names::weaponName(wstring role) {
 	else { return L"Dead Fish"; }
 };
 
-
+wstring names::ability(wstring role) {
+	int i = 0;
+	wstring j;
+	for (wstring k : names::roles) {
+		if (k == role) {
+			j = names::abilities[i];
+			break;
+		}
+		i++;
+		// else { return L"Dead Fish"; }
+	}
+	return j;
+};
 
 wstring names::firstName() { return first[rand() % (sizeof(first) / sizeof(first[0]))]; }
 wstring names::lastName() { return last[rand() % (sizeof(last) / sizeof(last[0]))]; }

@@ -337,7 +337,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 			// down
 			else if (m_keys[0x28].bPressed) {
-				// current_player = party.front(); 
+				// current_player = party.front();
 				party.front().selected = true;
 				menu_actions.find(current_menu)->second.second = false;
 			}
@@ -765,12 +765,12 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 }
 
 void fantasy::drawMenu(menu item) {
-	int margin = 10;
+	int margin = 9;
 
-	int left = margin;
-	int right = ScreenWidth() - margin;
+	int left = margin * 2;
+	int right = ScreenWidth() - 1 - margin * 2;
 	int top = margin;
-	int bottom = ScreenHeight() - margin;
+	int bottom = ScreenHeight() - 1 - margin;
 
 	drawWindow(left, right, top, bottom, L"Menu");
 
@@ -788,43 +788,58 @@ void fantasy::drawMenu(menu item) {
 		it++;
 	}
 
-	if (current_menu == party_menu) { drawParty(left); }
-	else if (current_menu == status) { drawStatus(left); }
-	else if (current_menu == items) { drawItems(left); }
-	else if (current_menu == equipment) { drawEquipment(left); }
+	if (current_menu == party_menu) { drawParty(top, left); }
+	else if (current_menu == status) { drawStatus(top, left); }
+	else if (current_menu == items) { drawItems(top); }
+	else if (current_menu == equipment) { drawEquipment(top); }
 
 }
 
-void fantasy::drawParty(int start) {
+void fantasy::drawParty(int top, int left) {
 	int i = 0;
 	for (player player : party) {
 		if (player.selected) {
-			DrawStringAlpha(start + 3 + i, start + header_rows, L"[" + player.name + L"]", 0x000F);
-			DrawStringAlpha(start + 3, start + 7, player.name + L" the " + to_wstring(player.level) + L" " + player.role, 0x000F);
+			DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
+			DrawStringAlpha(left + 3, top + 7, player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role, 0x000F);
 
 		}
 		else {
-			DrawStringAlpha(start + 4 + i, start + header_rows, player.name, 0x000F);
+			DrawStringAlpha(left + 4 + i, top + 5, player.name, 0x000F);
 		}
 		i = i + player.name.length() + 2;
 	}
 }
-void fantasy::drawStatus(int start) {
+void fantasy::drawStatus(int top, int left) {
 	int i = 0;
 	for (player player : party) {
 		if (player.selected) {
-			DrawStringAlpha(start + 3 + i, start + header_rows, L"[" + player.name + L"]", 0x000F);
-			DrawStringAlpha(start + 3, start + 7, player.name + L" the Lv " + to_wstring(player.level) + L" " + player.role, 0x000F);
+			DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
+			DrawStringAlpha(left + 3, top + 7, player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role, 0x000F);
 			int k = 0;
 			for (auto stat : player.stats) {
-				DrawStringAlpha(start + header_rows, start + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
+				DrawStringAlpha(left + 5, top + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
 				k++;
 			}
+			drawSkills(top, left, player);
 		}
 		else {
-			DrawStringAlpha(start + 4 + i, start + header_rows, player.name, 0x000F);
+			DrawStringAlpha(left + 4 + i, top + 5, player.name, 0x000F);
 		}
 		i = i + player.name.length() + 2;
+	}
+}
+
+void fantasy::drawSkills(int top, int left, player you) {
+	int max = 0;
+	for (player player : party) {
+		if (max < (player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role).length()) {
+			max = (player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role).length();
+		}
+	}
+	int i = 0;
+	for (ability skill : you.skills) {
+		DrawStringAlpha(left + max + 9, top + 9 + i, skill.name, 0x000F);
+		i++;
 	}
 }
 void fantasy::drawItems(int start) {

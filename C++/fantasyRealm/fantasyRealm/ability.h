@@ -11,6 +11,7 @@ using namespace std;
 class ability {
 public:
 	wstring name;
+	bool selected = false;
 	vector<action> actions;
 	ability();
 	ability(wstring role);

@@ -17,7 +17,8 @@ player::player() {
 	*this->stats = getStats(this->role, this->stats);
 	this->_weapon = weapon(this->role);
 	this->skills.push_back(fight());
-	this->skills.push_back(ability(L"Item"));
+	this->skills.push_back(ability(this->role));
+	this->skills.push_back(use());
 	// this->thoughts = greeting;
 	// this->selected = false;
 	// enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
@@ -36,7 +37,8 @@ player::player(wstring name, wstring role, int wits, int brave) {
 	*this->stats = getStats(this->role, this->stats);
 	this->_weapon = weapon(this->role);
 	this->skills.push_back(fight());
-	this->skills.push_back(ability(L"Item"));
+	this->skills.push_back(ability(this->role));
+	this->skills.push_back(use());
 }
 
 player::stat player::getStats(wstring role, player::stat stats[]) {

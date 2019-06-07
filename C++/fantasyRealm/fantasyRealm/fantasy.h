@@ -42,8 +42,9 @@ private:
 	void drawWindow(int left, int right, int top, int bottom, wstring title);
 	void drawMessage(player player, player::dialogue message);
 	void drawMenu(menu item);
-	void drawParty(int start);
-	void drawStatus(int start);
+	void drawParty(int top, int left);
+	void drawStatus(int top, int left);
+	void drawSkills(int top, int left, player player);
 	void drawItems(int start);
 	void drawEquipment(int start);
 	void drawBattle();
