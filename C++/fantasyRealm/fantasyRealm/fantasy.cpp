@@ -638,8 +638,6 @@ void fantasy::start() {
 
 	}
 	if (!isRole) { player1.role = L"Fool"; }
-	player1._weapon = weapon(player1.role);
-	player1.ability = ability();
 
 	wprintf(L"You must think you're pretty clever.\n");
 	wprintf(L"Just how clever are you? (1-10):\n");
@@ -663,7 +661,7 @@ void fantasy::start() {
 	player1.level = 1;
 
 	wcout << "Hello " << player1.name << " the " << player1.role << ".\n";
-	wcout << "The " << player1.role << " class uses the ability " << player1.ability.name << " and the " << player1._weapon.name << " starting weapon.\n";
+	wcout << "The " << player1.role << " class uses the ability " << player1.name << " and the " << player1._weapon.name << " starting weapon.\n";
 
 	system("pause");
 }

@@ -9,3 +9,9 @@ action::action() {
 	this->physical_damage = 1;
 	this->magic_damage = 1;
 }
+
+action::action(wstring name) {
+	this->name = name;
+	this->physical_damage = 1;
+	this->magic_damage = 1;
+}

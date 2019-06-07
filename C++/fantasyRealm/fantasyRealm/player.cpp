@@ -10,27 +10,30 @@
 using namespace std;
 
 player::player() {
-	names names;
-	this->race = L"Half-Orc";
-	this->role = names.role();
-	this->name = names.fullName(this->role);
-	this->_weapon = weapon(this->role);
-	this->thoughts = greeting;
 	this->level = 1;
-	this->selected = false;
-	enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
+	this->race = L"Half-Orc";
+	this->role = names::role();
+	this->name = names::fullName(this->role);
 	*this->stats = getStats(this->role, this->stats);
-	// this->role = L"Shortstop";
-	// this->stats.push_back({ L"Strength", 1 });
-	// this->name = L"Billy";
-	// this->name = L"Hubris";
+	this->_weapon = weapon(this->role);
+	this->skills.push_back(fight());
+	this->skills.push_back(ability(L"Item"));
+	// this->thoughts = greeting;
+	// this->selected = false;
+	// enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
 }
 player::player(wstring name) {
 	this->name = name;
 }
+player::player(wstring name, wstring role, int wits, int brave) {
+	this->name = name;
+	this->role = role;
+	this->wits = wits;
+	this->brave = brave;
+}
 player::stat player::getStats(wstring role, player::stat stats[]) {
 	srand(clock() + rand() % 10000);
-	int i = rand() % 20;
+	int i = rand() % 10;
 	int points = i / 2;
 	stats[luck].value = i;
 	vector<int> bonuses;

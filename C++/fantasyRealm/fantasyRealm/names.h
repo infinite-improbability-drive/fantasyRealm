@@ -18,7 +18,7 @@ public:
 	static wstring magic();
 
 	// names
-	static wstring first[5];
+	static wstring first[11];
 	static wstring firstName();
 	static wstring last[479];
 	static wstring lastName();

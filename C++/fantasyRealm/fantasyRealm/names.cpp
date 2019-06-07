@@ -13,7 +13,7 @@ wstring names::magics[12] = {
 	L"Blood Magic", L"Black Magic", L"Dark Arts", L"Divine", L"Holy", L"Medium", L"Necromancy", L"Psychic", L"Pyromancy", L"Shapeshift", L"Sorcery", L"Unholy",
 };
 
-wstring names::first[5] = { L"Elsie", L"Charlotte", L"Harold", L"Leopold", L"Olga" };
+wstring names::first[11] = { L"Elsie", L"Charlotte", L"Ingrid", L"Olga", L"Sally", L"Billy", L"Charlie", L"Harold", L"John", L"Leopold", L"Tom" };
 
 wstring names::last[479] = {
 	// World population = 7.55 billion

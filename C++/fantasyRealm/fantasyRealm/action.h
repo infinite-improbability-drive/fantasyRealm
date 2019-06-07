@@ -11,7 +11,8 @@ public:
 	wstring name;
 	int physical_damage;
 	int magic_damage;
-	action();
+	action();	
+	action(wstring name);
 };
 
 // actions - enter, exit, look, menu, quit, 
