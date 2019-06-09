@@ -1,15 +1,17 @@
 #include "pch.h"
 #include "monster.h"
+#include "names.h"
 #include "place.h"
-// #include "player.cpp"
 #include "realm.h"
+#include "time.h"
 #include <string>
 #include <vector>
 
 using namespace std;
 
 realm::realm() {
-	this->name = L"Midgard";
+	srand(clock() + rand() % 10000);
+	this->name = realm::getName();
 	this->type = L"realm";
 	for (int i = 0; i < 80; i++) {
 		places.push_back(place());
@@ -19,7 +21,8 @@ realm::realm() {
 	}
 }
 realm::realm(int wits, int brave) {
-	this->name = L"Midgard";
+	srand(clock() + rand() % 10000);
+	this->name = realm::getName();
 	this->type = L"realm";
 	for (int i = 0; i < wits * 10 + brave; i++) {
 		places.push_back(place());
@@ -94,4 +97,6 @@ vector<monster> realm::moveMonsters(vector<monster> monsters) {
 	return monsters;
 }
 
-// wstring realm::getName() { return L"Sanctuary Circle"; }
+wstring realm::getName() {
+	return names::realmName();
+}

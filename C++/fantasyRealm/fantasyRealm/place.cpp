@@ -8,7 +8,7 @@
 using namespace std;
 
 place::place() {
-	srand(clock() + rand() % 10000);
+	// srand(clock() + rand() % 10000);
 	int i = rand() % 1000;
 	this->name = getName(i);
 	this->type = getType(i);

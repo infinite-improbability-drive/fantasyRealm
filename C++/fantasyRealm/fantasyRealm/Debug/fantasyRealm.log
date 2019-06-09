@@ -1,2 +1,5 @@
-﻿  realm.cpp
+﻿  place.cpp
+  realm.cpp
+c:\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(16): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
+  Generating Code...
   fantasyRealm.vcxproj -> C:\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe

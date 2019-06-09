@@ -961,6 +961,8 @@ void fantasy::drawBattle() {
 		}
 	}
 
+	drawSkills(25, 25, party.front());
+
 }
 
 void fantasy::drawQuit() {

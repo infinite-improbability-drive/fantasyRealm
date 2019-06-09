@@ -364,6 +364,8 @@ wstring names::princess[12] = { L"Ariel", L"Augusta", L"Aurora", L"Euna", L"Eilo
 wstring names::fool[4] = { L"Charlie", L"Homer", L"Lemmy", L"Zippo" };
 
 
+wstring names::realms[10] = { L"Alfheim", L"Asgard", L"Hel", L"Jotunheim", L"Midgard", L"Muspelheim", L"Nidavellir", L"Niflheim", L"Svartalfheim", L"Vanaheim" };
+
 wstring names::towns[2363] = {
 
 	// Planet Earth
@@ -622,6 +624,10 @@ wstring names::fullName(wstring role) {
 	} 
 }
 
+wstring names::realmName() { 
+	// srand(100000);
+	return realms[rand() % (sizeof(realms) / sizeof(realms[0]))]; 
+}
 wstring names::townName() { return towns[rand() % (sizeof(towns) / sizeof(towns[0]))]; }
 wstring names::cave() { return caves[rand() % (sizeof(caves) / sizeof(caves[0]))]; }
 wstring names::caveType() { return caveTypes[rand() % (sizeof(caveTypes) / sizeof(caveTypes[0]))]; }
@@ -630,4 +636,6 @@ wstring names::element() { return elements[rand() % (sizeof(elements) / sizeof(e
 wstring names::farm() { return farms[rand() % (sizeof(farms) / sizeof(farms[0]))]; }
 wstring names::special() { return specials[rand() % (sizeof(specials) / sizeof(specials[0]))]; }
 wstring names::base() { return antarctic_bases[rand() % (sizeof(antarctic_bases) / sizeof(antarctic_bases[0]))]; }
+
+
 

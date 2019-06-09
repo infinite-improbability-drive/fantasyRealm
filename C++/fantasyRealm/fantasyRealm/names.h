@@ -45,6 +45,8 @@ public:
 	static wstring fool[4];
 
 	// places
+	static wstring realms[10];
+	static wstring realmName();
 	static wstring towns[2363];
 	static wstring townName();
 	static wstring caves[10];
