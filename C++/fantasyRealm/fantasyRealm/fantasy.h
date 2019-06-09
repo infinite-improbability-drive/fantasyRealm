@@ -51,6 +51,7 @@ private:
 	void drawEquipment(int start);
 	void drawBattle();
 	void drawQuit();
+	void isSolid();
 	int isMonster();
 
 protected:

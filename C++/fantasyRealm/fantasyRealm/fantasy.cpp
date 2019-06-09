@@ -66,7 +66,7 @@ using std::vector;
 bool fantasy::OnUserCreate() {
 	// seed random number generator
 	// int r = rand() % 1000;
-	srand(clock() + time(nullptr));
+	// srand(clock() + time(nullptr));
 	mode current = play;
 	menu current_menu = main;
 	move = true;
@@ -97,79 +97,10 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 	if (current == play) {
 
-		// move party.front()
-		// left
-		if (m_keys[0x25].bPressed) {
-			// check if solid 
-			for (place place : here.places) {
-				if ((place.y == party.front().y) && (place.x + 1 == party.front().x)) {
-					if (place.solid) {
-						move = false;
-						break;
-					}
-				}
-			}
-			// check if monster
-			enemy = isMonster();
-
-			// move
-			if (move) {
-				party.front().x -= 1; 
-			}
-		}
-		// up
-		if (m_keys[0x26].bPressed) {
-			// check if solid object
-			for (place place : here.places) {
-				if ((place.x == party.front().x) && (place.y + 1 == party.front().y)) {
-					if (place.solid) {
-						move = false;
-						break;
-					}
-				}
-			}
-			// check if monster
-			enemy = isMonster();
-
-			// move
-			if (move) {
-				party.front().y -= 1;
-			}
-		}
-		// right
-		if (m_keys[0x27].bPressed) {	// right
-			for (place place : here.places) {
-				if ((place.y == party.front().y) && (place.x - 1 == party.front().x)) {
-					if (place.solid) {
-						move = false;
-						break;
-					}
-				}
-			}
-			// check if monster
-			enemy = isMonster();
-
-			if (move) {
-				party.front().x += 1; 
-			}
-		}
-		// down
-		if (m_keys[0x28].bPressed) {	// down
-			for (place place : here.places) {
-				if ((place.x == party.front().x) && (place.y - 1 == party.front().y)) {
-					if (place.solid) {
-						move = false;
-						break;
-					}
-				}
-			}
-			// check if monster
-			enemy = isMonster();
-
-			if (move) {
-				party.front().y += 1; 
-			}
-		}
+		if (m_keys[0x25].bPressed) { isSolid(); enemy = isMonster(); if (move) { party.front().x -= 1; } }	// left
+		if (m_keys[0x26].bPressed) { isSolid();	enemy = isMonster(); if (move) { party.front().y -= 1; } }	// up
+		if (m_keys[0x27].bPressed) { isSolid();	enemy = isMonster(); if (move) { party.front().x += 1; } }	// right
+		if (m_keys[0x28].bPressed) { isSolid();	enemy = isMonster(); if (move) { party.front().y += 1; } }	// down
 
 		// random battle
 		if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
@@ -980,11 +911,26 @@ void fantasy::drawQuit() {
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 }
 
+void fantasy::isSolid() {
+	for (place place : here.places) {
+		if (((m_keys[0x25].bPressed) && (place.y == party.front().y) && (place.x + 1 == party.front().x)) ||	// left
+			((m_keys[0x26].bPressed) && (place.x == party.front().x) && (place.y + 1 == party.front().y)) ||	// up
+			((m_keys[0x27].bPressed) && (place.y == party.front().y) && (place.x - 1 == party.front().x)) ||	// right
+			((m_keys[0x28].bPressed) && (place.x == party.front().x) && (place.y - 1 == party.front().y))		// down
+			) {
+			if (place.solid) {
+				move = false;
+				break;
+			}
+		}
+	}
+}
+
 int fantasy::isMonster() {
 	// monster mon;
 	int i = 0;
 	for (monster monster : here.monsters) {
-		if (((monster.y == party.front().y) && ((monster.x + 1 == party.front().x) || (monster.x - 1 == party.front().x))) || 
+		if (((monster.y == party.front().y) && ((monster.x + 1 == party.front().x) || (monster.x - 1 == party.front().x))) ||
 			((monster.x == party.front().x) && ((monster.y + 1 == party.front().y) || (monster.y - 1 == party.front().y)))) {
 			current = normal_battle;
 			fight = battle(party, monster);
@@ -997,5 +943,3 @@ int fantasy::isMonster() {
 	}
 	return i;
 }
-
-
