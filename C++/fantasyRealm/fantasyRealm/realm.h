@@ -22,6 +22,7 @@ public:
 	realm();
 	realm(int wits, int brave);
 	realm(place here, realm *parent, int width, int height);
+	vector<monster> moveMonsters(vector<monster> monsters);
 };
 
 // wstring getName() { return L"Sanctuary Circle"; }

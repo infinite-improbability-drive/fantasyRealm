@@ -83,43 +83,7 @@ bool fantasy::OnUserCreate() {
 
 bool fantasy::OnUpdate() {
 	if (current == play) {
-		int i = 0;
-		// move monsters
-		for (monster monster : here.monsters) {
-			int randomize = rand() % 10000 + 1;
-			if (randomize == 1) {
-				monster.x += 1;
-			}
-			else if (randomize == 2) {
-				monster.y += 1;
-			}
-			else if (randomize == 3) {
-				monster.x -= 1;
-			}
-			else if (randomize == 4) {
-				monster.y -= 1;
-			}
-			else if (randomize == 5) {
-				monster.x += 1;
-				monster.y += 1;
-			}
-			else if (randomize == 6) {
-				monster.x += 1;
-				monster.y -= 1;
-			}
-			else if (randomize == 7) {
-				monster.y += 1;
-				monster.x -= 1;
-			}
-			else if (randomize == 8) {
-				monster.x -= 1;
-				monster.y -= 1;
-			}
-			else {
-			}
-			here.monsters[i] = monster;
-			i += 1;
-		}
+		here.monsters = here.moveMonsters(here.monsters);
 	}
 	return true;
 }

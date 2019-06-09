@@ -15,6 +15,7 @@ public:
 	battle();
 	battle(vector<player> party);
 	battle(vector<player> party, monster monster);
+
 };
 
 // actions - enter, exit, look, menu, quit, 

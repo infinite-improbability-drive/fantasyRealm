@@ -30,11 +30,11 @@ realm::realm(int wits, int brave) {
 }
 realm::realm(place here, realm *parent, int width, int height) {
 	if (type != L"realm") {
-		this->name = here.name;
-		this->type = here.type;
+		this->name = name;
+		this->type = type;
 		this->parent = parent;
-		this->x = here.x;
-		this->y = here.y;
+		this->x = x;
+		this->y = y;
 		int m = rand() % (width - 2) + 1;
 		int n = rand() % (height - 2) + 1;
 
@@ -52,6 +52,46 @@ realm::realm(place here, realm *parent, int width, int height) {
 			monsters.push_back(monster());
 		}
 	}
+}
+vector<monster> realm::moveMonsters(vector<monster> monsters) {
+	int i = 0;
+	// move monsters
+	for (monster monster : monsters) {
+		int randomize = rand() % 7000 + 1;
+		if (randomize == 1) {
+			monster.x += 1;
+		}
+		else if (randomize == 2) {
+			monster.y += 1;
+		}
+		else if (randomize == 3) {
+			monster.x -= 1;
+		}
+		else if (randomize == 4) {
+			monster.y -= 1;
+		}
+		else if (randomize == 5) {
+			monster.x += 1;
+			monster.y += 1;
+		}
+		else if (randomize == 6) {
+			monster.x += 1;
+			monster.y -= 1;
+		}
+		else if (randomize == 7) {
+			monster.y += 1;
+			monster.x -= 1;
+		}
+		else if (randomize == 8) {
+			monster.x -= 1;
+			monster.y -= 1;
+		}
+		else {
+		}
+		monsters[i] = monster;
+		i += 1;
+	}
+	return monsters;
 }
 
 // wstring realm::getName() { return L"Sanctuary Circle"; }
