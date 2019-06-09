@@ -211,6 +211,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
 			if (rand() % 10000 < 2) {
 				current = random_battle;
+				fight = battle(party);
 			}
 		}
 		move = true;
@@ -581,12 +582,12 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	}
 	// battle
 	// [Y] win battle
-	if (current == battle) {
+	if (current == normal_battle) {
 			
 	}
 		
 	// [Y] win battle
-	if (m_keys[89].bPressed && current == battle) {
+	if (m_keys[89].bPressed && current == normal_battle) {
 		here.monsters.erase(here.monsters.begin() + enemy);
 		current = play;
 	}
@@ -683,7 +684,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	// if (current == status) { drawStatus(); }		// draw status
 	// if (current == items) { drawItems(); }			// draw items
 	// if (current == equipment) { drawEquipment(); }	// draw equipment
-	if (current == battle) { drawBattle(); }		// draw battle
+	if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
 	if (current == quit) {	 drawQuit(); }			// draw quit
 
 
@@ -971,7 +972,7 @@ void fantasy::drawBattle() {
 	int top = (margin / 2) + (header_rows / 2);
 	int bottom = ScreenHeight() - (margin / 2) + (header_rows / 2);
 
-	if (current == battle && enemy < here.monsters.size()) {
+	if (current == normal_battle && enemy < here.monsters.size()) {
 		drawWindow(left, right, top, bottom, L"Battle!: " + here.monsters[enemy].name + L" vs. " + party.front().name);
 	}
 
@@ -980,11 +981,20 @@ void fantasy::drawBattle() {
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
 	// draw party.front()
-	Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2), party.front().name[0], FG_WHITE);
+	int i = 0;
+	for (player hero : fight.heroes) {
+		Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), hero.name[0], FG_WHITE);
+		i++;
+	}
 
 	// draw monster
-	if (current == battle && enemy < here.monsters.size()) {
-		Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
+	int j = 0;
+	if (current == normal_battle && enemy < here.monsters.size()) {
+		// Draw(ScreenWidth() / 4 - 2, ScreenHeight() / 2 + (header_rows / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
+		for (monster monster : fight.enemies) {
+			Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2), monster.icon, monster.color);
+			j++;
+		}
 	}
 
 }
@@ -1010,7 +1020,8 @@ int fantasy::isMonster() {
 	for (monster monster : here.monsters) {
 		if (((monster.y == party.front().y) && ((monster.x + 1 == party.front().x) || (monster.x - 1 == party.front().x))) || 
 			((monster.x == party.front().x) && ((monster.y + 1 == party.front().y) || (monster.y - 1 == party.front().y)))) {
-			current = battle;
+			current = normal_battle;
+			fight = battle(party, monster);
 
 			// return i;
 			// here.monsters.erase(here.monsters.begin() + i);

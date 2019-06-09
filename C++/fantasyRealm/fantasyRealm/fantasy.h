@@ -3,6 +3,7 @@
 #define __FANTASY_H__
 
 #include "olcConsoleGameEngine.h"
+#include "battle.h"
 #include "item.h"
 #include "player.h"
 #include "realm.h"
@@ -18,7 +19,7 @@ public:
 	}
 	void start();
 private:
-	enum mode { play, pause, talk, menu_mode, shop, battle, random_battle, quit };
+	enum mode { play, pause, talk, menu_mode, shop, normal_battle, random_battle, quit };
 	mode current;
 	enum menu { main, party_menu, status, items, equipment, exit_menu };
 	int header_rows;
@@ -34,6 +35,7 @@ private:
 	player someone;
 	player nobody;
 	vector<item> inventory;
+	battle fight;
 	bool move;
 	int enemy;
 

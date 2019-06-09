@@ -1,6 +1,18 @@
-﻿  fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(69): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(941): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(974): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(986): warning C4018: '<': signed/unsigned mismatch
-  fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe
+﻿  pch.cpp
+  ability.cpp
+  action.cpp
+  battle.cpp
+  fantasy.cpp
+c:\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(69): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(942): warning C4018: '<': signed/unsigned mismatch
+c:\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(975): warning C4018: '<': signed/unsigned mismatch
+c:\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(992): warning C4018: '<': signed/unsigned mismatch
+  item.cpp
+  monster.cpp
+  names.cpp
+  place.cpp
+  player.cpp
+  realm.cpp
+  weapon.cpp
+  Generating Code...
+  fantasyRealm.vcxproj -> C:\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe
