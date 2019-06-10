@@ -34,7 +34,7 @@ realm::realm(int wits, int brave) {
 realm::realm(place here, realm *parent, int width, int height) {
 	if (type != L"realm") {
 		this->name = here.name;
-		this->type = type;
+		this->type = here.type;
 		this->parent = parent;
 		this->x = here.x;
 		this->y = here.y;
@@ -51,6 +51,12 @@ realm::realm(place here, realm *parent, int width, int height) {
 				}
 			}
 		}
+
+		player someone = hero();
+		someone.x = rand() % (width - 2) + 1;
+		someone.y = rand() % (height - 2) + 1;
+		this->npcs.push_back(someone);
+
 		for (int i = 0; i < 240; i++) {
 			monsters.push_back(monster());
 		}

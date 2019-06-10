@@ -130,10 +130,6 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 							here.parent = &r;
 							party.front().x = rand() % (width - 2) + 1;
 							party.front().y = rand() % (height - 2) + 1;
-							someone = hero();
-							someone.x = rand() % (width - 2) + 1;
-							someone.y = rand() % (height - 2) + 1;
-							npcs.push_back(someone);
 							break;
 						}
 					}
@@ -228,19 +224,15 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			else if (m_keys[0x26].bPressed) {
 				int i = 0;
 				for (player member : party) { party[i].selected = false; i++; }
-				// current_player = nobody;
 				menu_actions.find(current_menu)->second.second = true;
 			}
 			// down
 			else if (m_keys[0x28].bPressed) {
-				// current_player = party.front();
 				party.front().selected = true;
 				menu_actions.find(current_menu)->second.second = false;
 			}
-			// if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
 		}
 		else if (current_menu == status) {
-			// menu_actions.find(current_menu)->second.second = true;
 			// left
 			if (m_keys[0x25].bPressed) { 
 				if (menu_actions.find(current_menu)->second.second) {
@@ -272,29 +264,18 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					}
 				}
 				else {
-					// int i = 0;
 					int j = 0;
 					for (player member : party) {
 						if (member.current) {
 							party[j].selected = true;
 							int k = 0;
 							for (ability skill : member.skills) {
-								// if (party[j].skills[0].selected) {
 								party[j].skills[k].selected = false;
-									// break;
-								// }
-								// else if (party[j].skills[k].selected) {
-									// party[j].skills[k].selected = false;
-									// party[j].skills[k - 1].selected = true;
-									// break;
-								// }
 								k++;
 							}
 							break;
 						}
 						j++;
-						// break;
-						// i++;
 					}
 				}
 			}
@@ -357,8 +338,6 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 							}
 						}
 						j++;
-						// break;
-						// i++;
 					}
 				}
 			}
@@ -440,29 +419,32 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				current = play;
 			}
 		}
-		if (m_keys[84].bPressed) {
-			if (someone.thoughts == someone.greeting) { someone.thoughts = someone.introduction; }
-			else if (someone.thoughts == someone.introduction) { someone.thoughts = someone.join; }
-		}
-		if (m_keys[89].bPressed && someone.thoughts == someone.join) {
-			someone.thoughts = someone.joined;
-			party.push_back(someone);
-			int i = 0;
-			for (player npc : npcs) {
-				if (npc.x == someone.x && npc.y == someone.y) {
-					break;
+		int j = 0;
+		for (player npc : here.npcs) {
+			if (party.front().x == npc.x && party.front().y == npc.y) {
+				if (m_keys[84].bPressed) {
+					if (npc.thoughts == npc.greeting) { here.npcs[j].thoughts = npc.introduction; }
+					else if (npc.thoughts == npc.introduction) { here.npcs[j].thoughts = npc.join; }
 				}
-				i++;
+				if (m_keys[89].bPressed && npc.thoughts == npc.join) {
+					here.npcs[j].thoughts = npc.joined;
+					party.push_back(npc);
+					here.npcs.erase(here.npcs.begin() + j);
+				}
+				break;
 			}
-			npcs.erase(npcs.begin() + i);
-			someone = nobody;
+			j++;
 		}
+
 
 	}
 	if (m_keys[84].bPressed) {
 		if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
-			if (party.front().x == someone.x && party.front().y == someone.y) {
-				current = talk;
+			for (player npc : here.npcs) {
+				if (party.front().x == npc.x && party.front().y == npc.y) {
+					current = talk;
+					break;
+				}
 			}
 		}
 		else {
@@ -589,21 +571,21 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	// draw party.front()
 	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (header_rows / 2), party.front().name[0], FG_WHITE);
 
-	// draw someone
+	// draw npcs
 	if (here.type.compare(L"realm") != 0) {
-		Draw((int)(ScreenWidth() / 2) + someone.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + someone.y - party.front().y, someone.name[0], FG_WHITE);
+		for (player npc : here.npcs) {
+			Draw((int)(ScreenWidth() / 2) + npc.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + npc.y - party.front().y, npc.name[0], FG_WHITE);
+			if (party.front().x == npc.x && party.front().y == npc.y) {
+				// draw message
+				if (current == talk) { drawMessage(npc, npc.thoughts); }
+			}
+		}
 	}
 
 	// draw menus
-	if (current == talk) { drawMessage(someone, someone.thoughts); }		// draw message
 	if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
-	// if (current == status) { drawStatus(); }		// draw status
-	// if (current == items) { drawItems(); }			// draw items
-	// if (current == equipment) { drawEquipment(); }	// draw equipment
 	if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
 	if (current == quit) {	 drawQuit(); }			// draw quit
-
-
 	return true;
 }
 
@@ -611,9 +593,6 @@ int main() {
 
 	// set character set to Unicode-16
 	_setmode(_fileno(stdout), _O_U16TEXT);
-
-	// username = start();
-
 
 	// use olcConsoleGameEngine derived app
 	fantasy game;

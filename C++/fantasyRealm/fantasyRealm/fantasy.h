@@ -30,10 +30,7 @@ private:
 
 	realm here;
 	realm r;
-	vector<player> npcs;
 	player current_player;
-	player someone;
-	player nobody;
 	vector<item> inventory;
 	battle fight;
 	bool move;

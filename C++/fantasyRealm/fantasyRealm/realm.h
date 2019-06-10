@@ -3,6 +3,7 @@
 #define __REALM_H__
 
 #include "place.h"
+#include "player.h"
 #include "monster.h"
 // #include <map>
 #include <string>
@@ -18,6 +19,7 @@ public:
 	static realmType rtype;
 	wstring type;
 	vector<place> places;
+	vector<player> npcs;
 	vector<monster> monsters;
 	realm* parent;
 	int x;
