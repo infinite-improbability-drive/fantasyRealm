@@ -1,6 +1,7 @@
 ﻿  pch.cpp
   ability.cpp
   action.cpp
+  algorithm.cpp
   battle.cpp
   fantasy.cpp
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
