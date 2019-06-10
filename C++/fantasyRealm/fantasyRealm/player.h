@@ -4,6 +4,8 @@
 
 #include "ability.h"
 #include "weapon.h"
+#include <codecvt>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
@@ -35,7 +37,12 @@ public:
 
 	player();
 	player(wstring name);
-	player(wstring name, wstring role, int wits, int brave);
+	static wstring input();
+};
+
+class player1 : public player {
+public:
+	player1();
 };
 
 #endif

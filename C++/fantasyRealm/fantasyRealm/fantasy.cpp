@@ -38,10 +38,8 @@ Last Updated: 24/06/2017
 
 #include "pch.h"
 #include <algorithm>
-#include <codecvt>
 #include <ctime>
 // #include <cstdlib>
-#include <iostream>
 #include <list>
 #include <locale>
 #include <string>
@@ -596,79 +594,12 @@ int main() {
 
 	// use olcConsoleGameEngine derived app
 	fantasy game;
-	game.start();
+	game.party.push_back(player1());
 
 	game.ConstructConsole(150, 40, 8, 16);
 	game.Start();
 
 	return 0;
-}
-
-
-void fantasy::start() {
-
-	wprintf(L"Welcome to the fantasy realm.\n");
-	wprintf(L"Please enter your name:\n");
-	wstring name = input();
-
-	if (name == L"") { name = names::fullName(); }
-
-	wprintf(L"Please choose your class-\n");
-	wstring roles[] = { L"Bard", L"Knight", L"Sorcerer" };
-	for (wstring r : roles) {
-		if (r != roles[roles->length() - 2]) {
-			wcout << r << ", ";
-		}
-		else {
-			wcout << r << ".\n";
-		}
-	}
-	wstring role = input();
-	bool isRole;
-	for (wstring r : roles) {
-		if (role == r) {
-			isRole = true;
-		}
-		else {
-			isRole = false;
-		}
-
-	}
-	if (!isRole) { role = L"Fool"; }
-
-	wprintf(L"You must think you're pretty clever.\n");
-	wprintf(L"Just how clever are you? (1-10):\n");
-	int wits;
-	cin >> wits;
-	while (wits < 1 || wits > 11) {
-		wprintf(L"Try again. \n");
-		wprintf(L"Just how clever are you? (1-10):\n");
-		cin >> wits;
-	}
-
-	wprintf(L"You must be brave to traverse these realms.\n");
-	wprintf(L"How brave do you think you are? (1-10):\n");
-	int brave;
-	cin >> brave;
-	while (brave < 1 || brave > 11) {
-		wprintf(L"Just how brave are you, really? (1-10):\n");
-		cin >> brave;
-	}
-
-
-	wcout << "Hello " << name << " the " << role << ".\n";
-	party.push_back(player(name, role, wits, brave));
-	wcout << "The " << party.front().role << " class uses the ability " << party.front().name << " and the " << party.front()._weapon.name << " starting weapon.\n";
-
-	system("pause");
-}
-
-wstring fantasy::input() {
-	string out;
-	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	getline(cin, out);
-	return converter.from_bytes(out);
-	// std::string narrow = converter.to_bytes(wide_utf16_source_string);
 }
 
 void fantasy::drawHeader() {

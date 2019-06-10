@@ -17,6 +17,7 @@ public:
 	fantasy() {
 		m_sAppName = L"fantasy realm";
 	}
+	vector<player> party;
 	void start();
 private:
 	enum mode { play, pause, talk, menu_mode, shop, normal_battle, random_battle, quit };
@@ -29,7 +30,6 @@ private:
 
 	realm here;
 	realm r;
-	vector<player> party;
 	vector<player> npcs;
 	player current_player;
 	player someone;
@@ -39,7 +39,6 @@ private:
 	bool move;
 	int enemy;
 
-	wstring input();
 	void drawHeader();
 	void drawWindow(int left, int right, int top, int bottom, wstring title);
 	void drawMessage(player player, player::dialogue message);

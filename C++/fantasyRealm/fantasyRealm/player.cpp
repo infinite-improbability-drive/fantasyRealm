@@ -26,12 +26,57 @@ player::player() {
 player::player(wstring name) {
 	this->name = name;
 }
-player::player(wstring name, wstring role, int wits, int brave) {
+
+player1::player1() {
+
+	wprintf(L"Welcome to the fantasy realm.\n");
+	wprintf(L"Please enter your name:\n");
+	this->name = input();
+
+	if (name == L"") { name = names::fullName(); }
+
+	wprintf(L"Please choose your class-\n");
+	wstring roles[] = { L"Bard", L"Knight", L"Sorcerer" };
+	for (wstring r : roles) {
+		if (r != roles[roles->length() - 2]) {
+			wcout << r << ", ";
+		}
+		else {
+			wcout << r << ".\n";
+		}
+	}
+	this->role = input();
+	bool isRole;
+	for (wstring r : roles) {
+		if (role == r) {
+			isRole = true;
+			break;
+		}
+		else {
+			isRole = false;
+		}
+
+	}
+	if (!isRole) { this->role = L"Fool"; }
+
+	wprintf(L"You must think you're pretty clever.\n");
+	wprintf(L"Just how clever are you? (1-10):\n");
+	cin >> this->wits;
+	while (wits < 1 || wits > 11) {
+		wprintf(L"Try again. \n");
+		wprintf(L"Just how clever are you? (1-10):\n");
+		cin >> this->wits;
+	}
+
+	wprintf(L"You must be brave to traverse these realms.\n");
+	wprintf(L"How brave do you think you are? (1-10):\n");
+	cin >> this->brave;
+	while (brave < 1 || brave > 11) {
+		wprintf(L"Just how brave are you, really? (1-10):\n");
+		cin >> this->brave;
+	}
+
 	this->level = 1;
-	this->name = name;
-	this->role = role;
-	this->wits = wits;
-	this->brave = brave;
 	this->x = rand() % (wits * 100) - (wits * 50);
 	this->y = rand() % (wits * 100) - (wits * 50);
 	*this->stats = getStats(this->role, this->stats);
@@ -39,6 +84,19 @@ player::player(wstring name, wstring role, int wits, int brave) {
 	this->skills.push_back(fight());
 	this->skills.push_back(ability(this->role));
 	this->skills.push_back(use());
+
+	wcout << "Hello " << this->name << " the " << role << ".\n";
+	wcout << "The " << this->role << " class uses the ability " << this->name << " and the " << this->_weapon.name << " starting weapon.\n";
+
+	system("pause");
+}
+
+wstring player::input() {
+	string out;
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+	getline(cin, out);
+	return converter.from_bytes(out);
+	// std::string narrow = converter.to_bytes(wide_utf16_source_string);
 }
 
 player::stat player::getStats(wstring role, player::stat stats[]) {
