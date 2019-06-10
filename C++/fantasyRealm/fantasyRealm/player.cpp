@@ -11,6 +11,8 @@ using namespace std;
 
 hero::hero() {
 	this->level = 1;
+	this->x = x;
+	this->y = y;
 	this->race = L"Half-Orc";
 	this->role = names::role();
 	this->name = names::fullName(this->role);
