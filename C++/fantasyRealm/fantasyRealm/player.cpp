@@ -9,7 +9,7 @@
 
 using namespace std;
 
-player::player() {
+hero::hero() {
 	this->level = 1;
 	this->race = L"Half-Orc";
 	this->role = names::role();
@@ -19,12 +19,12 @@ player::player() {
 	this->skills.push_back(fight());
 	this->skills.push_back(ability(this->role));
 	this->skills.push_back(use());
-	// this->thoughts = greeting;
-	// this->selected = false;
-	// enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
 }
 player::player(wstring name) {
 	this->name = name;
+}
+
+player::player() {
 }
 
 player1::player1() {
@@ -33,7 +33,7 @@ player1::player1() {
 	wprintf(L"Please enter your name:\n");
 	this->name = input();
 
-	if (name == L"") { name = names::fullName(); }
+	if (name == L"") { this->name = names::fullName(); }
 
 	wprintf(L"Please choose your class-\n");
 	wstring roles[] = { L"Bard", L"Knight", L"Sorcerer" };
@@ -85,8 +85,8 @@ player1::player1() {
 	this->skills.push_back(ability(this->role));
 	this->skills.push_back(use());
 
-	wcout << "Hello " << this->name << " the " << role << ".\n";
-	wcout << "The " << this->role << " class uses the ability " << this->name << " and the " << this->_weapon.name << " starting weapon.\n";
+	wcout << "Hello " << this->name << " the " << this->role << ".\n";
+	wcout << "The " << this->role << " class uses the ability " << this->skills[1].name << " and the " << this->_weapon.name << " starting weapon.\n";
 
 	system("pause");
 }

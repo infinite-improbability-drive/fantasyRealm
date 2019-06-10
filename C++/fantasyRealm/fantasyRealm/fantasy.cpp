@@ -128,7 +128,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 							here.parent = &r;
 							party.front().x = rand() % (width - 2) + 1;
 							party.front().y = rand() % (height - 2) + 1;
-							someone = player();
+							someone = hero();
 							someone.x = rand() % (width - 2) + 1;
 							someone.y = rand() % (height - 2) + 1;
 							npcs.push_back(someone);

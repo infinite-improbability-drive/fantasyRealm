@@ -40,6 +40,11 @@ public:
 	static wstring input();
 };
 
+class hero : public player {
+public:
+	hero();
+}; 
+
 class player1 : public player {
 public:
 	player1();

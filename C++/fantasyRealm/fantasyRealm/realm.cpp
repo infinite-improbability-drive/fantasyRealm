@@ -33,11 +33,11 @@ realm::realm(int wits, int brave) {
 }
 realm::realm(place here, realm *parent, int width, int height) {
 	if (type != L"realm") {
-		this->name = name;
+		this->name = here.name;
 		this->type = type;
 		this->parent = parent;
-		this->x = x;
-		this->y = y;
+		this->x = here.x;
+		this->y = here.y;
 		int m = rand() % (width - 2) + 1;
 		int n = rand() % (height - 2) + 1;
 
