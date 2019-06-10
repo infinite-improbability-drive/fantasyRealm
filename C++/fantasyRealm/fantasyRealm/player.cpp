@@ -9,24 +9,13 @@
 
 using namespace std;
 
-hero::hero() {
-	this->level = 1;
-	this->x = x;
-	this->y = y;
-	this->race = L"Half-Orc";
-	this->role = names::role();
-	this->name = names::fullName(this->role);
-	*this->stats = getStats(this->role, this->stats);
-	this->_weapon = weapon(this->role);
-	this->skills.push_back(fight());
-	this->skills.push_back(ability(this->role));
-	this->skills.push_back(use());
-}
-player::player(wstring name) {
-	this->name = name;
-}
+
 
 player::player() {
+}
+
+player::player(wstring name) {
+	this->name = name;
 }
 
 player1::player1() {
@@ -91,6 +80,48 @@ player1::player1() {
 	wcout << "The " << this->role << " class uses the ability " << this->skills[1].name << " and the " << this->_weapon.name << " starting weapon.\n";
 
 	system("pause");
+}
+
+hero::hero() {
+	this->level = 1;
+	this->x = x;
+	this->y = y;
+	this->race = L"Half-Orc";
+	this->role = names::role();
+	this->name = names::fullName(this->role);
+	*this->stats = getStats(this->role, this->stats);
+	this->_weapon = weapon(this->role);
+	this->skills.push_back(fight());
+	this->skills.push_back(ability(this->role));
+	this->skills.push_back(use());
+}
+
+npc::npc(int x, int y) {
+	this->name = names::fullName();
+	// this->role = names::peasantRoles();
+	this->x = x;
+	this->y = y;
+}
+
+inn::inn(int x, int y) {
+	this->name = names::fullName();
+	this->role = L"Innkeeper";
+	this->x = x;
+	this->y = y;
+}
+
+shop::shop(int x, int y) {
+	this->name = names::fullName();
+	this->role = L"Shopkeep";
+	this->x = x;
+	this->y = y;
+}
+
+smith::smith(int x, int y) {
+	this->name = names::fullName();
+	this->role = L"Blacksmith";
+	this->x = x;
+	this->y = y;
 }
 
 wstring player::input() {

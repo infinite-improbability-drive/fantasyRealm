@@ -57,6 +57,11 @@ realm::realm(place here, realm *parent, int width, int height) {
 		someone.y = rand() % (height - 2) + 1;
 		this->npcs.push_back(someone);
 
+		this->npcs.push_back(npc(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
+		this->npcs.push_back(inn(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
+		this->npcs.push_back(shop(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
+		this->npcs.push_back(smith(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
+
 		for (int i = 0; i < 240; i++) {
 			monsters.push_back(monster());
 		}

@@ -50,4 +50,24 @@ public:
 	player1();
 };
 
+class npc : public player {
+public:
+	npc(int x, int y);
+};
+
+class inn : public player {
+public:
+	inn(int x, int y);
+};
+
+class shop : public player {
+public:
+	shop(int x, int y);
+};
+
+class smith : public player {
+public:
+	smith(int x, int y);
+};
+
 #endif
