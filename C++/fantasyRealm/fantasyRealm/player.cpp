@@ -82,7 +82,7 @@ player1::player1() {
 	system("pause");
 }
 
-hero::hero() {
+hero::hero(int x, int y) {
 	this->level = 1;
 	this->x = x;
 	this->y = y;

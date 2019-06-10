@@ -52,11 +52,7 @@ realm::realm(place here, realm *parent, int width, int height) {
 			}
 		}
 
-		player someone = hero();
-		someone.x = rand() % (width - 2) + 1;
-		someone.y = rand() % (height - 2) + 1;
-		this->npcs.push_back(someone);
-
+		this->npcs.push_back(hero(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
 		this->npcs.push_back(npc(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
 		this->npcs.push_back(inn(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
 		this->npcs.push_back(shop(rand() % (width - 2) + 1, rand() % (height - 2) + 1));

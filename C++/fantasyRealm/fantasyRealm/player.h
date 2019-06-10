@@ -42,7 +42,7 @@ public:
 
 class hero : public player {
 public:
-	hero();
+	hero(int x, int y);
 }; 
 
 class player1 : public player {

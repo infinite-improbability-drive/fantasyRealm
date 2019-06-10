@@ -1,5 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\debug\names.obj' because it is being used by another process.
-  pch.cpp
+﻿  pch.cpp
   ability.cpp
   action.cpp
   battle.cpp
