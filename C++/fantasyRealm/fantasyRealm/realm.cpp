@@ -50,10 +50,10 @@ realm::realm(place here, realm *parent, int width, int height) {
 		for (i = 0; i < width; i++) {
 			for (j = 0; j < height; j++) {
 				if (i == 0 || j == 0 || i == width - 1 || j == height - 1) {
-					places.push_back(place(L"X", L"X", i, j, true));
+					places.push_back(place(L"X", L"X", i, j, 0x0006, true));
 				}
 				else if (tunnel[i][j] == 1) {
-					places.push_back(place(L"\u2591", L"X", i, j, true));
+					places.push_back(place(L"\u2591", L"X", i, j, 0x0006, true));
 				}
 				else if (tunnel[i][j] == 0) {
 					k++;
@@ -66,6 +66,7 @@ realm::realm(place here, realm *parent, int width, int height) {
 		int c = rand() % k;
 		int d = rand() % k;
 		int e = rand() % k;
+		int f = rand() % k;
 
 		for (i = 0; i < width; i++) {
 			for (j = 0; j < height; j++) {
@@ -75,7 +76,7 @@ realm::realm(place here, realm *parent, int width, int height) {
 					else if (l == c) {		this->npcs.push_back(inn(i, j)); }
 					else if (l == d) {		this->npcs.push_back(shop(i, j)); }
 					else if (l == e) {		this->npcs.push_back(smith(i, j)); }
-					else if (l == e) {		places.push_back(place(L"exit", i, j)); }
+					else if (l == f) {		places.push_back(place(L"exit", i, j)); }
 					if (rand() % 120 < 3) { monsters.push_back(monster(i, j)); }
 					l++;
 				}

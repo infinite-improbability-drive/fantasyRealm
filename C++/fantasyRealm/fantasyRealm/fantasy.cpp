@@ -459,6 +459,9 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		
 	// [Y] win battle
 	if (m_keys[89].bPressed && current == normal_battle) {
+		if (enemy == here.monsters.size()) {
+			enemy -= 1;
+		}
 		here.monsters.erase(here.monsters.begin() + enemy);
 		current = play;
 	}
@@ -498,7 +501,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	// draw realm
 	for (place place : here.places) {
 		if (((int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > header_rows) {
-			Draw((int) (ScreenWidth() / 2) + place.x - party.front().x, (int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, place.name[0], FG_WHITE);
+			Draw((int) (ScreenWidth() / 2) + place.x - party.front().x, (int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, place.name[0], place.color);
 		}
 	}
 

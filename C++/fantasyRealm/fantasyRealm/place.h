@@ -16,7 +16,7 @@ public:
 	int y;
 	place();
 	place(wstring type, int x, int y);
-	place(wstring name, wstring type, int x, int y, bool solid);
+	place(wstring name, wstring type, int x, int y, int color, bool solid);
 	static wstring getName(int i);
 	static wstring getType(int i);
 };

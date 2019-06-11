@@ -15,6 +15,7 @@ place::place() {
 	this->solid = false;
 	this->x = rand() % 200 - 100;
 	this->y = rand() % 200 - 100;
+	this->color = 0x000F;
 }
 place::place(wstring type, int x, int y) {
 	srand(clock() + rand() % 10000);
@@ -24,13 +25,15 @@ place::place(wstring type, int x, int y) {
 	this->solid = false;
 	this->x = x;
 	this->y = y;
+	this->color = 0x000F;
 }
-place::place(wstring name, wstring type, int x, int y, bool solid) {
+place::place(wstring name, wstring type, int x, int y, int color, bool solid) {
 	this->name = name;
 	this->type = type;
 	this->solid = solid;
 	this->x = x;
 	this->y = y;
+	this->color = color;
 }
 
 wstring place::getName(int i) {
