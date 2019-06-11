@@ -17,6 +17,7 @@ public:
 	int x;
 	int y;
 	monster();
+	monster(int x, int y);
 	static wstring getMonsterType();
 	static wstring getMonsterName(wstring type);
 	static wchar_t getMonsterIcon(wstring name);

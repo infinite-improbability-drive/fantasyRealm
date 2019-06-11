@@ -33,6 +33,15 @@ monster::monster() {
 	this->y = rand() % 200 - 100;
 }
 
+monster::monster(int x, int y) {
+	this->type = getMonsterType();
+	this->name = getMonsterName(this->type);
+	this->icon = getMonsterIcon(this->name);
+	this->color = getMonsterColor(this->name, this->type);
+	this->x = x;
+	this->y = y;
+}
+
 wstring monster::getMonsterType() {
 	int i = rand() % 100;
 	if (i == 99) {

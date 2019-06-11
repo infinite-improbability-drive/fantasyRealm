@@ -39,8 +39,6 @@ realm::realm(place here, realm *parent, int width, int height) {
 		this->parent = parent;
 		this->x = here.x;
 		this->y = here.y;
-		int m = rand() % (width - 2) + 1;
-		int n = rand() % (height - 2) + 1;
 
 		TunnelingAlgorithm tunnels;
 		vector<vector<int>> tunnel =  tunnels.generateLevel(width, height);
@@ -51,9 +49,6 @@ realm::realm(place here, realm *parent, int width, int height) {
 		int l = 0;
 		for (i = 0; i < width; i++) {
 			for (j = 0; j < height; j++) {
-				if (i == m && j == n) {
-					places.push_back(place(L"exit", m, n));
-				}
 				if (i == 0 || j == 0 || i == width - 1 || j == height - 1) {
 					places.push_back(place(L"X", L"X", i, j, true));
 				}
@@ -75,19 +70,18 @@ realm::realm(place here, realm *parent, int width, int height) {
 		for (i = 0; i < width; i++) {
 			for (j = 0; j < height; j++) {
 				if (tunnel[i][j] == 0) {
-					if (l == a) {		this->npcs.push_back(hero(i, j)); }
-					else if (l == b) {	this->npcs.push_back(npc(i, j)); }
-					else if (l == c) {	this->npcs.push_back(inn(i, j)); }
-					else if (l == d) {	this->npcs.push_back(shop(i, j)); }
-					else if (l == e) {	this->npcs.push_back(smith(i, j)); }
+					if (l == a) {			this->npcs.push_back(hero(i, j)); }
+					else if (l == b) {		this->npcs.push_back(npc(i, j)); }
+					else if (l == c) {		this->npcs.push_back(inn(i, j)); }
+					else if (l == d) {		this->npcs.push_back(shop(i, j)); }
+					else if (l == e) {		this->npcs.push_back(smith(i, j)); }
+					else if (l == e) {		places.push_back(place(L"exit", i, j)); }
+					if (rand() % 120 < 3) { monsters.push_back(monster(i, j)); }
 					l++;
 				}
 			}
 		}
 
-		for (int i = 0; i < 240; i++) {
-			monsters.push_back(monster());
-		}
 	}
 }
 vector<monster> realm::moveMonsters(vector<monster> monsters) {
