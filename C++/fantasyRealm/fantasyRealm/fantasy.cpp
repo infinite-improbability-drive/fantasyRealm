@@ -122,8 +122,8 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 							break;
 						}
 						else {
-							int width = 60;
-							int height = 30;
+							const int width = 120;
+							const int height = 60;
 							realm location = realm(place, &here, width, height);
 							r = here;
 							here = location;

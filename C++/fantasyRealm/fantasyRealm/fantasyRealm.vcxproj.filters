@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\algorithms">
+      <UniqueIdentifier>{3a0741c9-4d1e-4e1b-b55d-614fc78fb4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\algorithms">
+      <UniqueIdentifier>{377da7d2-b4af-4cd6-9538-eb701d18f39c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -55,7 +61,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="algorithm.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\algorithms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +102,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="algorithm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\algorithms</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

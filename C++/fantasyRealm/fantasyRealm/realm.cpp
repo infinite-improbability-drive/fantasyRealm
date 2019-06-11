@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "algorithm.h"
 #include "monster.h"
 #include "names.h"
 #include "place.h"
@@ -41,6 +42,9 @@ realm::realm(place here, realm *parent, int width, int height) {
 		int m = rand() % (width - 2) + 1;
 		int n = rand() % (height - 2) + 1;
 
+		TunnelingAlgorithm tunnels;
+		vector<vector<int>> tunnel =  tunnels.generateLevel(width, height);
+
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				if (i == m && j == n) {
@@ -48,6 +52,9 @@ realm::realm(place here, realm *parent, int width, int height) {
 				}
 				if (i == 0 || j == 0 || i == width - 1 || j == height - 1) {
 					places.push_back(place(L"X", L"X", i, j, true));
+				}
+				if (tunnel[i][j] == 1) {
+					places.push_back(place(L"\u2588", L"X", i, j, true));
 				}
 			}
 		}
