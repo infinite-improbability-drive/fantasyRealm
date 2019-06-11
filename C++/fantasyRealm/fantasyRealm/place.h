@@ -11,6 +11,7 @@ public:
 	wstring name;
 	wstring type;
 	bool solid;
+	int color;
 	int x;
 	int y;
 	place();

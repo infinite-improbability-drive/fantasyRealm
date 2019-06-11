@@ -45,25 +45,45 @@ realm::realm(place here, realm *parent, int width, int height) {
 		TunnelingAlgorithm tunnels;
 		vector<vector<int>> tunnel =  tunnels.generateLevel(width, height);
 
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		int l = 0;
+		for (i = 0; i < width; i++) {
+			for (j = 0; j < height; j++) {
 				if (i == m && j == n) {
 					places.push_back(place(L"exit", m, n));
 				}
 				if (i == 0 || j == 0 || i == width - 1 || j == height - 1) {
 					places.push_back(place(L"X", L"X", i, j, true));
 				}
-				if (tunnel[i][j] == 1) {
-					places.push_back(place(L"\u2588", L"X", i, j, true));
+				else if (tunnel[i][j] == 1) {
+					places.push_back(place(L"\u2591", L"X", i, j, true));
+				}
+				else if (tunnel[i][j] == 0) {
+					k++;
 				}
 			}
 		}
 
-		this->npcs.push_back(hero(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
-		this->npcs.push_back(npc(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
-		this->npcs.push_back(inn(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
-		this->npcs.push_back(shop(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
-		this->npcs.push_back(smith(rand() % (width - 2) + 1, rand() % (height - 2) + 1));
+		int a = rand() % k;
+		int b = rand() % k;
+		int c = rand() % k;
+		int d = rand() % k;
+		int e = rand() % k;
+
+		for (i = 0; i < width; i++) {
+			for (j = 0; j < height; j++) {
+				if (tunnel[i][j] == 0) {
+					if (l == a) {		this->npcs.push_back(hero(i, j)); }
+					else if (l == b) {	this->npcs.push_back(npc(i, j)); }
+					else if (l == c) {	this->npcs.push_back(inn(i, j)); }
+					else if (l == d) {	this->npcs.push_back(shop(i, j)); }
+					else if (l == e) {	this->npcs.push_back(smith(i, j)); }
+					l++;
+				}
+			}
+		}
 
 		for (int i = 0; i < 240; i++) {
 			monsters.push_back(monster());
