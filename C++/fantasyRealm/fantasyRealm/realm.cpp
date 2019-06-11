@@ -32,7 +32,7 @@ realm::realm(int wits, int brave) {
 		monsters.push_back(monster());
 	}
 }
-realm::realm(place here, realm *parent, int width, int height) {
+realm::realm(place here, realm *parent, int width, int height, player *player) {
 	if (type != L"realm") {
 		this->name = here.name;
 		this->type = here.type;
@@ -67,6 +67,7 @@ realm::realm(place here, realm *parent, int width, int height) {
 		int d = rand() % k;
 		int e = rand() % k;
 		int f = rand() % k;
+		int g = rand() % k;
 
 		for (i = 0; i < width; i++) {
 			for (j = 0; j < height; j++) {
@@ -77,6 +78,7 @@ realm::realm(place here, realm *parent, int width, int height) {
 					else if (l == d) {		this->npcs.push_back(shop(i, j)); }
 					else if (l == e) {		this->npcs.push_back(smith(i, j)); }
 					else if (l == f) {		places.push_back(place(L"exit", i, j)); }
+					else if (l == g) {		player->x = i; player->y = j; }
 					if (rand() % 120 < 3) { monsters.push_back(monster(i, j)); }
 					l++;
 				}

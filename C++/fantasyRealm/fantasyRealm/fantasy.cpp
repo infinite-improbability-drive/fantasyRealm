@@ -124,12 +124,10 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 						else {
 							const int width = 120;
 							const int height = 60;
-							realm location = realm(place, &here, width, height);
+							realm location = realm(place, &here, width, height, &party.front());
 							r = here;
 							here = location;
 							here.parent = &r;
-							party.front().x = rand() % (width - 2) + 1;
-							party.front().y = rand() % (height - 2) + 1;
 							break;
 						}
 					}

@@ -26,7 +26,7 @@ public:
 	int y;
 	realm();
 	realm(int wits, int brave);
-	realm(place here, realm *parent, int width, int height);
+	realm(place here, realm *parent, int width, int height, player *player);
 	static wstring getName();
 	static vector<monster> moveMonsters(vector<monster> monsters);
 };
