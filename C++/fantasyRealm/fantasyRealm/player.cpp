@@ -98,7 +98,7 @@ hero::hero(int x, int y) {
 
 npc::npc(int x, int y) {
 	this->name = names::fullName();
-	// this->role = names::peasantRoles();
+	this->role = L"Villager";
 	this->x = x;
 	this->y = y;
 }
@@ -167,8 +167,16 @@ wstring player::speak(dialogue thoughts) {
 	switch (thoughts) {
 	case greeting:
 		return L"Hi how are you?";
+	case intro:
+		return L"My name is " + name + L".";
 	case introduction:
 		return L"My name is " + name + L" the " + role + L".";
+	case stay:
+		return L"Would you like a room for the night? [Y] Yes    [N] No";
+	case browse:
+		return L"Would you like to buy anything? [Y] Yes    [N] No";
+	case upgrade:
+		return L"Would you like to upgrade your weapons and armor? [Y] Yes    [N] No";
 	case join:
 		return L"Would you have any need for a " + role + L" during your travels? [Y] Yes    [N] No";
 	case joined:
@@ -179,5 +187,4 @@ wstring player::speak(dialogue thoughts) {
 		return L"This is a fine place.";
 	}
 }
-
 

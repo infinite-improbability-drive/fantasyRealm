@@ -421,8 +421,28 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		for (player npc : here.npcs) {
 			if (party.front().x == npc.x && party.front().y == npc.y) {
 				if (m_keys[84].bPressed) {
-					if (npc.thoughts == npc.greeting) { here.npcs[j].thoughts = npc.introduction; }
-					else if (npc.thoughts == npc.introduction) { here.npcs[j].thoughts = npc.join; }
+					if (npc.thoughts == npc.greeting) {
+						if (npc.role == L"Villager") {
+							here.npcs[j].thoughts = npc.intro;
+						}
+						else {
+							here.npcs[j].thoughts = npc.introduction;
+						}
+					}
+					else if (npc.thoughts == npc.introduction || npc.thoughts == npc.intro) {
+						if (npc.role == L"Innkeeper") {
+							here.npcs[j].thoughts = npc.stay;
+						}
+						else if (npc.role == L"Shopkeep") {
+							here.npcs[j].thoughts = npc.browse;
+						}
+						else if (npc.role == L"Blacksmith") {
+							here.npcs[j].thoughts = npc.upgrade;
+						}
+						else {
+							here.npcs[j].thoughts = npc.join;
+						}
+					}
 				}
 				if (m_keys[89].bPressed && npc.thoughts == npc.join) {
 					here.npcs[j].thoughts = npc.joined;

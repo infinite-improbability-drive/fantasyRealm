@@ -1,15 +1,17 @@
 ﻿  fantasy.cpp
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(515): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(521): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(522): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(535): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(541): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(542): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(524): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(537): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(771): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(804): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(821): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(544): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(557): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(791): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(824): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(841): warning C4018: '<': signed/unsigned mismatch
+  player.cpp
+  Generating Code...
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe
