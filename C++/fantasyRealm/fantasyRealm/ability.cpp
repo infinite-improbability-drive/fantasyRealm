@@ -21,3 +21,9 @@ fight::fight() {
 use::use() {
 	this->name = L"Items";
 }
+slapstick::slapstick() {
+	this->name = L"Slapstick";
+	this->actions.push_back(action(L"Juggling"));
+	this->actions.push_back(action(L"Standup Comedy"));
+	this->actions.push_back(action(L"Mime"));
+}

@@ -574,103 +574,11 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		}
 	}
 
-// -------- HEADER --------
+// -------- DRAW --------
 
 	drawHeader();
+	drawRealm();
 
-// -------- GAME WORLD --------
-
-	// draw realm
-	for (place place : here.places) {
-		if (((int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > header_rows) {
-			Draw((int) (ScreenWidth() / 2) + place.x - party.front().x, (int) (ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, place.name[0], place.color);
-		}
-	}
-
-	// draw monsters
-	for (monster monster : here.monsters) {
-		if (((int) (ScreenHeight() / 2) + (header_rows / 2) + monster.y - party.front().y) > header_rows) {
-			Draw((int) (ScreenWidth() / 2) + monster.x - party.front().x, (int) (ScreenHeight() / 2) + (header_rows / 2) + monster.y - party.front().y, monster.icon, monster.color);
-		}
-	}
-
-	// draw map hints
-	// get base distance for comparison
-	float d = sqrt(pow(abs(party.front().x - here.places[0].x), 2) + pow(abs(party.front().y - here.places[0].y), 2));
-
-	// get lowest distance
-	int c = 0;
-	vector<float> distances;
-	for (place place : here.places) {
-		c = sqrt(pow(abs(party.front().x - place.x), 2) + pow(abs(party.front().y - place.y), 2));
-		distances.push_back(c);
-		if (c < d) {
-			d = c;
-		}
-	}
-	sort(distances.begin(), distances.end());
-
-	// for each map crystal get next closest place
-	// get number of map crystals
-	int i = 0;
-	int e = 0;
-	vector<int> j;
-	for (item item : inventory) {
-		if (item.name == L"Map Crystal") {
-			for (place place : here.places) {
-				e = sqrt(pow(abs(party.front().x - place.x), 2) + pow(abs(party.front().y - place.y), 2));
-				if (e == distances.front()) {
-					distances.erase(distances.begin());
-					j.push_back(i);
-				}
-				i++;
-			}
-		}
-	}
-
-	int m = 0;
-	for (place place : here.places) {
-		for (int k : j) {
-			if (k == m) {
-				// top
-				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) <= header_rows) {
-					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, header_rows + 1, L"^"[0], FG_WHITE);
-				}
-				// bottom
-				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > ScreenHeight() - 1) {
-					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
-				}
-				// left
-				if (((int)(ScreenWidth() / 2) + (header_rows / 2) + place.x - party.front().x) < 3) {
-					Draw(0, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, L"<"[0], FG_WHITE);
-				}
-				// right
-				if (((int)(ScreenWidth() / 2) + (header_rows / 2) + place.x - party.front().x) > ScreenWidth() + 2) {
-					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, L">"[0], FG_WHITE);
-				}
-			}
-		}
-		m++;
-	}
-
-	// draw party.front()
-	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (header_rows / 2), party.front().name[0], FG_WHITE);
-
-	// draw npcs
-	if (here.type.compare(L"realm") != 0) {
-		for (player npc : here.npcs) {
-			Draw((int)(ScreenWidth() / 2) + npc.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + npc.y - party.front().y, npc.name[0], FG_WHITE);
-			if (party.front().x == npc.x && party.front().y == npc.y) {
-				// draw message
-				if (current == talk) { drawMessage(npc, npc.thoughts); }
-			}
-		}
-	}
-
-	// draw menus
-	if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
-	if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
-	if (current == quit) {	 drawQuit(); }			// draw quit
 	return true;
 }
 
@@ -741,6 +649,103 @@ void fantasy::drawHeader() {
 	// bottom border
 	header_rows = 6;
 	DrawLine(0, header_rows, ScreenWidth(), header_rows, 0x003D, FG_WHITE);
+}
+
+void fantasy::drawRealm() {
+	for (place place : here.places) {
+		if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > header_rows) {
+			Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, place.name[0], place.color);
+		}
+	}
+
+	// draw monsters
+	for (monster monster : here.monsters) {
+		if (((int)(ScreenHeight() / 2) + (header_rows / 2) + monster.y - party.front().y) > header_rows) {
+			Draw((int)(ScreenWidth() / 2) + monster.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + monster.y - party.front().y, monster.icon, monster.color);
+		}
+	}
+
+	// draw map hints
+	drawMapHints();
+
+	// draw party.front()
+	Draw(ScreenWidth() / 2, ScreenHeight() / 2 + (header_rows / 2), party.front().name[0], FG_WHITE);
+
+	// draw npcs
+	if (here.type.compare(L"realm") != 0) {
+		for (player npc : here.npcs) {
+			Draw((int)(ScreenWidth() / 2) + npc.x - party.front().x, (int)(ScreenHeight() / 2) + (header_rows / 2) + npc.y - party.front().y, npc.name[0], FG_WHITE);
+			if (party.front().x == npc.x && party.front().y == npc.y) {
+				// draw message
+				if (current == talk) { drawMessage(npc, npc.thoughts); }
+			}
+		}
+	}
+
+	// draw menus
+	if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
+	if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
+	if (current == quit) { drawQuit(); }			// draw quit
+}
+
+void fantasy::drawMapHints() {
+	// get base distance for comparison
+	float d = sqrt(pow(abs(party.front().x - here.places[0].x), 2) + pow(abs(party.front().y - here.places[0].y), 2));
+
+	// get lowest distance
+	int c = 0;
+	vector<float> distances;
+	for (place place : here.places) {
+		c = sqrt(pow(abs(party.front().x - place.x), 2) + pow(abs(party.front().y - place.y), 2));
+		distances.push_back(c);
+		if (c < d) {
+			d = c;
+		}
+	}
+	sort(distances.begin(), distances.end());
+
+	// for each map crystal get next closest place
+	// get number of map crystals
+	int i = 0;
+	int e = 0;
+	vector<int> j;
+	for (item item : inventory) {
+		if (item.name == L"Map Crystal") {
+			for (place place : here.places) {
+				e = sqrt(pow(abs(party.front().x - place.x), 2) + pow(abs(party.front().y - place.y), 2));
+				if (e == distances.front()) {
+					distances.erase(distances.begin());
+					j.push_back(i);
+				}
+				i++;
+			}
+		}
+	}
+
+	int m = 0;
+	for (place place : here.places) {
+		for (int k : j) {
+			if (k == m) {
+				// top
+				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) <= header_rows) {
+					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, header_rows + 1, L"^"[0], FG_WHITE);
+				}
+				// bottom
+				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > ScreenHeight() - 1) {
+					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, ScreenHeight() - 1, L"v"[0], FG_WHITE);
+				}
+				// left
+				if (((int)(ScreenWidth() / 2) + (header_rows / 2) + place.x - party.front().x) < 3) {
+					Draw(0, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, L"<"[0], FG_WHITE);
+				}
+				// right
+				if (((int)(ScreenWidth() / 2) + (header_rows / 2) + place.x - party.front().x) > ScreenWidth() + 2) {
+					Draw(ScreenWidth() - 1, (int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y, L">"[0], FG_WHITE);
+				}
+			}
+		}
+		m++;
+	}
 }
 
 void fantasy::drawWindow(int left, int right, int top, int bottom, wstring title) {

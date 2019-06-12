@@ -24,6 +24,12 @@ public:
 	fight();
 };
 
+class slapstick : public ability {
+public:
+	// wstring name;
+	slapstick();
+};
+
 class use : public ability {
 public:
 	// wstring name;

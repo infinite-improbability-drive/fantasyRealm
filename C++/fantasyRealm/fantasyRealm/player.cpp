@@ -83,7 +83,8 @@ player1::player1() {
 
 	this->_weapon = weapon(this->role);
 	this->skills.push_back(fight());
-	this->skills.push_back(ability(this->role));
+	if (this->role == L"Fool") { this->skills.push_back(slapstick()); }
+	else { this->skills.push_back(ability(this->role)); }
 	this->skills.push_back(use());
 
 	wcout << "Hello " << this->name << " the " << this->role << ".\n";

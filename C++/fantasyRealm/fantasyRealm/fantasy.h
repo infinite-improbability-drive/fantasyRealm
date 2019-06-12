@@ -37,6 +37,8 @@ private:
 	int enemy;
 
 	void drawHeader();
+	void drawRealm();
+	void drawMapHints();
 	void drawWindow(int left, int right, int top, int bottom, wstring title);
 	void drawWindow(int left, int top, vector<wstring> message);
 	void drawWindow(vector<wstring> message);
