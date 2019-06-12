@@ -18,6 +18,9 @@ public:
 	battle(vector<player> party);
 	battle(vector<player> party, monster monster);
 
+	static vector<player> selectHero(vector<player> heroes);
+	static void selectMonster();
+
 };
 
 // actions - enter, exit, look, menu, quit, 

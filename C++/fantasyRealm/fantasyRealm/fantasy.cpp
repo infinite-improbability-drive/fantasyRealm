@@ -470,9 +470,62 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		}
 	}
 	// battle
-	// [Y] win battle
 	if (current == normal_battle) {
-			
+		if (m_keys[0x26].bPressed) {
+			int j = 0;
+			for (player member : fight.heroes) {
+				if (member.selected) {
+					int k = 0;
+					for (ability skill : party[j].skills) {
+						if (party[j].skills[0].selected) {
+							party[j].skills[0].selected = false;
+							party[j].selected = true;
+							break;
+						}
+						else if (party[j].skills[k].selected) {
+							party[j].skills[k].selected = false;
+							party[j].skills[k - 1].selected = true;
+							break;
+						}
+						k++;
+					}
+				}
+				j++;
+			}
+		}
+		else if (m_keys[0x28].bPressed) {
+			int i = 0;
+			// for (player member : fight.heroes) { fight.heroes[i].selected = false; i++; }
+			int j = 0;
+			int k = 0;
+			for (player member : fight.heroes) {
+				if (member.selected) {
+					bool selected = false;
+					for (ability skill : party[j].skills) {
+						if (skill.selected) {
+							selected = true;
+							break;
+						}
+						k++;
+					}
+					if (selected) {
+						if (k == member.skills.size() - 1) {
+							party[j].skills[k].selected = false;
+							party[j].skills[0].selected = true;
+						}
+						else {
+							party[j].skills[k].selected = false;
+							party[j].skills[k + 1].selected = true;
+						}
+					}
+					else {
+						party[j].skills.front().selected = true;
+					}
+					break;
+				}
+				j++;
+			}
+		}
 	}
 		
 	// [Y] win battle
@@ -855,10 +908,10 @@ void fantasy::drawStatus(int left, int top) {
 				DrawStringAlpha(left + 5, top + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
 				k++;
 			}
-			DrawStringAlpha(left + max, top + 16, L"HP: " + to_wstring(player.HP) + L"/" + to_wstring(player.maxHP), 0x000F);
-			DrawStringAlpha(left + max, top + 17, L"MP: " + to_wstring(player.MP) + L"/" + to_wstring(player.maxMP), 0x000F);
-			DrawStringAlpha(left + max, top + 18, L"XP: " + to_wstring(player.EXP) + L"/" + to_wstring(player.nextLevel), 0x000F);
-			DrawStringAlpha(left + max, top + 19, L"Total XP: " + to_wstring(player.totalEXP), 0x000F);
+			DrawStringAlpha(left + max + 9, top + 15, L"HP: " + to_wstring(player.HP) + L"/" + to_wstring(player.maxHP), 0x000F);
+			DrawStringAlpha(left + max + 9, top + 16, L"MP: " + to_wstring(player.MP) + L"/" + to_wstring(player.maxMP), 0x000F);
+			DrawStringAlpha(left + max + 9, top + 17, L"XP: " + to_wstring(player.EXP) + L"/" + to_wstring(player.nextLevel), 0x000F);
+			DrawStringAlpha(left + max + 9, top + 18, L"Total XP: " + to_wstring(player.totalEXP), 0x000F);
 			drawSkills(left + max + 9, top + 9, player);
 		}
 		else {
@@ -921,7 +974,10 @@ void fantasy::drawBattle() {
 	int i = 0;
 	for (player hero : fight.heroes) {
 		Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), hero.name[0], FG_WHITE);
-		if (hero.selected) { drawSkills((ScreenWidth() * 3) / 4, 30, party.front()); }
+		if (hero.selected) {
+			Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2) - 1, L"\u2193"[0], FG_WHITE);
+			drawSkills((ScreenWidth() * 3) / 4, 30, party.front());
+		}
 		i++;
 	}
 
