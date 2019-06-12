@@ -22,12 +22,15 @@ public:
 	bool selected = false;
 	bool current = false;
 	int level;
+	int EXP;
+	int nextLevel;
+	int totalEXP;
 	int wits;
 	int brave;
-	int HP;
 	int maxHP;
-	int MP;
 	int maxMP;
+	int HP;
+	int MP;
 	int x;
 	int y;
 	enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
@@ -43,6 +46,7 @@ public:
 	player::stat randomStats(stat stats[], vector<int> bonuses, int points);
 	static int getMaxHP(player::stat stats[]);
 	static int getMaxMP(player::stat stats[]);
+	static int getNextLevel();
 	wstring speak(dialogue thoughts);
 };
 

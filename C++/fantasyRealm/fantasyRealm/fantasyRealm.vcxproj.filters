@@ -60,6 +60,12 @@
     <ClInclude Include="battle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tunneling.h">
+      <Filter>Header Files\algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="prime.h">
+      <Filter>Header Files\algorithms</Filter>
+    </ClInclude>
     <ClInclude Include="algorithm.h">
       <Filter>Header Files\algorithms</Filter>
     </ClInclude>
@@ -101,7 +107,10 @@
     <ClCompile Include="battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="algorithm.cpp">
+    <ClCompile Include="tunneling.cpp">
+      <Filter>Source Files\algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="prime.cpp">
       <Filter>Source Files\algorithms</Filter>
     </ClCompile>
   </ItemGroup>

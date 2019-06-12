@@ -40,7 +40,6 @@ realm::realm(place here, realm *parent, int width, int height, player *player) {
 		this->x = here.x;
 		this->y = here.y;
 
-		TunnelingAlgorithm tunnels;
 		vector<vector<int>> tunnel =  tunnels.generateLevel(width, height);
 
 		int i = 0;

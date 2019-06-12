@@ -482,6 +482,17 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		}
 		here.monsters.erase(here.monsters.begin() + enemy);
 		current = play;
+		int i = 0;
+		for (player hero : party) {
+			party[i].EXP += 1;
+			party[i].totalEXP += 1;
+			if (hero.EXP >= hero.nextLevel) {
+				party[i].EXP -= hero.nextLevel;
+				party[i].level += 1;
+				party[i].nextLevel = hero.getNextLevel();
+			}
+			i++;
+		}
 	}
 	// [Y] win battle
 	if (m_keys[89].bPressed && current == random_battle) {
@@ -846,6 +857,8 @@ void fantasy::drawStatus(int left, int top) {
 			}
 			DrawStringAlpha(left + max, top + 16, L"HP: " + to_wstring(player.HP) + L"/" + to_wstring(player.maxHP), 0x000F);
 			DrawStringAlpha(left + max, top + 17, L"MP: " + to_wstring(player.MP) + L"/" + to_wstring(player.maxMP), 0x000F);
+			DrawStringAlpha(left + max, top + 18, L"XP: " + to_wstring(player.EXP) + L"/" + to_wstring(player.nextLevel), 0x000F);
+			DrawStringAlpha(left + max, top + 19, L"Total XP: " + to_wstring(player.totalEXP), 0x000F);
 			drawSkills(left + max + 9, top + 9, player);
 		}
 		else {

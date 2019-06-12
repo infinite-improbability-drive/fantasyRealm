@@ -68,6 +68,9 @@ player1::player1() {
 	}
 
 	this->level = 1;
+	this->nextLevel = 1;
+	this->EXP = 0;
+	this->totalEXP = 0;
 	this->x = rand() % (wits * 100) - (wits * 50);
 	this->y = rand() % (wits * 100) - (wits * 50);
 	*this->stats = getStats(this->role, this->stats);
@@ -91,6 +94,9 @@ player1::player1() {
 
 hero::hero(int x, int y) {
 	this->level = 1;
+	this->EXP = 0;
+	this->nextLevel = 1;
+	this->totalEXP = 0;
 	this->x = x;
 	this->y = y;
 	this->race = L"Half-Orc";
@@ -203,6 +209,7 @@ int player::getMaxMP(player::stat stats[]) {
 	return max;
 }
 
+int player::getNextLevel() { return rand() % 10; }
 
 wstring player::speak(dialogue thoughts) {
 	switch (thoughts) {
