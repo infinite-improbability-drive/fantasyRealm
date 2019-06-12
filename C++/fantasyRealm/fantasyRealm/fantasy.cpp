@@ -697,8 +697,6 @@ void fantasy::drawWindow(int left, int right, int top, int bottom, wstring title
 
 void fantasy::drawWindow(vector<wstring> message) {
 
-	int margin = 17;
-
 	int width = 0;
 	for (wstring line : message) {
 		if (line.size() > width) { width = line.size(); }
@@ -709,7 +707,6 @@ void fantasy::drawWindow(vector<wstring> message) {
 	int right = (ScreenWidth() / 2) + (width / 2) + 3;
 	int top = (ScreenHeight() / 2) - (height / 2);
 	int bottom = (ScreenHeight() / 2) + (height / 2) + 1;
-
 
 	DrawLine(left, top + 1, left, bottom - 1, 0x2502, FG_WHITE);		// left
 	DrawLine(left + 1, top, right - 1, top, 0x2500, FG_WHITE);			// top
@@ -723,6 +720,36 @@ void fantasy::drawWindow(vector<wstring> message) {
 
 	Fill(left + 1, top + 1, right, bottom, L' ');
 	
+	int i = 0;
+	for (wstring line : message) {
+		DrawStringAlpha(left + 2, top + i + 1, message[i], 0x000F);
+		i++;
+	}
+}
+
+void fantasy::drawWindow(int left, int top, vector<wstring> message) {
+
+	int width = 0;
+	for (wstring line : message) {
+		if (line.size() > width) { width = line.size(); }
+	}
+	int height = message.size();
+
+	int right = left + width + 3;
+	int bottom = top + height + 1;
+
+	DrawLine(left, top + 1, left, bottom - 1, 0x2502, FG_WHITE);		// left
+	DrawLine(left + 1, top, right - 1, top, 0x2500, FG_WHITE);			// top
+	DrawLine(right, top + 1, right, bottom - 1, 0x2502, FG_WHITE);		// right
+	DrawLine(left + 1, bottom, right - 1, bottom, 0x2500, FG_WHITE);	// bottom
+
+	Draw(left, top, 0x250C, FG_WHITE);
+	Draw(right, top, 0x2510, FG_WHITE);
+	Draw(left, bottom, 0x2514, FG_WHITE);
+	Draw(right, bottom, 0x2518, FG_WHITE);
+
+	Fill(left + 1, top + 1, right, bottom, L' ');
+
 	int i = 0;
 	for (wstring line : message) {
 		DrawStringAlpha(left + 2, top + i + 1, message[i], 0x000F);
@@ -773,14 +800,14 @@ void fantasy::drawMenu(menu item) {
 		it++;
 	}
 
-	if (current_menu == party_menu) { drawParty(top, left); }
-	else if (current_menu == status) { drawStatus(top, left); }
+	if (current_menu == party_menu) { drawParty(left, top); }
+	else if (current_menu == status) { drawStatus(left, top); }
 	else if (current_menu == items) { drawItems(top); }
 	else if (current_menu == equipment) { drawEquipment(top); }
 
 }
 
-void fantasy::drawParty(int top, int left) {
+void fantasy::drawParty(int left, int top) {
 	int i = 0;
 	for (player player : party) {
 		if (player.selected) {
@@ -794,7 +821,13 @@ void fantasy::drawParty(int top, int left) {
 		i = i + player.name.length() + 2;
 	}
 }
-void fantasy::drawStatus(int top, int left) {
+void fantasy::drawStatus(int left, int top) {
+	int max = 0;
+	for (player player : party) {
+		if (max < (player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role).length()) {
+			max = (player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role).length();
+		}
+	}
 	int i = 0;
 	for (player player : party) {
 		if (player.current) {
@@ -811,7 +844,7 @@ void fantasy::drawStatus(int top, int left) {
 				DrawStringAlpha(left + 5, top + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
 				k++;
 			}
-			drawSkills(top, left, player);
+			drawSkills(left + max + 9, top + 9, player);
 		}
 		else {
 			DrawStringAlpha(left + 4 + i, top + 5, player.name, 0x000F);
@@ -820,23 +853,21 @@ void fantasy::drawStatus(int top, int left) {
 	}
 }
 
-void fantasy::drawSkills(int top, int left, player you) {
-	int max = 0;
-	for (player player : party) {
-		if (max < (player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role).length()) {
-			max = (player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role).length();
-		}
-	}
+void fantasy::drawSkills(int left, int top, player you) {
+	vector<wstring> skills;
 	int i = 0;
 	for (ability skill : you.skills) {
 		if (skill.selected) {
-			DrawStringAlpha(left + max + 9, top + 9 + i, L"[" + skill.name + L"]", 0x000F);
+			skills.push_back(L"[" + skill.name + L"]");
+			// DrawStringAlpha(left + 9, top + 9 + i, L"[" + skill.name + L"]", 0x000F);
 		}
 		else {
-			DrawStringAlpha(left + max + 10, top + 9 + i, skill.name, 0x000F);
+			skills.push_back(L" " + skill.name + L" ");
+			// DrawStringAlpha(left + 10, top + 9 + i, skill.name, 0x000F);
 		}
 		i++;
 	}
+	drawWindow(left, top, skills);
 }
 void fantasy::drawItems(int start) {
 	int i = 0;

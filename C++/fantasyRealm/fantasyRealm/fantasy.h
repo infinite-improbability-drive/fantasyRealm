@@ -38,12 +38,13 @@ private:
 
 	void drawHeader();
 	void drawWindow(int left, int right, int top, int bottom, wstring title);
+	void drawWindow(int left, int top, vector<wstring> message);
 	void drawWindow(vector<wstring> message);
 	void drawMessage(player player, player::dialogue message);
 	void drawMenu(menu item);
-	void drawParty(int top, int left);
-	void drawStatus(int top, int left);
-	void drawSkills(int top, int left, player player);
+	void drawParty(int left, int top);
+	void drawStatus(int left, int top);
+	void drawSkills(int left, int top, player player);
 	void drawItems(int start);
 	void drawEquipment(int start);
 	void drawBattle();
