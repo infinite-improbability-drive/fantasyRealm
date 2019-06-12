@@ -9,9 +9,8 @@ c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(542): warning C4
           ]
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(544): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(557): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(791): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(824): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(841): warning C4018: '<': signed/unsigned mismatch
-  player.cpp
-  Generating Code...
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(704): warning C4018: '>': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(826): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(859): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(876): warning C4018: '<': signed/unsigned mismatch
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe

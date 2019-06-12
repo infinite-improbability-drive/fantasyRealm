@@ -38,6 +38,7 @@ private:
 
 	void drawHeader();
 	void drawWindow(int left, int right, int top, int bottom, wstring title);
+	void drawWindow(vector<wstring> message);
 	void drawMessage(player player, player::dialogue message);
 	void drawMenu(menu item);
 	void drawParty(int top, int left);

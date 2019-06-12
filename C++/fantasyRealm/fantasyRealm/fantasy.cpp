@@ -695,6 +695,41 @@ void fantasy::drawWindow(int left, int right, int top, int bottom, wstring title
 	DrawStringAlpha(left + 2, top + 1, title, 0x000F);
 }
 
+void fantasy::drawWindow(vector<wstring> message) {
+
+	int margin = 17;
+
+	int width = 0;
+	for (wstring line : message) {
+		if (line.size() > width) { width = line.size(); }
+	}
+	int height = message.size();
+
+	int left = (ScreenWidth() / 2) - (width / 2);
+	int right = (ScreenWidth() / 2) + (width / 2) + 3;
+	int top = (ScreenHeight() / 2) - (height / 2);
+	int bottom = (ScreenHeight() / 2) + (height / 2) + 1;
+
+
+	DrawLine(left, top + 1, left, bottom - 1, 0x2502, FG_WHITE);		// left
+	DrawLine(left + 1, top, right - 1, top, 0x2500, FG_WHITE);			// top
+	DrawLine(right, top + 1, right, bottom - 1, 0x2502, FG_WHITE);		// right
+	DrawLine(left + 1, bottom, right - 1, bottom, 0x2500, FG_WHITE);	// bottom
+
+	Draw(left, top, 0x250C, FG_WHITE);
+	Draw(right, top, 0x2510, FG_WHITE);
+	Draw(left, bottom, 0x2514, FG_WHITE);
+	Draw(right, bottom, 0x2518, FG_WHITE);
+
+	Fill(left + 1, top + 1, right, bottom, L' ');
+	
+	int i = 0;
+	for (wstring line : message) {
+		DrawStringAlpha(left + 2, top + i + 1, message[i], 0x000F);
+		i++;
+	}
+}
+
 void fantasy::drawMessage(player player, player::dialogue message) {
 
 	int width = max(player.speak(message).length(), player.name.length()) + 4;
@@ -858,11 +893,17 @@ void fantasy::drawQuit() {
 	int top = margin;
 	int bottom = ScreenHeight() - margin;
 
-	drawWindow(left, right, top, bottom, L"Quit?");
+	vector<wstring> text;
+	text.push_back(L"Quit?");
+	text.push_back(L"");
+	// drawWindow(left, right, top, bottom, L"Quit?");
 
 	// message
-	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to quit?", 0x000F);
-	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
+	text.push_back(L"Are you sure you want to quit?");
+	text.push_back(L"[Y] Yes [N] No");
+	// DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to quit?", 0x000F);
+	// DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
+	drawWindow(text);
 }
 
 void fantasy::isSolid() {
