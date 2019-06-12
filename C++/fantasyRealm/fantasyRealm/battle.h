@@ -12,6 +12,8 @@ class battle {
 public:
 	vector<player> heroes;
 	vector<monster> enemies;
+	enum turn {hero, enemy};
+	turn current;
 	battle();
 	battle(vector<player> party);
 	battle(vector<player> party, monster monster);

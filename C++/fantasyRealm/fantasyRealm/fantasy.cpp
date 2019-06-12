@@ -844,6 +844,8 @@ void fantasy::drawStatus(int left, int top) {
 				DrawStringAlpha(left + 5, top + 8 + k, player.stats[k].name + L": " + to_wstring(player.stats[k].value), 0x000F);
 				k++;
 			}
+			DrawStringAlpha(left + max, top + 16, L"HP: " + to_wstring(player.HP) + L"/" + to_wstring(player.maxHP), 0x000F);
+			DrawStringAlpha(left + max, top + 17, L"MP: " + to_wstring(player.MP) + L"/" + to_wstring(player.maxMP), 0x000F);
 			drawSkills(left + max + 9, top + 9, player);
 		}
 		else {
@@ -895,10 +897,18 @@ void fantasy::drawBattle() {
 	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to win?", 0x000F);
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
+	if (fight.current == fight.hero) {
+		DrawStringAlpha(left + 4, top + 5, L"Player Turn", 0x000F);
+	}
+	else {
+		DrawStringAlpha(left + 4, top + 5, L"Enemy Turn", 0x000F);
+	}
+
 	// draw party.front()
 	int i = 0;
 	for (player hero : fight.heroes) {
 		Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), hero.name[0], FG_WHITE);
+		if (hero.selected) { drawSkills((ScreenWidth() * 3) / 4, 30, party.front()); }
 		i++;
 	}
 
@@ -912,7 +922,6 @@ void fantasy::drawBattle() {
 		}
 	}
 
-	drawSkills(25, 25, party.front());
 
 }
 

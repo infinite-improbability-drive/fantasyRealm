@@ -1,4 +1,9 @@
-﻿  fantasy.cpp
+﻿  pch.cpp
+  ability.cpp
+  action.cpp
+  algorithm.cpp
+  battle.cpp
+  fantasy.cpp
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(535): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(541): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
@@ -12,6 +17,15 @@ c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(557): warning C4
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(702): warning C4018: '>': signed/unsigned mismatch
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(734): warning C4018: '>': signed/unsigned mismatch
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(827): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(890): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(907): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(892): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(917): warning C4018: '<': signed/unsigned mismatch
+  item.cpp
+  monster.cpp
+  names.cpp
+  place.cpp
+  player.cpp
+  realm.cpp
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
+  weapon.cpp
+  Generating Code...
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe

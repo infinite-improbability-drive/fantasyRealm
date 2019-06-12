@@ -24,20 +24,26 @@ public:
 	int level;
 	int wits;
 	int brave;
+	int HP;
+	int maxHP;
+	int MP;
+	int maxMP;
 	int x;
 	int y;
 	enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
 	struct stat { wstring name;	int value; };
 	stat stats[luck + 1] = { {L"Strength", 1}, {L"Defense", 1}, {L"Stamina", 1}, {L"Perception", 1}, {L"Accuracy", 1}, {L"Agility", 1}, {L"Intellect", 1}, {L"Wisdom", 1}, {L"Spirit", 1}, {L"Charisma", 1}, {L"Luck", 1}, };
-	player::stat getStats(wstring role, player::stat stats[]);
-	player::stat randomStats(stat stats[], vector<int> bonuses, int points);
 	enum dialogue { greeting, intro, introduction, exclamation, stay, browse, upgrade, join, joined, disgust };
 	dialogue thoughts = greeting;
-	wstring speak(dialogue thoughts);
 
 	player();
 	player(wstring name);
 	static wstring input();
+	player::stat getStats(wstring role, player::stat stats[]);
+	player::stat randomStats(stat stats[], vector<int> bonuses, int points);
+	static int getMaxHP(player::stat stats[]);
+	static int getMaxMP(player::stat stats[]);
+	wstring speak(dialogue thoughts);
 };
 
 class hero : public player {

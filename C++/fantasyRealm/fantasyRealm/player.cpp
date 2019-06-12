@@ -71,6 +71,13 @@ player1::player1() {
 	this->x = rand() % (wits * 100) - (wits * 50);
 	this->y = rand() % (wits * 100) - (wits * 50);
 	*this->stats = getStats(this->role, this->stats);
+
+	this->maxHP = getMaxHP(this->stats);
+	this->maxMP = getMaxMP(this->stats);
+
+	this->HP = rand() % (this->maxHP / 2) + (this->maxHP / 2);
+	this->MP = rand() % (this->maxMP - 3) + 3;
+
 	this->_weapon = weapon(this->role);
 	this->skills.push_back(fight());
 	this->skills.push_back(ability(this->role));
@@ -89,7 +96,13 @@ hero::hero(int x, int y) {
 	this->race = L"Half-Orc";
 	this->role = names::role();
 	this->name = names::fullName(this->role);
+
 	*this->stats = getStats(this->role, this->stats);
+	this->maxHP = getMaxHP(this->stats);
+	this->maxMP = getMaxMP(this->stats);
+	this->HP = rand() % (this->maxHP / 2) + (this->maxHP / 2);
+	this->MP = rand() % this->maxMP + 1;
+
 	this->_weapon = weapon(this->role);
 	this->skills.push_back(fight());
 	this->skills.push_back(ability(this->role));
@@ -163,6 +176,34 @@ player::stat player::randomStats(player::stat stats[], vector<int> bonuses, int 
 	}
 	return *stats;
 }
+
+int player::getMaxHP(player::stat stats[]) {
+	int max = 10;
+	for (int i = 0; i < stats[luck].value; i++) {
+		max += rand() % 4 + 1;
+	}
+	for (int j = 0; j < stats[stamina].value; j++) {
+		max += rand() % 12 + 1;
+	}
+
+	return max;
+}
+
+int player::getMaxMP(player::stat stats[]) {
+	int max = 3;
+	for (int i = 0; i < stats[luck].value; i++) {
+		max += rand() % 2;
+	}
+	for (int j = 0; j < stats[intellect].value; j++) {
+		max += rand() % 3 + 1;
+	}
+	for (int j = 0; j < stats[wisdom].value; j++) {
+		max += rand() % 2 + 1;
+	}
+	return max;
+}
+
+
 wstring player::speak(dialogue thoughts) {
 	switch (thoughts) {
 	case greeting:
