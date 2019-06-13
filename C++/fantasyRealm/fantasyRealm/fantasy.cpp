@@ -98,13 +98,13 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 	if (current == play) {
 
-		if (m_keys[0x25].bPressed) { isSolid(); enemy = isMonster(); if (move) { party.front().x -= 1; } }	// left
-		if (m_keys[0x26].bPressed) { isSolid();	enemy = isMonster(); if (move) { party.front().y -= 1; } }	// up
-		if (m_keys[0x27].bPressed) { isSolid();	enemy = isMonster(); if (move) { party.front().x += 1; } }	// right
-		if (m_keys[0x28].bPressed) { isSolid();	enemy = isMonster(); if (move) { party.front().y += 1; } }	// down
+		if (m_keys[left].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().x -= 1; } }
+		if (m_keys[up].bPressed) {		isSolid(); enemy = isMonster(); if (move) { party.front().y -= 1; } }
+		if (m_keys[right].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().x += 1; } }
+		if (m_keys[down].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().y += 1; } }
 
 		// random battle
-		if ((m_keys[0x25].bPressed || m_keys[0x26].bPressed || m_keys[0x27].bPressed || m_keys[0x28].bPressed) && move) {
+		if ((m_keys[left].bPressed || m_keys[up].bPressed || m_keys[right].bPressed || m_keys[down].bPressed) && move) {
 			if (rand() % 10000 < 2) {
 				current = random_battle;
 				fight = battle(party);
@@ -112,7 +112,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		}
 		move = true;
 		// [ENTER] enter location
-		if (m_keys[13].bPressed) {
+		if (m_keys[enter].bPressed) {
 			if (std::find(actions.begin(), actions.end(), L"Enter") != actions.end()) {
 				for (place place : here.places) {
 					if (party.front().x == place.x && party.front().y == place.y) {
@@ -142,7 +142,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 
 	// [M] menu
-	if (m_keys[77].bPressed) {
+	if (m_keys[m].bPressed) {
 		if (std::find(actions.begin(), actions.end(), L"Menu") != actions.end()) {
 			current = menu_mode;
 		}
@@ -154,13 +154,11 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	if (current == menu_mode) {
 		// main
 		if (current_menu == main) {
-			// left
-			if (m_keys[0x25].bPressed) {
+			if (m_keys[left].bPressed) {
 				current_menu = exit_menu;
 				menu_actions.find(current_menu)->second.second = true;
 			}
-			// right
-			else if (m_keys[0x27].bPressed) { 
+			else if (m_keys[right].bPressed) { 
 				current_menu = party_menu; 
 				menu_actions.find(current_menu)->second.second = true;
 			}
@@ -168,8 +166,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 		// party
 		else if (current_menu == party_menu) {
-			// left
-			if (m_keys[0x25].bPressed) { 
+			if (m_keys[left].bPressed) { 
 				int i = 0;
 				bool selected = false;
 				for (player member : party) {
@@ -193,8 +190,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					current_menu = main;
 				}
 			}
-			// right
-			else if (m_keys[0x27].bPressed) { 
+			else if (m_keys[right].bPressed) { 
 				int i = 0;
 				bool selected = false;
 				for (player member : party) {
@@ -219,21 +215,18 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					menu_actions.find(current_menu)->second.second = true;
 				}
 			}
-			// up
-			else if (m_keys[0x26].bPressed) {
+			else if (m_keys[up].bPressed) {
 				int i = 0;
 				for (player member : party) { party[i].selected = false; i++; }
 				menu_actions.find(current_menu)->second.second = true;
 			}
-			// down
-			else if (m_keys[0x28].bPressed) {
+			else if (m_keys[down].bPressed) {
 				party.front().selected = true;
 				menu_actions.find(current_menu)->second.second = false;
 			}
 		}
 		else if (current_menu == status) {
-			// left
-			if (m_keys[0x25].bPressed) { 
+			if (m_keys[left].bPressed) { 
 				if (menu_actions.find(current_menu)->second.second) {
 					menu_actions.find(current_menu)->second.second = false;
 					current_menu = party_menu;
@@ -278,8 +271,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					}
 				}
 			}
-			// right
-			else if (m_keys[0x27].bPressed) { 
+			else if (m_keys[right].bPressed) { 
 				int i = 0;
 				bool selected = false;
 				for (player member : party) {
@@ -309,8 +301,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					menu_actions.find(current_menu)->second.second = true;
 				}
 			}
-			// up
-			else if (m_keys[0x26].bPressed) {
+			else if (m_keys[up].bPressed) {
 				bool selected = false;
 				for (player member : party) { if (member.selected) { selected = true; } }
 				if (selected) {
@@ -342,8 +333,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					}
 				}
 			}
-			// down
-			else if (m_keys[0x28].bPressed) {
+			else if (m_keys[down].bPressed) {
 				if (menu_actions.find(current_menu)->second.second) {
 					party.front().selected = true;
 					party.front().current = true;
@@ -386,12 +376,12 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 		}
 		else if (current_menu == items) {
-			// left
-			if (m_keys[0x25].bPressed) {
+
+			if (m_keys[left].bPressed) {
 				current_menu = status; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; }
 			}
 			// up
-			else if (m_keys[0x26].bPressed) {
+			else if (m_keys[up].bPressed) {
 				if (inventory.front().selected) {
 					if (!menu_actions.find(current_menu)->second.second) {
 						menu_actions.find(current_menu)->second.second = true;
@@ -416,11 +406,11 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				}
 			}
 			// right
-			else if (m_keys[0x27].bPressed) {
+			else if (m_keys[right].bPressed) {
 				current_menu = equipment; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; }
 			}
 			// down
-			else if (m_keys[0x28].bPressed) { 
+			else if (m_keys[down].bPressed) { 
 				menu_actions.find(current_menu)->second.second = false; 
 
 				int i = 0;
@@ -449,13 +439,13 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 		}
 		else if (current_menu == equipment) {
-			if (m_keys[0x25].bPressed) { current_menu = items; }			// left
-			else if (m_keys[0x27].bPressed) { current_menu = exit_menu; }	// right
+			if (m_keys[left].bPressed) { current_menu = items; }			// left
+			else if (m_keys[right].bPressed) { current_menu = exit_menu; }	// right
 			menu_actions.find(current_menu)->second.second = true;
 		}
 		else if (current_menu == exit_menu) {
-			if (m_keys[0x25].bPressed) { current_menu = equipment; }		// left
-			else if (m_keys[0x27].bPressed) { current_menu = main; }		// right
+			if (m_keys[left].bPressed) { current_menu = equipment; }		// left
+			else if (m_keys[right].bPressed) { current_menu = main; }		// right
 			else if (m_keys[13].bPressed) { current = play; }				// enter
 			if (current_menu != main) { menu_actions.find(current_menu)->second.second = true; }
 		}
@@ -517,7 +507,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 
 	}
-	if (m_keys[84].bPressed) {
+	if (m_keys[t].bPressed) {
 		if (std::find(actions.begin(), actions.end(), L"Talk") != actions.end()) {
 			for (player npc : here.npcs) {
 				if (party.front().x == npc.x && party.front().y == npc.y) {
@@ -532,20 +522,20 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	}
 	// battle
 	if (current == normal_battle) {
-		if (m_keys[0x26].bPressed) {
+		if (m_keys[up].bPressed) {
 			int j = 0;
 			for (player member : fight.heroes) {
-				if (member.selected) {
+				if (member.current) {
 					int k = 0;
-					for (ability skill : party[j].skills) {
-						if (party[j].skills[0].selected) {
-							party[j].skills[0].selected = false;
-							party[j].selected = true;
+					for (ability skill : fight.heroes[j].skills) {
+						if (fight.heroes[j].skills[0].selected) {
+							fight.heroes[j].skills[0].selected = false;
+							fight.heroes[j].current = true;
 							break;
 						}
 						else if (party[j].skills[k].selected) {
-							party[j].skills[k].selected = false;
-							party[j].skills[k - 1].selected = true;
+							fight.heroes[j].skills[k].selected = false;
+							fight.heroes[j].skills[k - 1].selected = true;
 							break;
 						}
 						k++;
@@ -554,15 +544,15 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				j++;
 			}
 		}
-		else if (m_keys[0x28].bPressed) {
+		else if (m_keys[down].bPressed) {
 			int i = 0;
 			// for (player member : fight.heroes) { fight.heroes[i].selected = false; i++; }
 			int j = 0;
 			int k = 0;
 			for (player member : fight.heroes) {
-				if (member.selected) {
+				if (member.current) {
 					bool selected = false;
-					for (ability skill : party[j].skills) {
+					for (ability skill : fight.heroes[j].skills) {
 						if (skill.selected) {
 							selected = true;
 							break;
@@ -571,16 +561,16 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					}
 					if (selected) {
 						if (k == member.skills.size() - 1) {
-							party[j].skills[k].selected = false;
-							party[j].skills[0].selected = true;
+							fight.heroes[j].skills[k].selected = false;
+							fight.heroes[j].skills[0].selected = true;
 						}
 						else {
-							party[j].skills[k].selected = false;
-							party[j].skills[k + 1].selected = true;
+							fight.heroes[j].skills[k].selected = false;
+							fight.heroes[j].skills[k + 1].selected = true;
 						}
 					}
 					else {
-						party[j].skills.front().selected = true;
+						fight.heroes[j].skills.front().selected = true;
 					}
 					break;
 				}
@@ -651,6 +641,8 @@ int main() {
 	// use olcConsoleGameEngine derived app
 	fantasy game;
 	game.party.push_back(player1());
+	game.party.push_back(hero(rand() % 20 - 10, rand() % 20 - 10));
+	game.party.push_back(hero(rand() % 20 - 10, rand() % 20 - 10));
 
 	game.ConstructConsole(150, 40, 8, 16);
 	game.Start();
@@ -931,10 +923,10 @@ void fantasy::drawMenu(menu item) {
 		it++;
 	}
 
-	if (current_menu == party_menu) { drawParty(left, top); }
-	else if (current_menu == status) { drawStatus(left, top); }
-	else if (current_menu == items) { drawItems(left, top); }
-	else if (current_menu == equipment) { drawEquipment(top); }
+	if		(current_menu == party_menu) {  drawParty(left, top); }
+	else if (current_menu == status) {		drawStatus(left, top); }
+	else if (current_menu == items) {		drawItems(left, top); }
+	else if (current_menu == equipment) {	drawEquipment(top); }
 
 }
 
@@ -1047,9 +1039,9 @@ void fantasy::drawBattle() {
 	int i = 0;
 	for (player hero : fight.heroes) {
 		Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), hero.name[0], FG_WHITE);
-		if (hero.selected) {
+		if (hero.current) {
 			Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2) - 1, L"\u2193"[0], FG_WHITE);
-			drawSkills((ScreenWidth() * 3) / 4, 30, party.front());
+			drawSkills((ScreenWidth() * 3) / 4, 30, hero);
 		}
 		i++;
 	}
@@ -1060,6 +1052,9 @@ void fantasy::drawBattle() {
 		// Draw(ScreenWidth() / 4 - 2, ScreenHeight() / 2 + (header_rows / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
 		for (monster monster : fight.enemies) {
 			Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2), monster.icon, monster.color);
+			if (monster.current) {
+				Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2) - 1, L"\u2193"[0], monster.color);
+			}
 			j++;
 		}
 	}

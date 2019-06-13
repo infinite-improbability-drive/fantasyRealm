@@ -23,6 +23,7 @@ private:
 	enum mode { play, pause, talk, menu_mode, shop, normal_battle, random_battle, quit };
 	mode current;
 	enum menu { main, party_menu, status, items, equipment, exit_menu };
+	static enum key { left = 0x25, up = 0x26, right = 0x27, down = 0x28, enter = 13, m = 77, t = 84 };
 	int header_rows;
 	vector<wstring> actions;
 	menu current_menu;

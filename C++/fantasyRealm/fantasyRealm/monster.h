@@ -12,7 +12,8 @@ public:
 	wstring name;
 	wstring type;
 	wchar_t icon;
-
+	bool current = false;
+	bool selected = false;
 	int color;
 	int x;
 	int y;
