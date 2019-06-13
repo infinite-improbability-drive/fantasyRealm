@@ -47,7 +47,7 @@ private:
 	void drawParty(int left, int top);
 	void drawStatus(int left, int top);
 	void drawSkills(int left, int top, player player);
-	void drawItems(int start);
+	void drawItems(int left, int top);
 	void drawEquipment(int start);
 	void drawBattle();
 	void drawQuit();

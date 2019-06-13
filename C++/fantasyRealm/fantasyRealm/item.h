@@ -9,6 +9,8 @@ using namespace std;
 class item {
 public:
 	wstring name;
+	wstring description;
+	bool selected;
 	item();
 	item(wstring name);
 };

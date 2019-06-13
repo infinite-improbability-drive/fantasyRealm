@@ -39,6 +39,7 @@ Last Updated: 24/06/2017
 #include "pch.h"
 #include <algorithm>
 #include <ctime>
+#include <chrono>
 // #include <cstdlib>
 #include <list>
 #include <locale>
@@ -303,7 +304,9 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					}
 				}
 				else {
+					menu_actions.find(current_menu)->second.second = false;
 					current_menu = items;
+					menu_actions.find(current_menu)->second.second = true;
 				}
 			}
 			// up
@@ -383,9 +386,67 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 		}
 		else if (current_menu == items) {
-			if (m_keys[0x25].bPressed) { current_menu = status; }			// left
-			else if (m_keys[0x27].bPressed) { current_menu = equipment; }	// right
-			menu_actions.find(current_menu)->second.second = true;
+			// left
+			if (m_keys[0x25].bPressed) {
+				current_menu = status; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; }
+			}
+			// up
+			else if (m_keys[0x26].bPressed) {
+				if (inventory.front().selected) {
+					if (!menu_actions.find(current_menu)->second.second) {
+						menu_actions.find(current_menu)->second.second = true;
+						inventory.front().selected = false;
+					}
+				}
+				else {
+					int i = 0;
+					bool selected = false;
+					for (item item : inventory) {
+						if (item.selected) {
+							selected = true;
+							break;
+						}
+						i++;
+					}
+					if (selected) {
+						inventory[i].selected = false;
+						inventory[i - 1].selected = true;
+					}
+					else {}
+				}
+			}
+			// right
+			else if (m_keys[0x27].bPressed) {
+				current_menu = equipment; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; }
+			}
+			// down
+			else if (m_keys[0x28].bPressed) { 
+				menu_actions.find(current_menu)->second.second = false; 
+
+				int i = 0;
+				bool selected = false;
+				for (item item : inventory) {
+					if (item.selected) {
+						selected = true;
+						break;
+					}
+					i++;
+				}
+				if (selected) {
+					if (i == inventory.size() - 1) {
+						inventory[i].selected = false;
+						inventory[0].selected = true;
+					}
+					else {
+						inventory[i].selected = false;
+						inventory[i + 1].selected = true;
+					}
+				}
+				else {
+					inventory.front().selected = true;
+				}
+
+			}
 		}
 		else if (current_menu == equipment) {
 			if (m_keys[0x25].bPressed) { current_menu = items; }			// left
@@ -640,12 +701,13 @@ void fantasy::drawHeader() {
 	// time
 	auto timenow = chrono::system_clock::to_time_t(chrono::system_clock::now());
 
-	// time_t rawtime;
-	// time(&rawtime);
-	// ctime(&rawtime);
-	// std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	DrawStringAlpha(2, 5, to_wstring(timenow), 0x000F);
+	time_t curr_time;
+	curr_time = time(NULL);
+	tm *tm_local = localtime(&curr_time);
 
+	int hours = tm_local->tm_hour;
+	if (hours > 12) { hours -= 12; DrawStringAlpha(2, 5, L"\u2600" + to_wstring(hours) + L":" + to_wstring(tm_local->tm_min) + L"PM", 0x000F); }
+	else {						   DrawStringAlpha(2, 5, L"\u263C" + to_wstring(hours) + L":" + to_wstring(tm_local->tm_min) + L"AM", 0x000F); }
 	// bottom border
 	header_rows = 6;
 	DrawLine(0, header_rows, ScreenWidth(), header_rows, 0x003D, FG_WHITE);
@@ -728,7 +790,7 @@ void fantasy::drawMapHints() {
 			if (k == m) {
 				// top
 				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) <= header_rows) {
-					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, header_rows + 1, L"^"[0], FG_WHITE);
+					Draw((int)(ScreenWidth() / 2) + place.x - party.front().x, header_rows + 1, L""[0], FG_WHITE);
 				}
 				// bottom
 				if (((int)(ScreenHeight() / 2) + (header_rows / 2) + place.y - party.front().y) > ScreenHeight() - 1) {
@@ -871,7 +933,7 @@ void fantasy::drawMenu(menu item) {
 
 	if (current_menu == party_menu) { drawParty(left, top); }
 	else if (current_menu == status) { drawStatus(left, top); }
-	else if (current_menu == items) { drawItems(top); }
+	else if (current_menu == items) { drawItems(left, top); }
 	else if (current_menu == equipment) { drawEquipment(top); }
 
 }
@@ -890,6 +952,7 @@ void fantasy::drawParty(int left, int top) {
 		i = i + player.name.length() + 2;
 	}
 }
+
 void fantasy::drawStatus(int left, int top) {
 	int max = 0;
 	for (player player : party) {
@@ -942,10 +1005,15 @@ void fantasy::drawSkills(int left, int top, player you) {
 	}
 	drawWindow(left, top, skills);
 }
-void fantasy::drawItems(int start) {
+void fantasy::drawItems(int left, int top) {
 	int i = 0;
 	for (item item : inventory) {
-		DrawStringAlpha(start + 4, start + header_rows + i, item.name, 0x000F);
+		if (item.selected) {
+			DrawStringAlpha(left + 4, top + header_rows + i, L"[" + item.name + L"]", 0x000F);
+		}
+		else {
+			DrawStringAlpha(left + 5, top + header_rows + i, item.name, 0x000F);
+		}
 		i++;
 	}
 }

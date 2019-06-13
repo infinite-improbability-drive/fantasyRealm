@@ -66,7 +66,7 @@ wstring monster::getMonsterType() {
 		return L"small";
 	}
 	else {
-		return L"animal";
+		return L"trash";
 	}
 }
 
@@ -96,7 +96,8 @@ wstring monster::getMonsterName(wstring type) {
 
 wchar_t monster::getMonsterIcon(wstring name) {
 	if (name == L"Crow") { return 0x04AB; }
-	else if (name == L"Rat") { return 0x0155; }
+	else if (name == L"Rat") { return 0x036C; }
+	else if (name == L"Worm") { return 0x0360; }
 	else if (name.find(L"Bear") != std::string::npos) {
 		return 'b';
 	}
