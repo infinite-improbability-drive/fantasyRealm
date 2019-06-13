@@ -23,11 +23,17 @@ private:
 	enum mode { play, pause, talk, menu_mode, shop, normal_battle, random_battle, quit };
 	mode current;
 	enum menu { main, party_menu, status, items, equipment, exit_menu };
-	static enum key { left = 0x25, up = 0x26, right = 0x27, down = 0x28, enter = 13, m = 77, t = 84 };
+	static enum key { left = 0x25, up = 0x26, right = 0x27, down = 0x28, enter = 13, m = 77, n = 78, q = 81, t = 84, y = 89 };
 	int header_rows;
 	vector<wstring> actions;
 	menu current_menu;
-	map<menu, pair<wstring, bool>> menu_actions = { {party_menu, {L"Party", false}}, {status, {L"Status", false} }, {items, {L"Items", false }}, {equipment, {L"Equipment", false }}, {exit_menu, {L"Exit", false }} };
+	map<menu, pair<wstring, bool>> menu_actions = {
+		{party_menu, {L"Party", false}}, 
+		{status, {L"Status", false} }, 
+		{items, {L"Items", false }}, 
+		{equipment, {L"Equipment", false }}, 
+		{exit_menu, {L"Exit", false }} 
+	};
 
 	realm here;
 	realm r;

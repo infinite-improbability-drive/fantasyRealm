@@ -533,20 +533,20 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 							fight.heroes[j].current = true;
 							break;
 						}
-						else if (party[j].skills[k].selected) {
+						else if (skill.selected) {
 							fight.heroes[j].skills[k].selected = false;
 							fight.heroes[j].skills[k - 1].selected = true;
 							break;
 						}
 						k++;
 					}
+					break;
 				}
 				j++;
 			}
 		}
 		else if (m_keys[down].bPressed) {
 			int i = 0;
-			// for (player member : fight.heroes) { fight.heroes[i].selected = false; i++; }
 			int j = 0;
 			int k = 0;
 			for (player member : fight.heroes) {
@@ -579,8 +579,8 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		}
 	}
 		
-	// [Y] win battle
-	if (m_keys[89].bPressed && current == normal_battle) {
+	// win battle
+	if (m_keys[y].bPressed && current == normal_battle) {
 		if (enemy == here.monsters.size()) {
 			enemy -= 1;
 		}
@@ -605,7 +605,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 
 	// [Q] quit
-	if (m_keys[81].bPressed) {
+	if (m_keys[q].bPressed) {
 		if (std::find(actions.begin(), actions.end(), L"Quit") != actions.end()) {
 			current = quit;
 		}
@@ -615,12 +615,12 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	}
 	if (current == quit) {
 		// [Y] quit game
-		if (m_keys[89].bPressed) {
+		if (m_keys[y].bPressed) {
 			exit(0);
 		}
 
 		// [N] return to game
-		if (m_keys[78].bPressed) {
+		if (m_keys[n].bPressed) {
 			current = play;
 		}
 	}
