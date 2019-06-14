@@ -84,11 +84,21 @@ vector<monster> battle::target(vector<monster> monsters) {
 
 monster battle::attack(player player, monster monster) {
 	monster.HP -= rand() % (player.stats[player.strength].value * 5) + 1;
+	if (monster.HP <= 0) {
+		monster.HP = 0;
+		monster.living = false;
+	}
+	monster.selected = false;
 	return monster;
 }
 
 player battle::attack(monster monster, player player) {
 	player.HP -= rand() % (monster.stats[monster.strength].value * 5) + 1;
+	if (player.HP <= 0) {
+		player.HP = 0;
+		player.living = false;
+	}
+	player.selected = false;
 	return player;
 }
 

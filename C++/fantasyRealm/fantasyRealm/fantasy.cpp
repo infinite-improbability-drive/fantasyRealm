@@ -85,8 +85,16 @@ bool fantasy::OnUserCreate() {
 bool fantasy::OnUpdate() {
 	if (current == play) {
 		here.monsters = here.moveMonsters(here.monsters);
-	}	
-	if (current == normal_battle || current == random_battle) {
+	}
+	else if (current == normal_battle || current == random_battle) {
+		int j = fight.heroes.size();
+		for (player hero : fight.heroes) {
+			if (!hero.living) {
+				j--;
+			}
+		}
+		if (j == 0) { current = game_over; }
+
 		if (fight.current == fight.next) { fight = fight.getNext(fight); }
 		else if (fight.current == fight.enemy) { 
 			fight.current = fight.getNextState(fight.current); }
@@ -662,7 +670,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 
 int main() {
 
-	// set character set to Unicode-16
+	// set character set to Unicode-16?
 	_setmode(_fileno(stdout), _O_U16TEXT);
 
 	// use olcConsoleGameEngine derived app
@@ -765,8 +773,10 @@ void fantasy::drawRealm() {
 
 	// draw menus
 	if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
-	if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
-	if (current == quit) { drawQuit(); }			// draw quit
+	else if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
+	else if (current == quit) { drawQuit(); }			// draw quit
+	else if (current == game_over) { 
+		drawGameOver(); }
 }
 
 void fantasy::drawMapHints() {
@@ -853,10 +863,14 @@ void fantasy::drawWindow(vector<wstring> message) {
 	}
 	int height = message.size();
 
+	// if (height == 1) { height++; }
+
 	int left = (ScreenWidth() / 2) - (width / 2);
 	int right = (ScreenWidth() / 2) + (width / 2) + 3;
 	int top = (ScreenHeight() / 2) - (height / 2);
 	int bottom = (ScreenHeight() / 2) + (height / 2) + 1;
+
+	if (bottom == top + 1) { bottom++; }
 
 	DrawLine(left, top + 1, left, bottom - 1, 0x2502, FG_WHITE);		// left
 	DrawLine(left + 1, top, right - 1, top, 0x2500, FG_WHITE);			// top
@@ -884,7 +898,6 @@ void fantasy::drawWindow(int left, int top, vector<wstring> message) {
 		if (line.size() > width) { width = line.size(); }
 	}
 	int height = message.size();
-
 	int right = left + width + 3;
 	int bottom = top + height + 1;
 
@@ -1082,6 +1095,13 @@ void fantasy::drawQuit() {
 	text.push_back(L"");
 	text.push_back(L"Are you sure you want to quit?");
 	text.push_back(L"[Y] Yes [N] No");
+	drawWindow(text);
+}
+
+void fantasy::drawGameOver() {
+	vector<wstring> text;
+	text.push_back(L"Game Over!");
+	// text.push_back(L"");
 	drawWindow(text);
 }
 

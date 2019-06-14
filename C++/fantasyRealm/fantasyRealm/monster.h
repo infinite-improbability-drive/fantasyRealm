@@ -12,6 +12,7 @@ public:
 	wstring name;
 	wstring type;
 	wchar_t icon;
+	bool living = true;
 	bool current = false;
 	bool selected = false;
 	int color;

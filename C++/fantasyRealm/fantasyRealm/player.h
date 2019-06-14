@@ -19,6 +19,7 @@ public:
 	wstring role;
 	weapon _weapon;
 	vector<ability> skills;
+	bool living = true;
 	bool selected = false;
 	bool current = false;
 	int level;

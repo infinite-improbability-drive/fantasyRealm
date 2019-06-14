@@ -20,7 +20,7 @@ public:
 	vector<player> party;
 	void start();
 private:
-	enum mode { play, pause, talk, menu_mode, shop, normal_battle, random_battle, quit };
+	enum mode { play, pause, talk, menu_mode, shop, normal_battle, random_battle, quit, game_over };
 	mode current;
 	enum menu { main, party_menu, status, items, equipment, exit_menu };
 	static enum key { left = 0x25, up = 0x26, right = 0x27, down = 0x28, enter = 13, m = 77, n = 78, q = 81, t = 84, y = 89 };
@@ -58,6 +58,7 @@ private:
 	void drawEquipment(int start);
 	void drawBattle();
 	void drawQuit();
+	void drawGameOver();
 	void isSolid();
 	int isMonster();
 
