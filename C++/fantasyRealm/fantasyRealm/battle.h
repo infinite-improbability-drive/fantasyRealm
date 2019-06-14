@@ -12,15 +12,15 @@ class battle {
 public:
 	vector<player> heroes;
 	vector<monster> enemies;
-	enum turn {hero, enemy};
-	turn current;
+	enum state {start, next, hero, enemy, select_hero_attack, select_enemy_attack, select_skill, select_item, select_target, attack};
+	state current;
 	battle();
 	battle(vector<player> party);
 	battle(vector<player> party, monster monster);
 
 	static vector<player> selectHero(vector<player> heroes);
 	static vector<monster> selectMonster(vector<monster> monsters);
-
+	static state getNextState(state current);
 };
 
 // actions - enter, exit, look, menu, quit, 

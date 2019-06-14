@@ -15,8 +15,16 @@ public:
 	bool current = false;
 	bool selected = false;
 	int color;
+	int maxHP;
+	int maxMP;
+	int HP;
+	int MP;
 	int x;
 	int y;
+	enum statistics { strength, defense, stamina, perception, accuracy, agility, intellect, wisdom, spirit, charisma, luck };
+	struct stat { wstring name;	int value; };
+	stat stats[luck + 1] = { {L"Strength", 1}, {L"Defense", 1}, {L"Stamina", 1}, {L"Perception", 1}, {L"Accuracy", 1}, {L"Agility", 1}, {L"Intellect", 1}, {L"Wisdom", 1}, {L"Spirit", 1}, {L"Charisma", 1}, {L"Luck", 1}, };
+
 	monster();
 	monster(int x, int y);
 	static wstring getMonsterType();

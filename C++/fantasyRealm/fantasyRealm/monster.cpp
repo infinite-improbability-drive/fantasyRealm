@@ -31,6 +31,10 @@ monster::monster() {
 	this->color = getMonsterColor(this->name, this->type);
 	this->x = rand() % 200 - 100;
 	this->y = rand() % 200 - 100;
+	this->maxHP = rand() % 60 + 50;
+	this->maxMP = rand() % 60 + 50;
+	this->HP = rand() % this->maxHP + 1;
+	this->MP = rand() % this->maxMP + 1;
 }
 
 monster::monster(int x, int y) {
@@ -40,6 +44,10 @@ monster::monster(int x, int y) {
 	this->color = getMonsterColor(this->name, this->type);
 	this->x = x;
 	this->y = y;
+	this->maxHP = rand() % 150 - 50;
+	this->maxMP = rand() % 150 - 50;
+	this->HP = rand() % this->maxHP + 1;
+	this->MP = rand() % this->maxMP + 1;
 }
 
 wstring monster::getMonsterType() {

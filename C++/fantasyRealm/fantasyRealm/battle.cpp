@@ -43,5 +43,20 @@ vector<monster> battle::selectMonster(vector<monster> monsters) {
 	return monsters;
 }
 
+battle::state battle::getNextState(state current) {
+	switch (current) {
+	case start: return next;
+	case next: 	if (rand() % 2 > 0) { return hero; }
+				else { return enemy; };
+	case hero: return select_hero_attack;
+	case enemy: return select_enemy_attack;
+	// case select_hero_attack: return select_target;
+	case select_skill: return select_target;
+	case select_item: return select_target;
+	case select_enemy_attack: return select_target;
+	case select_target: return attack;
+	case attack: return next;
+	}
+}
 
 

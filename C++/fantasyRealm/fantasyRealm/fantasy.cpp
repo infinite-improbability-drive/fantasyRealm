@@ -85,6 +85,9 @@ bool fantasy::OnUserCreate() {
 bool fantasy::OnUpdate() {
 	if (current == play) {
 		here.monsters = here.moveMonsters(here.monsters);
+	}	
+	if (current == normal_battle || current == random_battle) {
+		fight.current = fight.getNextState(fight.current);
 	}
 	return true;
 }
@@ -377,40 +380,19 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		}
 		else if (current_menu == items) {
 
-			if (m_keys[left].bPressed) {
-				current_menu = status; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; }
-			}
-			// up
+			if (m_keys[left].bPressed) { current_menu = status; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; } }
+			else if (m_keys[right].bPressed) { current_menu = equipment; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; } }
 			else if (m_keys[up].bPressed) {
 				if (inventory.front().selected) {
-					if (!menu_actions.find(current_menu)->second.second) {
-						menu_actions.find(current_menu)->second.second = true;
-						inventory.front().selected = false;
-					}
+					if (!menu_actions.find(current_menu)->second.second) { menu_actions.find(current_menu)->second.second = true; inventory.front().selected = false; }
 				}
 				else {
-					int i = 0;
-					bool selected = false;
-					for (item item : inventory) {
-						if (item.selected) {
-							selected = true;
-							break;
-						}
-						i++;
-					}
-					if (selected) {
-						inventory[i].selected = false;
-						inventory[i - 1].selected = true;
-					}
-					else {}
+					int i = 0; bool selected = false;
+					for (item item : inventory) { if (item.selected) { selected = true;	break; } i++; }
+					if (selected) { inventory[i].selected = false; inventory[i - 1].selected = true; }
 				}
 			}
-			// right
-			else if (m_keys[right].bPressed) {
-				current_menu = equipment; menu_actions.find(current_menu)->second.second = true; int i = 0; for (item item : inventory) { inventory[i].selected = false; i++; }
-			}
-			// down
-			else if (m_keys[down].bPressed) { 
+			else if (m_keys[down].bPressed) {
 				menu_actions.find(current_menu)->second.second = false; 
 
 				int i = 0;
@@ -423,18 +405,10 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					i++;
 				}
 				if (selected) {
-					if (i == inventory.size() - 1) {
-						inventory[i].selected = false;
-						inventory[0].selected = true;
-					}
-					else {
-						inventory[i].selected = false;
-						inventory[i + 1].selected = true;
-					}
+					if (i == inventory.size() - 1) { inventory[i].selected = false;	inventory[0].selected = true; }
+					else { inventory[i].selected = false; inventory[i + 1].selected = true;	}
 				}
-				else {
-					inventory.front().selected = true;
-				}
+				else { inventory.front().selected = true; }
 
 			}
 		}
@@ -575,6 +549,27 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					break;
 				}
 				j++;
+			}
+		}
+		else if (m_keys[enter].bPressed) {
+			int i = 0;
+			for (player player : fight.heroes) {
+				if (player.current) {
+					int j = 0;
+					for (ability skill : player.skills) {
+						if (skill.selected) {
+							if (skill.name == L"Fight") {
+								fight.current = fight.select_hero_attack;
+							}
+							// fight.heroes[i].skills[j].selected = false;
+							// fight.heroes[i].skills[j].current = true;
+							break;
+						}
+						j++;
+					}
+					break;
+				}
+				i++;
 			}
 		}
 	}
@@ -895,8 +890,6 @@ void fantasy::drawMessage(player player, player::dialogue message) {
 
 	// message
 	DrawStringAlpha(left + 2, top + 3, player.speak(message), 0x000F);
-
-	// if (player.speak.next != nullptr) {}
 }
 
 void fantasy::drawMenu(menu item) {
@@ -955,13 +948,9 @@ void fantasy::drawStatus(int left, int top) {
 	int i = 0;
 	for (player player : party) {
 		if (player.current) {
-			if (player.selected) {
-				DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
-			}
-			else {
-				DrawStringAlpha(left + 4 + i, top + 5, player.name, 0x000F);
-			}
-			// DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F);
+			if (player.selected) { DrawStringAlpha(left + 3 + i, top + 5, L"[" + player.name + L"]", 0x000F); }
+			else {				   DrawStringAlpha(left + 4 + i, top + 5, player.name, 0x000F); }
+
 			DrawStringAlpha(left + 3, top + 7, player.name + L" the Lv" + to_wstring(player.level) + L" " + player.role, 0x000F);
 			int k = 0;
 			for (auto stat : player.stats) {
@@ -985,14 +974,8 @@ void fantasy::drawSkills(int left, int top, player you) {
 	vector<wstring> skills;
 	int i = 0;
 	for (ability skill : you.skills) {
-		if (skill.selected) {
-			skills.push_back(L"[" + skill.name + L"]");
-			// DrawStringAlpha(left + 9, top + 9 + i, L"[" + skill.name + L"]", 0x000F);
-		}
-		else {
-			skills.push_back(L" " + skill.name + L" ");
-			// DrawStringAlpha(left + 10, top + 9 + i, skill.name, 0x000F);
-		}
+		if (skill.selected) { skills.push_back(L"[" + skill.name + L"]"); }
+		else {				  skills.push_back(L" " + skill.name + L" "); }
 		i++;
 	}
 	drawWindow(left, top, skills);
@@ -1000,12 +983,8 @@ void fantasy::drawSkills(int left, int top, player you) {
 void fantasy::drawItems(int left, int top) {
 	int i = 0;
 	for (item item : inventory) {
-		if (item.selected) {
-			DrawStringAlpha(left + 4, top + header_rows + i, L"[" + item.name + L"]", 0x000F);
-		}
-		else {
-			DrawStringAlpha(left + 5, top + header_rows + i, item.name, 0x000F);
-		}
+		if (item.selected) { DrawStringAlpha(left + 4, top + header_rows + i, L"[" + item.name + L"]", 0x000F); }
+		else {				 DrawStringAlpha(left + 5, top + header_rows + i, item.name, 0x000F); }
 		i++;
 	}
 }
@@ -1028,17 +1007,14 @@ void fantasy::drawBattle() {
 	DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to win?", 0x000F);
 	DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 
-	if (fight.current == fight.hero) {
-		DrawStringAlpha(left + 4, top + 5, L"Player Turn", 0x000F);
-	}
-	else {
-		DrawStringAlpha(left + 4, top + 5, L"Enemy Turn", 0x000F);
-	}
+	if (fight.current == fight.hero) { DrawStringAlpha(left + 4, top + 5, L"Player Turn", 0x000F); }
+	else {							   DrawStringAlpha(left + 4, top + 5, L"Enemy Turn", 0x000F); }
 
-	// draw party.front()
+	// draw party
 	int i = 0;
 	for (player hero : fight.heroes) {
 		Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), hero.name[0], FG_WHITE);
+		DrawStringAlpha(((left + right) / 2) + 2, bottom - fight.heroes.size() + i, hero.name + L" HP" + to_wstring(hero.HP) + L"/" + to_wstring(hero.maxHP), 0x000F);
 		if (hero.current) {
 			Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2) - 1, L"\u2193"[0], FG_WHITE);
 			drawSkills((ScreenWidth() * 3) / 4, 30, hero);
@@ -1049,9 +1025,9 @@ void fantasy::drawBattle() {
 	// draw monster
 	int j = 0;
 	if (current == normal_battle && enemy < here.monsters.size()) {
-		// Draw(ScreenWidth() / 4 - 2, ScreenHeight() / 2 + (header_rows / 2), here.monsters[enemy].icon, here.monsters[enemy].color);
 		for (monster monster : fight.enemies) {
 			Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2), monster.icon, monster.color);
+			DrawStringAlpha(left + 2, bottom - fight.heroes.size() + j, monster.name + L" HP" + to_wstring(monster.HP) + L"/" + to_wstring(monster.maxHP), 0x000F);
 			if (monster.current) {
 				Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2) - 1, L"\u2193"[0], monster.color);
 			}
@@ -1063,55 +1039,31 @@ void fantasy::drawBattle() {
 }
 
 void fantasy::drawQuit() {
-	int margin = 17;
-
-	int left = margin;
-	int right = ScreenWidth() - margin;
-	int top = margin;
-	int bottom = ScreenHeight() - margin;
-
 	vector<wstring> text;
 	text.push_back(L"Quit?");
 	text.push_back(L"");
-	// drawWindow(left, right, top, bottom, L"Quit?");
-
-	// message
 	text.push_back(L"Are you sure you want to quit?");
 	text.push_back(L"[Y] Yes [N] No");
-	// DrawStringAlpha(left + 4, top + 3, L"Are you sure you want to quit?", 0x000F);
-	// DrawStringAlpha(left + 4, top + 4, L"[Y] Yes [N] No", 0x000F);
 	drawWindow(text);
 }
 
 void fantasy::isSolid() {
 	for (place place : here.places) {
-		if (((m_keys[0x25].bPressed) && (place.y == party.front().y) && (place.x + 1 == party.front().x)) ||	// left
-			((m_keys[0x26].bPressed) && (place.x == party.front().x) && (place.y + 1 == party.front().y)) ||	// up
-			((m_keys[0x27].bPressed) && (place.y == party.front().y) && (place.x - 1 == party.front().x)) ||	// right
-			((m_keys[0x28].bPressed) && (place.x == party.front().x) && (place.y - 1 == party.front().y))		// down
-			) {
-			if (place.solid) {
-				move = false;
-				break;
-			}
+		if (((m_keys[left].bPressed) && (place.y == party.front().y) && (place.x + 1 == party.front().x))	||
+			((m_keys[up].bPressed) && (place.x == party.front().x) && (place.y + 1 == party.front().y))		||
+			((m_keys[right].bPressed) && (place.y == party.front().y) && (place.x - 1 == party.front().x))  ||
+			((m_keys[down].bPressed) && (place.x == party.front().x) && (place.y - 1 == party.front().y)))
+		{
+			if (place.solid) { move = false; break; }
 		}
 	}
 }
 
 int fantasy::isMonster() {
-	// monster mon;
 	int i = 0;
 	for (monster monster : here.monsters) {
 		if (((monster.y == party.front().y) && ((monster.x + 1 == party.front().x) || (monster.x - 1 == party.front().x))) ||
-			((monster.x == party.front().x) && ((monster.y + 1 == party.front().y) || (monster.y - 1 == party.front().y)))) {
-			current = normal_battle;
-			fight = battle(party, monster);
-
-			// return i;
-			// here.monsters.erase(here.monsters.begin() + i);
-			break;
-		}
-		i += 1;
-	}
+			((monster.x == party.front().x) && ((monster.y + 1 == party.front().y) || (monster.y - 1 == party.front().y))))
+		{ current = normal_battle; fight = battle(party, monster); break; }	i ++; }
 	return i;
 }

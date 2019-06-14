@@ -1,18 +1,34 @@
-﻿  fantasy.cpp
+﻿  pch.cpp
+  ability.cpp
+  action.cpp
+  prime.cpp
+  tunneling.cpp
+  battle.cpp
+  fantasy.cpp
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.h(26): warning C4091: 'static ': ignored on left of 'fantasy::key' when no variable is declared
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(747): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(753): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(754): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(742): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(748): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(749): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(756): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(769): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(825): warning C4018: '>': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(857): warning C4018: '>': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(951): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1023): warning C4018: '<': signed/unsigned mismatch
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1051): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(751): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(764): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(820): warning C4018: '>': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(852): warning C4018: '>': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(944): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1002): warning C4018: '<': signed/unsigned mismatch
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1027): warning C4018: '<': signed/unsigned mismatch
+  item.cpp
+  monster.cpp
+  names.cpp
+  place.cpp
+  player.cpp
+  realm.cpp
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
+  weapon.cpp
+  Generating Code...
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\battle.cpp(60): warning C4715: 'battle::getNextState': not all control paths return a value
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe
