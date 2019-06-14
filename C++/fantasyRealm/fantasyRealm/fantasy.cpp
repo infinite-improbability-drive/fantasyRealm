@@ -87,7 +87,32 @@ bool fantasy::OnUpdate() {
 		here.monsters = here.moveMonsters(here.monsters);
 	}	
 	if (current == normal_battle || current == random_battle) {
-		fight.current = fight.getNextState(fight.current);
+		if (fight.current == fight.next) { fight = fight.getNext(fight); }
+		else if (fight.current == fight.enemy) { 
+			fight.current = fight.getNextState(fight.current); }
+		else if (fight.current == fight.enemy_select_attack) {
+			// fight.enemies = fight.selectAbility(fight.enemies); 
+			fight.current = fight.getNextState(fight.current);
+		}
+		else if (fight.current == fight.enemy_select_target) {
+			fight.heroes = fight.target(fight.heroes); fight.current = fight.getNextState(fight.current);
+		}
+		else if (fight.current == fight.enemy_attack) {
+			int i = 0;
+			for (player hero : fight.heroes) {
+				for (monster enemy : fight.enemies) {
+					if (enemy.current && hero.selected) {
+						fight.heroes[i] = fight.attack(enemy, hero);
+						break;
+					}
+				}
+				i++;
+			}
+			// fight.heroes = fight.attack(fight.enemies); 
+			fight.current = fight.getNextState(fight.current);
+		}
+
+		// fight.current = fight.getNextState(fight.current);
 	}
 	return true;
 }
@@ -552,6 +577,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			}
 		}
 		else if (m_keys[enter].bPressed) {
+			fight.current = fight.next;
 			int i = 0;
 			for (player player : fight.heroes) {
 				if (player.current) {
@@ -559,7 +585,13 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 					for (ability skill : player.skills) {
 						if (skill.selected) {
 							if (skill.name == L"Fight") {
-								fight.current = fight.select_hero_attack;
+								fight.current = fight.hero_select_attack;
+							}
+							if (skill.name == fight.heroes[i].skills[j].name) {
+								fight.current = fight.hero_select_skill;
+							}
+							if (skill.name == L"Items") {
+								fight.current = fight.hero_select_item;
 							}
 							// fight.heroes[i].skills[j].selected = false;
 							// fight.heroes[i].skills[j].current = true;
@@ -1019,6 +1051,9 @@ void fantasy::drawBattle() {
 			Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2) - 1, L"\u2193"[0], FG_WHITE);
 			drawSkills((ScreenWidth() * 3) / 4, 30, hero);
 		}
+		if (hero.selected) {
+			Draw((ScreenWidth() * 3) / 4 - 1, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), L"\u2192"[0], FG_WHITE);
+		}
 		i++;
 	}
 
@@ -1027,9 +1062,12 @@ void fantasy::drawBattle() {
 	if (current == normal_battle && enemy < here.monsters.size()) {
 		for (monster monster : fight.enemies) {
 			Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2), monster.icon, monster.color);
-			DrawStringAlpha(left + 2, bottom - fight.heroes.size() + j, monster.name + L" HP" + to_wstring(monster.HP) + L"/" + to_wstring(monster.maxHP), 0x000F);
+			DrawStringAlpha(left + 2, bottom - fight.enemies.size() + j, monster.name + L" HP" + to_wstring(monster.HP) + L"/" + to_wstring(monster.maxHP), 0x000F);
 			if (monster.current) {
 				Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2) - 1, L"\u2193"[0], monster.color);
+			}
+			if (monster.selected) {
+				Draw(ScreenWidth() / 4 + 1, ScreenHeight() / 2 + (header_rows / 2) + (j * 2) - 1, L"\u2190"[0], monster.color);
 			}
 			j++;
 		}
