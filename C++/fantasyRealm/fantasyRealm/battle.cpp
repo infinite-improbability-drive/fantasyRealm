@@ -28,8 +28,8 @@ battle::state battle::getNextState(state current) {
 				else { return enemy; };
 	case hero: return hero_select_attack;
 	// case select_hero_attack: return select_target;
-	case hero_select_skill: return hero_select_target;
-	case hero_select_item: return hero_select_target;
+	//case hero_select_skill: return hero_select_target;
+	// case hero_select_item: return hero_select_target;
 	case hero_select_target: return hero_attack;
 	case hero_attack: return next;
 	case enemy: return enemy_select_attack;

@@ -87,15 +87,29 @@ bool fantasy::OnUpdate() {
 		here.monsters = here.moveMonsters(here.monsters);
 	}
 	else if (current == normal_battle || current == random_battle) {
-		int j = fight.heroes.size();
+		int i = fight.heroes.size();
 		for (player hero : fight.heroes) {
 			if (!hero.living) {
+				i--;
+			}
+		}
+		if (i == 0) { current = game_over; }
+
+		int j = fight.enemies.size();
+		for (monster enemy : fight.enemies) {
+			if (!enemy.living) {
 				j--;
 			}
 		}
-		if (j == 0) { current = game_over; }
+		if (j == 0) { current = battle_win; }
 
 		if (fight.current == fight.next) { fight = fight.getNext(fight); }
+		else if (fight.current == fight.hero) {
+			// fight = fight.getNext(fight);
+		}
+		else if (fight.current == fight.hero_select_target) {
+			// fight.enemies[0].selected = true; 
+		}
 		else if (fight.current == fight.enemy) { 
 			fight.current = fight.getNextState(fight.current); }
 		else if (fight.current == fight.enemy_select_attack) {
@@ -119,6 +133,21 @@ bool fantasy::OnUpdate() {
 			// fight.heroes = fight.attack(fight.enemies); 
 			fight.current = fight.getNextState(fight.current);
 		}
+		else if (fight.current == fight.hero_attack) {
+			int i = 0;
+			for (player hero : fight.heroes) {
+				int j = 0;
+				for (monster enemy : fight.enemies) {
+					if (hero.current && enemy.selected) {
+						fight.enemies[j] = fight.attack(hero, enemy);
+						break;
+					}
+					j++;
+				}
+			}
+			// fight.heroes = fight.attack(fight.enemies); 
+			fight.current = fight.getNextState(fight.current);
+		}
 
 		// fight.current = fight.getNextState(fight.current);
 	}
@@ -135,9 +164,9 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	if (current == play) {
 
 		if (m_keys[left].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().x -= 1; } }
-		if (m_keys[up].bPressed) {		isSolid(); enemy = isMonster(); if (move) { party.front().y -= 1; } }
-		if (m_keys[right].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().x += 1; } }
-		if (m_keys[down].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().y += 1; } }
+		else if (m_keys[up].bPressed) {		isSolid(); enemy = isMonster(); if (move) { party.front().y -= 1; } }
+		else if (m_keys[right].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().x += 1; } }
+		else if (m_keys[down].bPressed) {	isSolid(); enemy = isMonster(); if (move) { party.front().y += 1; } }
 
 		// random battle
 		if ((m_keys[left].bPressed || m_keys[up].bPressed || m_keys[right].bPressed || m_keys[down].bPressed) && move) {
@@ -529,87 +558,136 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 	}
 	// battle
 	if (current == normal_battle) {
-		if (m_keys[up].bPressed) {
-			int j = 0;
-			for (player member : fight.heroes) {
-				if (member.current) {
-					int k = 0;
-					for (ability skill : fight.heroes[j].skills) {
-						if (fight.heroes[j].skills[0].selected) {
-							fight.heroes[j].skills[0].selected = false;
-							fight.heroes[j].current = true;
-							break;
+		if (fight.current == fight.hero) {
+			if (m_keys[up].bPressed) {
+				int j = 0;
+				for (player member : fight.heroes) {
+					if (member.current) {
+						int k = 0;
+						for (ability skill : fight.heroes[j].skills) {
+							if (fight.heroes[j].skills[0].selected) {
+								fight.heroes[j].skills[0].selected = false;
+								fight.heroes[j].current = true;
+								break;
+							}
+							else if (skill.selected) {
+								fight.heroes[j].skills[k].selected = false;
+								fight.heroes[j].skills[k - 1].selected = true;
+								break;
+							}
+							k++;
 						}
-						else if (skill.selected) {
-							fight.heroes[j].skills[k].selected = false;
-							fight.heroes[j].skills[k - 1].selected = true;
-							break;
-						}
-						k++;
+						break;
 					}
-					break;
+					j++;
 				}
-				j++;
 			}
-		}
-		else if (m_keys[down].bPressed) {
-			int i = 0;
-			int j = 0;
-			int k = 0;
-			for (player member : fight.heroes) {
-				if (member.current) {
-					bool selected = false;
-					for (ability skill : fight.heroes[j].skills) {
-						if (skill.selected) {
-							selected = true;
-							break;
+			else if (m_keys[down].bPressed) {
+				int i = 0;
+				int j = 0;
+				int k = 0;
+				for (player member : fight.heroes) {
+					if (member.current) {
+						bool selected = false;
+						for (ability skill : fight.heroes[j].skills) {
+							if (skill.selected) {
+								selected = true;
+								break;
+							}
+							k++;
 						}
-						k++;
-					}
-					if (selected) {
-						if (k == member.skills.size() - 1) {
-							fight.heroes[j].skills[k].selected = false;
-							fight.heroes[j].skills[0].selected = true;
+						if (selected) {
+							if (k == member.skills.size() - 1) {
+								fight.heroes[j].skills[k].selected = false;
+								fight.heroes[j].skills[0].selected = true;
+							}
+							else {
+								fight.heroes[j].skills[k].selected = false;
+								fight.heroes[j].skills[k + 1].selected = true;
+							}
 						}
 						else {
-							fight.heroes[j].skills[k].selected = false;
-							fight.heroes[j].skills[k + 1].selected = true;
+							fight.heroes[j].skills.front().selected = true;
 						}
+						break;
 					}
-					else {
-						fight.heroes[j].skills.front().selected = true;
-					}
-					break;
+					j++;
 				}
-				j++;
+			}
+			else if (m_keys[enter].bPressed) {
+				fight.current = fight.next;
+				int i = 0;
+				for (player player : fight.heroes) {
+					if (player.current) {
+						int j = 0;
+						for (ability skill : player.skills) {
+							if (skill.selected) {
+								if (skill.name == L"Fight") {
+									fight.current = fight.hero_select_target;
+									fight.heroes[i].skills[j].selected = false;
+									fight.enemies.front().selected = true;
+								}
+								else if (skill.name == fight.heroes[i].skills[j].name) {
+									fight.current = fight.hero_select_skill;
+								}
+								if (skill.name == L"Items") {
+									fight.current = fight.hero_select_item;
+								}
+								// fight.heroes[i].skills[j].selected = false;
+								// fight.heroes[i].skills[j].current = true;
+								break;
+							}
+							j++;
+						}
+						break;
+					}
+					i++;
+				}
 			}
 		}
-		else if (m_keys[enter].bPressed) {
-			fight.current = fight.next;
-			int i = 0;
-			for (player player : fight.heroes) {
-				if (player.current) {
-					int j = 0;
-					for (ability skill : player.skills) {
-						if (skill.selected) {
-							if (skill.name == L"Fight") {
-								fight.current = fight.hero_select_attack;
-							}
-							if (skill.name == fight.heroes[i].skills[j].name) {
-								fight.current = fight.hero_select_skill;
-							}
-							if (skill.name == L"Items") {
-								fight.current = fight.hero_select_item;
-							}
-							// fight.heroes[i].skills[j].selected = false;
-							// fight.heroes[i].skills[j].current = true;
-							break;
+		else if (fight.current == fight.hero_select_target) {
+			if (m_keys[left].bPressed || m_keys[up].bPressed) {
+				int i = 0;
+				for (monster enemy : fight.enemies) {
+					if (enemy.selected) {
+						if (i == 0) {
+							fight.enemies[i].selected = false;
+							fight.enemies[fight.enemies.size() - 1].selected = true;
 						}
-						j++;
+						else {
+							fight.enemies[i].selected = false;
+							fight.enemies[0].selected = true;
+						}
+						break;
 					}
-					break;
+					i++;
 				}
-				i++;
+			}
+			else if (m_keys[right].bPressed || m_keys[down].bPressed) {
+				int i = 0;
+				for (monster enemy : fight.enemies) {
+					if (enemy.selected) {
+						if (i == fight.enemies.size() - 1) {
+							fight.enemies[i].selected = false;
+							fight.enemies[0].selected = true;
+						}
+						else {
+							fight.enemies[i].selected = false;
+							fight.enemies[i + 1].selected = true;
+						}
+						break;
+					}
+					i++;
+				}
+			}
+			else if (m_keys[enter].bPressed) {
+				for (player hero : fight.heroes) {
+					for (monster enemy : fight.enemies) {
+						if (hero.current && enemy.selected) {
+							fight.current = fight.hero_attack;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -659,6 +737,18 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 			current = play;
 		}
 	}
+
+	if (current == game_over) {
+		if (m_keys[enter].bPressed) {
+			exit(0);
+		}
+	}
+	if (current == battle_win) {
+		if (m_keys[enter].bPressed) {
+			current = play;
+		}
+	}
+
 
 // -------- DRAW --------
 
@@ -775,8 +865,8 @@ void fantasy::drawRealm() {
 	if (current == menu_mode) { drawMenu(current_menu); }			// draw menu
 	else if (current == normal_battle || current == random_battle) { drawBattle(); }		// draw battle
 	else if (current == quit) { drawQuit(); }			// draw quit
-	else if (current == game_over) { 
-		drawGameOver(); }
+	else if (current == game_over) { drawGameOver(); }
+	else if (current == battle_win) { drawBattleWin(); }
 }
 
 void fantasy::drawMapHints() {
@@ -1080,7 +1170,7 @@ void fantasy::drawBattle() {
 				Draw(ScreenWidth() / 4, ScreenHeight() / 2 + (header_rows / 2) + (j * 2) - 1, L"\u2193"[0], monster.color);
 			}
 			if (monster.selected) {
-				Draw(ScreenWidth() / 4 + 1, ScreenHeight() / 2 + (header_rows / 2) + (j * 2) - 1, L"\u2190"[0], monster.color);
+				Draw(ScreenWidth() / 4 + 1, ScreenHeight() / 2 + (header_rows / 2) + (j * 2), L"\u2190"[0], monster.color);
 			}
 			j++;
 		}
@@ -1089,19 +1179,24 @@ void fantasy::drawBattle() {
 
 }
 
-void fantasy::drawQuit() {
+void fantasy::drawBattleWin() {
 	vector<wstring> text;
-	text.push_back(L"Quit?");
-	text.push_back(L"");
-	text.push_back(L"Are you sure you want to quit?");
-	text.push_back(L"[Y] Yes [N] No");
+	text.push_back(L"You win the battle! ");
 	drawWindow(text);
 }
 
 void fantasy::drawGameOver() {
 	vector<wstring> text;
 	text.push_back(L"Game Over!");
-	// text.push_back(L"");
+	drawWindow(text);
+}
+
+void fantasy::drawQuit() {
+	vector<wstring> text;
+	text.push_back(L"Quit?");
+	text.push_back(L"");
+	text.push_back(L"Are you sure you want to quit?");
+	text.push_back(L"[Y] Yes [N] No");
 	drawWindow(text);
 }
 
