@@ -116,6 +116,10 @@ hero::hero(int x, int y) {
 	this->skills.push_back(use());
 }
 
+
+
+
+
 npc::npc(int x, int y) {
 	this->name = names::fullName();
 	this->role = L"Villager";

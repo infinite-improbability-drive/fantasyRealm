@@ -1,12 +1,6 @@
-﻿  pch.cpp
-  action.cpp
-  fantasy.cpp
-c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(104): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  monster.cpp
-  name.cpp
-  place.cpp
-  realm.cpp
-  Generating code
-  All 1132 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Release\fantasyRealm.exe
+﻿  ability.cpp
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\names.h(15): warning C4091: 'static ': ignored on left of 'names::rolesList' when no variable is declared
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\ability.cpp(20): error C2534: 'ability': constructor cannot return a value
+  c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\ability.h(11): note: see declaration of 'ability'
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\ability.cpp(20): error C2562: 'ability::ability': 'void' function returning a value
+  c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\ability.cpp(13): note: see declaration of 'ability::ability'

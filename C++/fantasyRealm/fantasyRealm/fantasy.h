@@ -13,6 +13,7 @@
 using namespace std;
 
 class fantasy : public olcConsoleGameEngine {
+	//friend class realm;
 public:
 	fantasy() {
 		m_sAppName = L"fantasy realm";
@@ -54,6 +55,7 @@ private:
 	void drawParty(int left, int top);
 	void drawStatus(int left, int top);
 	void drawSkills(int left, int top, player player);
+	void drawSkill(int left, int top, ability ability);
 	void drawItems(int left, int top);
 	void drawEquipment(int start);
 	void drawBattle();

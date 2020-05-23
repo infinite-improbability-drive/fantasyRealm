@@ -11,6 +11,8 @@ public:
 	wstring name;
 	int physical_damage;
 	int magic_damage;
+	bool selected = false;
+	bool current = false;
 	action();	
 	action(wstring name);
 };

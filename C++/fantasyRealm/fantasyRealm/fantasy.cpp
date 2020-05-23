@@ -83,10 +83,16 @@ bool fantasy::OnUserCreate() {
 }
 
 bool fantasy::OnUpdate() {
+
+	// move monsters
 	if (current == play) {
 		here.monsters = here.moveMonsters(here.monsters);
 	}
+
+	// battle
 	else if (current == normal_battle || current == random_battle) {
+
+		// lose
 		int i = fight.heroes.size();
 		for (player hero : fight.heroes) {
 			if (!hero.living) {
@@ -95,6 +101,7 @@ bool fantasy::OnUpdate() {
 		}
 		if (i == 0) { current = game_over; }
 
+		// win
 		int j = fight.enemies.size();
 		for (monster enemy : fight.enemies) {
 			if (!enemy.living) {
@@ -103,6 +110,8 @@ bool fantasy::OnUpdate() {
 		}
 		if (j == 0) { current = battle_win; }
 
+
+		// next round
 		if (fight.current == fight.next) { fight = fight.getNext(fight); }
 		else if (fight.current == fight.hero) {
 			// fight = fight.getNext(fight);
@@ -110,6 +119,8 @@ bool fantasy::OnUpdate() {
 		else if (fight.current == fight.hero_select_target) {
 			// fight.enemies[0].selected = true; 
 		}
+
+		// enemy turn
 		else if (fight.current == fight.enemy) { 
 			fight.current = fight.getNextState(fight.current); }
 		else if (fight.current == fight.enemy_select_attack) {
@@ -133,6 +144,8 @@ bool fantasy::OnUpdate() {
 			// fight.heroes = fight.attack(fight.enemies); 
 			fight.current = fight.getNextState(fight.current);
 		}
+
+		// player turn
 		else if (fight.current == fight.hero_attack) {
 			int i = 0;
 			for (player hero : fight.heroes) {
@@ -493,7 +506,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 		// [Q] equipment
 		if (m_keys[81].bPressed) { current_menu = equipment; }
 		// [E] return to game
-		if (m_keys[69].bPressed) { current = play; }
+		if (m_keys[69].bPressed || m_keys[27].bPressed) { current = play; }
 	}
 
 	// [T] talk
@@ -629,6 +642,7 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 								}
 								else if (skill.name == fight.heroes[i].skills[j].name) {
 									fight.current = fight.hero_select_skill;
+									fight.heroes[i].skills[j].current = true;
 								}
 								if (skill.name == L"Items") {
 									fight.current = fight.hero_select_item;
@@ -690,6 +704,52 @@ bool fantasy::OnUserUpdate(float fElapsedTime) {
 				}
 			}
 		}
+		else if (fight.current == fight.hero_select_skill) {
+			if (m_keys[left].bPressed || m_keys[up].bPressed) {
+				//int i = 0;
+				//for (monster enemy : fight.enemies) {
+				//	if (enemy.selected) {
+				//		if (i == 0) {
+				//			fight.enemies[i].selected = false;
+				//			fight.enemies[fight.enemies.size() - 1].selected = true;
+				//		}
+				//		else {
+				//			fight.enemies[i].selected = false;
+				//			fight.enemies[0].selected = true;
+				//		}
+				//		break;
+				//	}
+				//	i++;
+				// }
+			}
+			else if (m_keys[right].bPressed || m_keys[down].bPressed) {
+				//int i = 0;
+				//for (monster enemy : fight.enemies) {
+				//	if (enemy.selected) {
+				//		if (i == fight.enemies.size() - 1) {
+				//			fight.enemies[i].selected = false;
+				//			fight.enemies[0].selected = true;
+				//		}
+				//		else {
+				//			fight.enemies[i].selected = false;
+				//			fight.enemies[i + 1].selected = true;
+				//		}
+				//		break;
+				//	}
+				//	i++;
+				//}
+			}
+			else if (m_keys[enter].bPressed) {
+				//for (player hero : fight.heroes) {
+				//	for (monster enemy : fight.enemies) {
+				//		if (hero.current && enemy.selected) {
+				//			fight.current = fight.hero_attack;
+				//		}
+				//	}
+				//}
+			}
+		}
+
 	}
 		
 	// win battle
@@ -1115,6 +1175,16 @@ void fantasy::drawSkills(int left, int top, player you) {
 	}
 	drawWindow(left, top, skills);
 }
+void fantasy::drawSkill(int left, int top, ability skill) {
+	vector<wstring> skills;
+	int i = 0;
+	for (action act : skill.actions) {
+		if (act.selected) { skills.push_back(L"[" + act.name + L"]"); }
+		else { skills.push_back(L" " + act.name + L" "); }
+		i++;
+	}
+	drawWindow(left, top, skills);
+}
 void fantasy::drawItems(int left, int top) {
 	int i = 0;
 	for (item item : inventory) {
@@ -1153,6 +1223,11 @@ void fantasy::drawBattle() {
 		if (hero.current) {
 			Draw((ScreenWidth() * 3) / 4, ScreenHeight() / 2 + (header_rows / 2) + (i * 2) - 1, L"\u2193"[0], FG_WHITE);
 			drawSkills((ScreenWidth() * 3) / 4, 30, hero);
+			for (ability ability : hero.skills) {
+				if (ability.selected && ability.current) {
+					drawSkill((ScreenWidth() * 3) / 4 + 2, 13, ability);
+				}
+			}
 		}
 		if (hero.selected) {
 			Draw((ScreenWidth() * 3) / 4 - 1, ScreenHeight() / 2 + (header_rows / 2) + (i * 2), L"\u2192"[0], FG_WHITE);

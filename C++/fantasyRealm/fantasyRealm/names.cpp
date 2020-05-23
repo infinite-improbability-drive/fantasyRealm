@@ -5,6 +5,7 @@
 using namespace std;
 
 wstring names::roles[15] = { L"Barbarian", L"Bard", L"Cleric", L"Demon Hunter", L"Druid", L"Knight", L"Paladin", L"Pugilist", L"Pyromancer", L"Samurai", L"Sniper", L"Sorcerer", L"Thief", L"Princess", L"Fool" }; 
+enum rolesList { Barbarian, Bard, Cleric, DemonHunter, Druid, Knight, Paladin, Pugilist, Pyromancer, Samurai, Sniper, Sorcerer, Thief, Princess, Fool };
 wstring names::weapons[15] = { L"Club", L"3-string Lute", L"Talisman", L"Warglaives", L"Oaken Staff", L"Copper Sword", L"Divine Longsword +5", L"Fists", L"PyroFlame", L"Master's Katana", L"Short Bow", L"Wand", L"Bandit Knife", L"Royal Crown", L"Straw Hat" }; 
 wstring names::abilities[15] = {L"Rage", L"Song", L"Holy", L"Unholy", L"Shapeshift", L"SwordTech", L"Holy Arts", L"Evade", L"Flame", L"Bushido", L"Assassin", L"Sorcery", L"Steal", L"Royal", L"Slapstick" };
 wstring names::magics[12] = { L"Blood Magic", L"Black Magic", L"Dark Arts", L"Divine", L"Holy", L"Medium", L"Necromancy", L"Psychic", L"Pyromancy", L"Shapeshift", L"Sorcery", L"Unholy" };

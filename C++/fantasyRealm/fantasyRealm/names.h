@@ -12,6 +12,7 @@ public:
 	// roles
 	static wstring roles[15];
 	static wstring role();
+	static enum rolesList;
 	static wstring weapons[15];
 	static wstring weaponName(wstring role);
 	static wstring abilities[15];

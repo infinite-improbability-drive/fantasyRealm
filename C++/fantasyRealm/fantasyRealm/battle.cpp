@@ -28,7 +28,7 @@ battle::state battle::getNextState(state current) {
 				else { return enemy; };
 	case hero: return hero_select_attack;
 	// case select_hero_attack: return select_target;
-	//case hero_select_skill: return hero_select_target;
+	case hero_select_skill: return hero_select_target;
 	// case hero_select_item: return hero_select_target;
 	case hero_select_target: return hero_attack;
 	case hero_attack: return next;
@@ -50,7 +50,10 @@ vector<player> battle::select(vector<player> heroes) {
 		heroes[i].current = false;
 		i++;
 	}
-	heroes[rand() % heroes.size()].current = true;
+	int k = 0;
+	k = rand() % heroes.size();
+	heroes[k].current = true;
+	heroes[k].skills[0].selected = true;
 	return heroes;
 }
 vector<monster> battle::select(vector<monster> monsters) {

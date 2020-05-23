@@ -1,4 +1,6 @@
-﻿  fantasy.cpp
+﻿  ability.cpp
+  battle.cpp
+  fantasy.cpp
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.h(26): warning C4091: 'static ': ignored on left of 'fantasy::key' when no variable is declared
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(874): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
@@ -15,4 +17,10 @@ c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(988): warning C4
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1079): warning C4018: '<': signed/unsigned mismatch
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1137): warning C4018: '<': signed/unsigned mismatch
 c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\fantasy.cpp(1165): warning C4018: '<': signed/unsigned mismatch
+  player.cpp
+  realm.cpp
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\realm.h(17): warning C4091: 'static ': ignored on left of 'realm::realmType' when no variable is declared
+  tunneling.cpp
+  Generating Code...
+c:\repos\fantasyrealm\c++\fantasyrealm\fantasyrealm\battle.cpp(40): warning C4715: 'battle::getNextState': not all control paths return a value
   fantasyRealm.vcxproj -> C:\Repos\fantasyRealm\C++\fantasyRealm\Debug\fantasyRealm.exe

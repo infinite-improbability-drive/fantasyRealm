@@ -10,8 +10,9 @@ action::action() {
 	this->magic_damage = 1;
 }
 
-action::action(wstring name) {
-	this->name = name;
+action::action(wstring role) {
+	this->name = role;
 	this->physical_damage = 1;
 	this->magic_damage = 1;
+	/*if (std::wstring::compare(role, L"")) {}*/
 }
