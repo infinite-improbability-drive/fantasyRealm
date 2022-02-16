@@ -17,7 +17,7 @@ ability::ability(wstring role) {
 		this->actions.push_back(action());
 	}
 	else if (role == L"Bard") {
-		return song();
+		this->actions.push_back(action());
 	} 
 	else if (role == L"Cleric") {
 		this->actions.push_back(action());
